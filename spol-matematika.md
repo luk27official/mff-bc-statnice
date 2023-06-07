@@ -245,3 +245,133 @@ $objem(V) = \pi \int_a^b f(t)^2 dt$, $povrch(V) = 2\pi \int^b_a f(t) \sqrt{1+(f'
 ##### Délka křivky
 
 Délka křivky $\{(x, f(x)) \in \mathbb{R}^2 | a \leq x \leq b\}$ je rovna $\int_a^b \sqrt{1+(f'(t))^2} dt$.
+
+## 2. Algebra a lineární algebra
+
+TODO
+
+## 3. Diskrétní matematika
+
+### Relace
+
+Relace mezi množinami $X, Y$ je $R \subseteq X \times Y$. Může být:
+- prázdná $\emptyset$
+- univerzální $X \times Y$
+- diagonální $\{(x, x) | x \in X\}$
+- inverzní $\{ (y, x) | (x, y) \in R\}$
+- složená $x(R \circ S)z \iff \exists y \in Y: xRy \land ySz$
+
+#### Vlastnosti binárních relací (reflexivita, symetrie, antisymetrie, tranzitivita)
+
+- reflexivita: $\forall x \in X: x R x$
+- symetrie: $\forall x, y \in X: x R y \iff y R x$
+- antisymetrie: $\forall x, y \in X, x \not = y: x R y \implies \lnot y R x$
+- tranzitivita: $\forall x, y, z \in X: xRy \land yRz \implies xRz$
+
+### Ekvivalence a rozkladové třídy
+
+Relace $R$ na $X$ je ekvivalence právě tehdy, když  je symetrická, tranzitivní a reflexivní. Ekivalenční třída prvku $R[x] = \{y \in X | xRy\}$ - obsahuje všechny prvky, které jsou s ním v ekvivalenci.
+
+Z toho vyplývá několik triviálních důsledků:
+1. Ekvivalenční třída je neprázdná množina (z reflexivity).
+2. Ekvivalenční třída se buď jiné rovná, nebo spolu v průniku nemají žádný prvek.
+3. Ekvivalenční třídy určují relaci jednoznačně.
+
+### Částečná uspořádání
+
+#### Základní pojmy (minimální a maximální prvky, nejmenší a největší prvky, řetězec, antiřetězec)
+
+Relace $R$ na $X$ je uspořádání právě tehdy, když je reflexivní, antisymetrická a tranzitivní.
+
+Je několik druhů uspořádání. V lineárním uspořádání jsme schopni všechny prvky mezi sebou porovnat. Částečné uspořádání není lineární (tedy některé, možná všechny) prvky nelze spolu porovnat. Ostré uspořádání známe například >, <.
+
+Minimální prvek je takový prvek, že v nosné množině neexistuje menší. Nejmenší prvek je takový, že všechny prvky musí být porovnatelné s ním a být stejně velké nebo větší (jde tedy o silnější kritérium než u minimality). Obdobně definujeme maximální a největší prvek.
+
+Lexikografické uspořádání je uspořádání postupně podle prvního prvku, pak podle druhého atd (jde třeba o seřazení podle abecedy).
+
+Nechť $(X, \leq)$ je částečně uspořádaná množina (ČUM). Pak platí, že $A \subseteq X$ je řetězec, pokud $\forall a, b \in A$ jsou porovnatelné. Obdobně definujeme antiřetězec $A \subseteq X$, žádné dva prvky nejsou navzájem porovnatelné.
+
+Označujeme $\omega(X, \leq)$ délku nejdelšího řetězce, $\alpha(X, \leq)$ délku nejdelšího antiřetězce.
+
+#### Výška a šířka částečně uspořádané množiny a věta o jejich vztahu (o dlouhém a širokém)
+
+Pro ČUM $(X, \leq)$ platí, že velikost nosné množiny $|X| \leq \alpha \omega$.
+
+### Funkce
+
+Jde o relaci, ve kterém se prvek z $X$ zobrazuje na právě jeden prvek z $Y$. Značíme $f$, podmínku bychom zapsali $\forall x \in X \exists ! y \in Y: x f y$, v matematice také značíme $f: X \rightarrow Y, f(x) = y$.
+
+#### Typy funkcí (prostá, na, bijekce)
+
+Uvažujme funkci $f: X \rightarrow Y$
+
+- být prostá: $\forall x, x' \in X, x \not = x': f(x) \not = f(x')$
+- být "na": $\forall y \in Y \exists x \in X: f(x) = y$
+- bijekce: prostá a "na", neboli $\forall y \in Y \exists ! x \in X: f(x) = y$
+
+#### Počty různých typů funkcí mezi dvěma konečnými množinami
+
+Mějme funkci $f: A \rightarrow B, a = |A|, b = |B|$. Potom platí, že:
+- $|2^X| = 2^{|X|}$
+- celkový počet funkcí je $b^a$
+- prostých funkcí je $b^{\underline{a}}$ (tedy $\prod_{i=0}^{a-1}(b-i)$)
+
+### Permutace a jejich základní vlastnosti (počet a pevný bod)
+
+Bijekcí pro dvě stejné množiny velikosti $n$ je $n!$.
+
+Bijekcím mezi dvěma stejnými množinami se také říká permutace. Pevný bod permutace je prvek, který se zobrazí sám na sebe ($f(x) = x$).
+
+### Kombinační čísla a vztahy mezi nimi, binomická věta a její aplikace
+
+Nejprve si definujeme kombinační číslo. Jsou k tomu dva způsoby:
+
+${X \choose k} = \{ A \subseteq X | |A| = k \}$, ${n \choose k} = \frac{n!}{k!(n-k)!}$
+
+Druhá definice je používanější. Stejně totiž platí věta $|{X \choose k}| = {|X| \choose k}$.
+
+Teď si uvedeme pár vlastností.
+- počet prázdných podmnožin = 1 = počet kompletních podmnožin = ${n \choose n}$
+- počet jednoprvkových podmnožin = n = počet podmnožin, kde 1 prvek chybí = ${n \choose n-1} = {n \choose 1}$
+- obecně tedy platí ${n \choose k} = {n \choose n-k}$
+- počet podmnožin dané množiny: $\sum_{k=0}^n {n \choose k} = 2^n$
+- ${n \choose k} = {n - 1 \choose k} + {n - 1 \choose k - 1}$
+
+Dále si definujeme Pascalův trojúhelník, který má řádky indexované od nuly a na každé úrovni má kombinační čísla, kde $n$ je číslo řádku a $k$ postupně zleva roste od nuly až po $n$. Součet řádku je zjevně $2^n$ (viz vzorec nahoře).
+
+Binomická věta: $\forall n \in \mathbb{N}, \forall a, b \in \mathbb{R}: (a+b)^n = \sum_{k=0}^{n} {n \choose k} a^{n-k}b^k$.
+
+Dá se použít třeba v již zmiňovaném Pascalově trojúhelníku, pak pro různé vzorce, součty apod.
+
+### Princip inkluze a exkluze (PIE)
+
+#### Obecná formulace (a důkaz)
+
+Nechť $A_1, ..., A_n$ jsou konečné množiny. Potom platí $|\bigcup_{i=0}^n A_i| = \sum_{k=1}^n (-1)^{k+1} \sum_{I \in {[n] \choose k}} | \bigcap_{i \in I} A_i |$.
+
+Důkaz: Budeme počítat, kolikrát se prvek $x$ nachází nalevo a kolikrát napravo.
+Nalevo: 1, protože jde o sjednocení.
+Napravo: Předpokládejme, že se vyskytne v $j$ množinách, vyskytuje se tedy v každé $k$-tici z těchto $j$ množin (tedy $k \leq j$). Existuje právě ${j \choose k}$ $k$-prvkových podmnožin $j$-prvkové množiny, ve vzorci se znaménka střídají. Tedy máme ${j \choose 1} - {j \choose 2} + {j \choose 3} + ... + (-1)^{j-1} {j \choose j} = 1$.
+
+#### Použití (problém šatnářky, Eulerova funkce pro počet dělitelů, počet surjekcí)
+
+Problém šatnářky: Pánové přijdou do divadla a odloží své klobouky do šatny. Při odchodu šatnářka vydá každému právě 1 klobouk. Jaká je pravděpodobnost, že žádný pán nedostane svůj klobouk?
+
+Řešení: Obecně se bude řešení blížit k $e^{-1}$.
+
+Eulerova funkce je počet přirozených čísel nesoudělných s $n$, která jsou menší nebo rovna $n$.
+
+Počet surjekcí: Surjekce je jinými slovy to stejné, co je vlastnost funkce "na". Pro výpočet toho, kolik surjekcí existuje, se dá použít právě PIE.
+
+### Hallova věta o systému různých reprezentantů a její vztah k párování v bipartitním grafu
+
+Nejprve definujme, co vlastně systém různých reprezentantů je. Mějme množinový systém $M_i, i \in I$ na množině $X$, platí $M_i \subseteq X$.
+Systém různých reprezentantů (SRR) je funkce $f: I \rightarrow X$, která splňuje:
+1. $\forall i \in I: f(i) \in M_i$ (z každé z množin zvolí reprezentanta)
+2. $f$ je prostá (reprezentant není stejný)
+
+Hallova věta: SRR existuje $\iff \forall J \subseteq I: |\bigcup_{i \in J} M_i| \geq J$.
+
+Důkaz $\implies$: Zvolím libovolně $J \subseteq I$. Pak platí to, že $f$ je prostá, a tím pádem se splnila pravá strana.
+
+Důkaz $\impliedby$: V grafu (jednotkové ohodnocení) najdeme celočíselný maximální tok, tedy tím nalezneme minimální řez. Hrany s tokem 1 dávají SRR.
