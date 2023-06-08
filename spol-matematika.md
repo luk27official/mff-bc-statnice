@@ -454,7 +454,7 @@ Lineární zobrazení reprezentujeme maticově, můžeme využít předpis $x \r
 Příklad zobrazení je třeba identita, matice rotace, apod.
 
 Matice rotace = $\begin{pmatrix}
-\cos(\alpha) & -\sin(\alpha)
+\cos(\alpha) & -\sin(\alpha)\\
 \sin(\alpha) & \cos(\alpha)
 \end{pmatrix}$
 
@@ -508,6 +508,103 @@ Platí také následující:
 Standardní skalární součin vektorů $x, y \in \mathbb{R}^n$ je definován jako $x^Ty = \sum_{i=1}^n x_i y_i$. Euklidovská norma vektoru (neboli velikost) je definována jako $||x|| = \sqrt{x^Tx} = \sqrt{\sum_{i=1}^n x^2_i}$. Platí, že norma je nezáporná. Geometricky skalární součin vyjadřuje vztah $x^Ty = ||x|| \cdot ||y|| \cdot \cos(\varphi)$. Z toho vyplývá, že vektory jsou kolmé, právě když je skalární součin vektorů nulový.
 
 Skalární součin je symetrický a lineární funkcí v první i druhé složcee, ale ne v obou zároveň.
+
+Buď $V$ vektorový prostor nad $\mathbb{R}$. Pak skalární součin je zobrazení $\langle \cdot, \cdot \rangle: V^2 \rightarrow \mathbb{R}$ splňující pro všechna $x, y, z \in V, \alpha \in \mathbb{R}$:
+1. $\langle x, x\rangle \geq 0$ a rovnost nastene pouze pro $x = 0$
+2. $\langle x + y, z \rangle = \langle x, z \rangle + \langle y, z \rangle$
+3. $\langle \alpha x, y \rangle = \alpha \langle x, y \rangle$
+4. $\langle x, y \rangle = \langle y, x \rangle$
+
+Pro komplexní čísla platí to stejné, jen v posledním (4.) důsledku musíme uvažovat komplexně sdružené číslo!
+
+Standardní skalární součin bězně používáme při maticovém násobení. Každý kladný násobek standardního skalárního součinu je také skalárním součinem.
+
+Podobně jako u lineárního zobrazení, i skalární součin je určen jednoznačně.
+
+Norma indukovaná skalárním součinem: $||x|| = \sqrt{\langle x, x \rangle}$, kde $x \in V$.
+
+Ještě si definujme normu obecně: Buď $V$ vektorový prostor nad reálnými nebo komplexními čísly. Pak je norma zobrazení $|| \cdot ||: V \rightarrow \mathbb{R}$ splňující:
+1. $\forall x \in V: ||x|| \geq 0$ a rovnost pouze pro nulový vektor
+2. $\forall x \in V, \forall \alpha \in \mathbb{C}: ||\alpha x|| = | \alpha | \cdot || x ||$
+3. $||x + y|| \leq || x || + || y ||$
+
+Normu pro spojité funkce definujeme přes integrál.
+
+Metrika na množině $M$ je zobrazení $d: M^2 \rightarrow \mathbb{R}$, jde o normu rozdílu vektorů. Jedná se o vzdálenost. Je také nezáporná, symetrická a platí pro ni trojúhelníková nerovnost.
+
+#### Pythagorova věta, Cauchyho-Schwarzova nerovnost, trojúhelníková nerovnost
+
+Pythagorova věta: $||x||^2 + ||y||^2 = ||x + y||^2$, pokud jsou $x, y$ kolmé.
+
+Cauchy-Schwarzova nerovnost: $\forall x, y \in V: |\langle x, y \rangle| \leq ||x|| \cdot ||y||$
+
+Trojúhelníková nerovnost: $\forall x, y \in V: ||x + y|| \leq ||x|| + ||y||$
+
+#### Ortonormální systémy vektorů, Fourierovy koeficienty, Gramova-Schmidtova ortogonalizace
+
+Systém vektorů je ortogonální, pokud je skalární součin dvou libovolných vektorů ze systému roven nule (tedy jsou na sebe všechny vektory kolmé). Systém je ortonormální, právě tehdy když je ortogonální a zároveň platí $|| z_i || = 1$ pro všechny vektory systému. Je-li systém ortogonální, pak se dá jednoduše zortonormalizovat, prostě pronásobíme vektory nějakou konstantou.
+
+Je-li systém vektorů $z_1, ..., z_n$ ortonormální, pak je lineárně nezávislý. To lze nahlédnout z definice lineární kombinace.
+
+Fourierovy koeficienty: Buď $z_1, ..., z_n$ ortonormální báze prostoru $V$. Pak pro každé $x \in V$ platí $x = \sum_{i = 1}^n \langle x, z_i \rangle z_i$. Tomuhle říkáme Fourierův rozvoj a skaláry se nazývají Fourierovy koeficienty.
+
+Gramova-Schmidtova ortogonalizace začne s libovolnou bazí a postupně nakolmuje vektory, vytváří bázi, která je ortonormální. Nakolmování funguje tak, že v jedné fázi odečteme od vektoru $x_k$ jeho projekci do prostoru generovaného předchozími vektory, takže bude kolmý i na ty předchozí. Poznámka: Tady bych asi opět doporučil se podívat na nějaký konkrétní příklad, pamatovat si ten algoritmus je celkem těžké, ale v praxi to je celkem intuitivní.
+
+Každý konečně generovaný prostor se skalárním součinem má svou ortonormální bázi.
+
+### Ortogonální doplněk, ortogonální projekce, projekce jako lineární zobrazení
+
+Buď $V$ vektorový prostor a $M \subseteq V$. Pak ortogonální doplněk množiny $M$ je $M^{\perp} = \{ x \in V; \langle x, y \rangle = 0 \forall y \in M \}$. Tedy je to doplňek podprostoru $M$ takový, že všechny vektory z $M^{\perp}$ jsou kolmé na vektor z $M$.
+
+Platí, že ortogonální doplněk je také podprostorem $V$, že $M^{\perp} = span(M)^{\perp}$ a je-li $M \subseteq N$, pak platí obrácená inkluze pro doplňky.
+
+Dále platí, že $M \cap M^{\perp} = \{ o \}, V = U + U^{\perp}, (U^{\perp})^\perp = U,  \dim V = \dim U + \dim U^{\perp}$.
+
+Ortogonální projekce: Buď $V$ vektorový prostor a $U$ jeho podprostor. Pak projekcí vektoru $x \in V$ do $U$ rozumíme takový vektor $x_U \in U$, který splňuje $||x - x_U|| = \min_{y \in U} ||x - y||$. Vektor $y$ je určen jednoznačně (z Pythagorovy věty).
+
+Doplňěk řádkového podprostoru matice $A$ je roven jeho jádru. Platí také:
+1. $Ker(A^T A) = Ker(A)$
+2. $\mathcal{R}(A^T A) = \mathcal{R}(A)$
+3. $rank(A^T A) = rank(A)$
+
+Ortogonální projekce: Buď $A \in \mathbb{R}^{m \times n}$ hodnosti $n$. Pak projekce vektoru $x \in \mathbb{R}^m$ do sloupcového prostoru je $x' = A(A^T A)^-1 A^T x$.
+
+Matice $P$ je matice projekce právě tehdy, když je symetrická a $P = P^2$.
+
+Matici projekce do doplňku získáme tak, že matici projekce odečteme od jednotkové matice.
+
+#### Ortogonální matice a jejich vlastnosti
+
+Matice $\mathbb{Q} \in \mathbb{R}^{n \times n}$ je ortogonální, pokud $Q^T Q = I_n$. Matice $\mathbb{Q} \in \mathbb{C}^{n \times n}$ je unitární, pokud $\overline{Q}^T Q = I_n$.
+
+Následující tvrzení jsou ekvivalentní:
+1. $Q$ je ortogonální
+2. $Q$ je regulární a $Q^{-1} = Q^T$
+3. $QQ^T = I_n$
+4. $Q^T$ je ortogonální
+5. $Q^{-1}$ existuje a je ortogonální
+6. sloupce i řádky $Q$ tvoří ortonormální bázi $R^n$
+
+Součin ortogonálních matic je také ortogonální matice.
+
+Příklady: jednotková matice, Householderova matice, Givensova matice (například matice rotace)
+
+Dále pro ortogonální matice platí:
+1. $\langle Qx, Qy \rangle = \langle x, y \rangle$ pro každé $x, y \in \mathbb{R}^n$
+2. $\forall x \in \mathbb{R}^n: ||Qx|| = ||x||$
+3. prvky ortogonální matice mají hodnoty mezi 0 až 1 včetně, to platí i pro inverzi
+4. $\begin{pmatrix}
+1 & o^T\\
+o & Q
+\end{pmatrix}$ je také ortogonální matice.
+
+Ortogonální matice a lineární zobrazení: Buďte $U, V$ prostory nad $\mathbb{R}$ s libovolným skalárním součinem a $f: U \rightarrow V$ lineární zobrazení. Nechť $B_U, B_V$ jsou ortonormální báze U a V. Pak matice zobrazení ${}_{B_V}[f]_{B_U}$ je ortogonální právě tehdy, když $\langle f(x), f(y) \rangle = \langle x, y \rangle$ pro každé $x, y \in U$.
+
+Poslední definice, která se k tomuto tématu vztahuje, je stopa matice $trace(A) = \sum_{i=1}^n x_{ii}$, tedy součet prvků na diagonále.
+
+### Determinanty
+
+TODO
 
 ## 3. Diskrétní matematika
 
