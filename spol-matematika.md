@@ -248,7 +248,266 @@ Délka křivky $\{(x, f(x)) \in \mathbb{R}^2 | a \leq x \leq b\}$ je rovna $\int
 
 ## 2. Algebra a lineární algebra
 
-TODO
+### Algebraické struktury
+
+#### Grupy a podgrupy, permutace
+
+Buď binární operace na množině $G$, tedy $G^2 \rightarrow G$. Grupa je poté dvojice $(G, \circ)$, která splňuje:
+1. Asociativita: $\forall a, b, c \in G: a \circ (b \circ c) = (a \circ b) \circ c$
+2. Existence neutrálního prvku: $\exists e \in G \forall x \in G: x \circ e = e \circ x = x$
+3. Existence inverzního prvku: $\forall x \in G \exists x' \in G: x \circ x' = x' \circ x = e$
+4. Pro tzv. Abelovy grupy ještě platí komutativita: $\forall a, b \in G: a \circ b = b \circ a$
+
+Příklady Abelových grup: $(\mathbb{Z}, +), (\mathbb{Q}, +), (\mathbb{R}, +)$, grupy matic, číselné obory s násobením bez nuly atd. Důležitým případem je konečná grupa $(\mathbb{Z}_n, +)$, kde operace definujeme vždy $mod n$.
+
+Příklad ne-Abelových grup: Zobrazení na množině s operací skládání, permutace...
+
+Platí následující:
+1. $a \circ c = b \circ c \implies a = b$
+2. neutrální prvek je určen jednoznačně
+3. pro každý prvek grupy je jeho inverzní prvek určen jednoznačně
+4. $a \circ x = b$ má právě jedno řešení $\forall a, b \in G$
+5. $(a^{-1})^{-1} = a$
+6. $(a \circ b)^{-1} = b^{-1} \circ a^{-1}$
+
+Podgrupa grupy $(G, \circ)$ je grupa $(H, \diamond)$ taková, že $H \subseteq G$ a pro všechna $a, b \in H$ platí $a \circ b = a \diamond b$. Značíme $(H, \diamond) \leq (G, \circ)$.
+
+Podgrupy jsou uzavřené na průnik, ale ne na sjednocení.
+
+Permutace na konečné množině $X$ je bijekce $p: X \rightarrow X$. Často uvažujeme permutace pro prvky $1, ..., n$. Množina všech permutací pro $n$ prvků se značí $S_n$. Dá se značit například tabulkou, grafem, nebo rozložením na cykly.
+
+Rozložení na cyklus vypadá následovně: $(1, 2)(3)(4, 5, 6)$. Občas se jednoprvkové cykly vynechávají.
+
+Permutace se dají invertovat, skládat apod. Znaménko permutace $sgn(p) = (-1)^{n-k}$.
+Permutaci, kde se všechny prvky zobrazí samy na sebe, říkáme identita, permutaci s prohozenými dvěma prvky říkáme transpozice.
+
+#### Tělesa a speciálně konečná tělesa
+
+Těleso je množina $\mathbb{T}$ spolu se dvěma komutativními binárními operacemi sčítání a násobení splňující:
+1. $(\mathbb{T}, +)$ je Abelova grupa, neutrální prvek je 0 a inverzní k $a$ je $-a$
+2. $(\mathbb{T} \setminus \{0\}, \cdot)$ je Abelova grupa, neutrální prvek je 1 a inverzní k $a$ je $a^{-1}$
+3. Distributivita: $\forall a, b, c \in \mathbb{T}: a \cdot (b + c) = a \cdot b + a \cdot c$
+
+Příklady těles jsou třeba $\mathbb{R}, \mathbb{C}$ apod., pozor na to, že množina celých čísel těleso netvoří. Konečná tělěsa $\mathbb{Z}_n$ jsou tělesy pro $n$ prvočíselné.
+
+Základní vlastnosti těles:
+1. $0a = 0$
+2. $ab = 0 \implies a = 0 \lor b = 0$
+3. $-a = (-1)a$
+
+Charakteristika tělesa je nejmenší počet jedniček, které při sečtení dají 0. Pokud takové číslo neexistuje, pak se definuje jako 0.
+
+### Soustavy lineárních rovnic
+
+#### Maticový zápis, elementární řádkové úpravy, odstupňovaný tvar matice
+
+Matice typu $m \times n$ je obdélníkové schéma (tabulka) reálných čísel, značíme ji $A$ a pro $m = n$ je matice čtvercová. Jednotlivé prvky indexujeme často písmeny $i, j$, poté je prvek na řádku $i$ a ve sloupci $j$ značen $a_{ij}$ nebo $A_{ij}$.
+
+Sloupcový vektor je matice typu $n \times 1$, řádkový vektor $1 \times n$.
+
+Hvězdičkovou notací značíme výběr jednoho celého řádku, popřípadě sloupce.
+
+Maticí soustavy rozumíme $(A | b)$, kde matice $A$ obsahuje koeficienty proměnných a sloupec vpravo hodnoty na pravé straně soustavy.
+
+Matice lze upravovat přes elementární řádkové úpravy:
+1. vynásobení $i$-tého řádku reálným nenulovým číslem
+2. přičtení $\alpha$-násobku $j$-tého řádku k $i$-tému ($\alpha \in \mathbb{R}, i \not = j$)
+3. výměna $i$-tého a $j$-tého řádku
+
+Tyto úpravy zachovávají množinu řešení soustavy.
+
+Matice je v řádkově odstupňovaném tvaru (REF), pokud existuje $r$ takové, že platí:
+1. řádky $1, ..., r$ jsou nenulové
+2. řádky $r + 1, ..., m$ jsou nulové
+3. označíme-li $p_i = \min\{j, a_{ij} \not = 0\}$ pozici (pivot) prvního nenulového prvku v $i$-tém řádku, pak $p_1 < p_2 < ... < p_r$
+
+Dalším pojmem, který se nám hodí, je tzv. hodnost matice, to je počet nenulových řádků po převodu matice do tvaru REF.
+
+Převod matice do REF můžeme udělat pomocí řádkových elementárních úprav.
+
+#### Gaussova a Gaussova-Jordanova eliminace, popis množiny řešení
+
+Gaussova eliminace se provádí převodem matice $A$ do REF tvaru, po převodu může nastat následující:
+1. soustava nemá řešení, pokud na pravé straně matice (v $b$) je pivot
+2. soustava má právě jedno řešení, pokud počet proměnných je roven počtu pivotů, který není napravo
+3. soustava má nekonečně mnoho řešení, pokud počet proměnných je vyšší než počet pivotů
+
+Gaussova-Jordanova eliminace funguje stejně, až na to, že se převádí do tvaru RREF, který zajišťuje, že na pozicích pivotů jsou jedničky a nad každým pivotem jsou pouze nuly. Řešení fungují obdobně. Převod na RREF tvar je jednoznačný.
+
+### Matice
+
+Definice matice viz nahoře, už jsme ji potřebovali.
+
+#### Operace s maticemi a základní typy matic, hodnost matice
+
+Rovnost matic nastává při stejných rozměrech a hodnotách na každé pozici.
+
+Součet matic definujeme pro každý prvek jako součet prvků na dané pozici, rozdíl obdobně.
+
+Násobek matice s číslem definujeme pro každý prvek jako $(\alpha A)_{ij} = \alpha A_{ij}$.
+
+Platí komutativita, asociativita, distributivita, pravidla $A + 0 = A, 1A = A, A + (-1)A = 0, \alpha(\beta A) = (\alpha\beta)A$.
+
+Součin dvou matic definujeme pro $A \in \mathbb{R}^{m \times p}, B \in \mathbb{R}^{p \times n}$ jako $AB$, což bude matice typu $\mathbb{R}^{m \times n}$ s prvky $(AB)_ij = \sum_{k=1}^p A_{ik} B_{kj}$. Pomůcka - prvek na pozici $(i, j)$ spočítáme jako skalární součin $i$-tého řádku matice $A$ a $j$-tého sloupce matice $B$.
+
+Definujme si jednotkovou matici $I_n$ jako matici $n \times n$, která má na diagonále jedničky, všude jinde nuly. Obdobně se definuje nulová matice, která má všude nuly (někdy $0_n$). 
+
+Součin dvou matic je asociativní, distributivní zprava i zleva, pronásobení číslem lze z libovolné strany a násobení jednotkovou a nulovou maticí funguje tak, jak bychom očekávali. Pozor na to, že součin dvou matic není komutativní, tedy $AB \not = BA$ pro mnoho matic!
+
+Transpozici matice značíme $A^T$ a jde o překlopení podle hlavní diagonály, tedy sloupce uvažujeme jako řádky a vice versa.
+
+Platí například $(A^T)^T = A, (A + B)^T = A^T + B^T, (\alpha A)^T = \alpha A^T, (AB)^T = B^T A^T$.
+
+Matice je symetrická, pokud $A = A^T$.
+
+Další typy matic:
+- diagonální matice: všechny prvky mimo diagonálu jsou nulové
+- horní trojúhelníková matice: všechny prvky pod diagonálou (mimo diagonálu) jsou  nulové
+- dolní trojúhelníková matice: všechny prvky nad diagonálou (mimo diagonálu) jsou nulové
+
+Hodnost matice jsme si již definovali.
+
+#### Regulární a inverzní matice
+
+Matice $A$ je regulární, pokud soustava $Ax = 0$ má jediné řešení $x = 0$. V opačném případě se matice nazývá singulární.
+
+$A \in \mathbb{R}^{n \times n}$ je regulární právě tehdy, když RREF tvar matice je jednotková matice a hodnost matice je rovna počtu řádků. Regulární matice mají navíc jedno řešení pro každou soustavu rovnic.
+
+Součin regulárních matic je také regulární matice, součin singulární a libovolné matice je matice singulární. Je-li matice regulární, pak je její transpozice taky regulární.
+
+Každá regulární matice se dá vyjádřit jako součin konečně mnoha elementárních matic.
+
+Inverzní matice pro $A \in \mathbb{R}^{n \times n}$ je $A^{-1}$, pokud platí $AA^{-1} = A^{-1}A = I_n$. Inverzní matice existuje pro regulární matice.
+
+Pro regulární matice ještě platí $(A^{-1})^T = (A^T)^{-1}, (A^{-1})^{-1} = A, (\alpha A)^{-1} = \frac{1}{\alpha} A^{-1} (\alpha \not = 0), (AB)^{-1} = B^{-1} A^{-1}$.
+
+### Vektorové prostory
+
+#### Vektorový prostor a podprostor, lineární obal, lineární kombinace, generátory
+
+Buď $\mathbb{T}$ těleso s neutrálními prvky 0 pro sčítání a 1 pro násobení. Poté vektorovým prostorem nad tělesem $\mathbb{T}$ rozumíme množinu $V$ s operacemi sčítání vektorů $+: V^2 \rightarrow V$ a násobení vektroů skalárem $\mathbb{T} \times V \rightarrow V$ splňující pro každé $\alpha, \beta \in \mathbb{T}, u, v \in V$:
+1. $(V, +)$ je Abelova grupa, neutrální prvek značíme $0$, inverzní k $v$ značíme $-v$
+2. asociativita: $\alpha(\beta v) = (\alpha \beta) v$
+3. $1v = v$
+4. distributivita: $(\alpha+\beta)v = \alpha v + \beta v$
+5. distributivita: $\alpha(u + v) = \alpha u + \alpha v$
+
+Prvky vektorového prostoru značíme písmeny a říkáme jim vektory. Prvkům tělesa $\mathbb{T}$ říkáme skaláry.
+
+Příklad vektorových prostorů: $\mathbb{R}^n$ nad $\mathbb{R}$, $\mathbb{T}^n$ nad $\mathbb{T}$, prostor matic $\mathbb{R}^{m \times n}$ nad $\mathbb{R}$, ...
+
+Buď $V$ vektorový prostor nad $\mathbb{T}$, pak $U \subseteq V$ je podprostorem $V$, pokud také tvoří vektorový prostor nad $\mathbb{T}$ se stejnými operacemi. Značíme $U \Subset V$.
+
+Podprostor musí obsahovat nulový vektor a být uzavřený na součet a násobení. Průnik podprostorů je také podprostor původního prostoru.
+
+Buď $V$ vektorový prostor nad $\mathbb{T}$ a $W \subseteq V$. Pak lineární obal $W$, značený $span(W)$, je průnik všech podprostorů $V$ obsahujících $W$.
+
+Nechť prostor U je lineárním obalem množiny vektorů $W$, tedy $U = span(W)$, pak říkáme, že $W$ generuje prostor $U$ a prvky množiny $W$ jsou generátory $U$. Prostor $U$ je konečně generovaný, pokud je generovaný nějakou konečnou množinou vektorů.
+
+Lineární kombinace: Buď $V$ vektorový prostor nad $\mathbb{T}$ a $v_1, ..., v_n \in V$. Pak lineární kombinací vektorů $v_1, ..., v_n$ rozumíme výraz typu $\sum_{i=1}^n \alpha_i v_i = \alpha_1 v_1 + ... + \alpha_n v_n$, kde $\alpha_1, ..., \alpha_n \in \mathbb{T}$. Lineární obal pak obsahuje všechny lineární kombinace generátorll.
+
+#### Lineární závislost a nezávislost, báze a její existence, souřadnice, dimenze
+
+Buď $V$ vektorový prostor na $\mathbb{T}$ a mějme vektory $v_1, ..., v_n \in V$. Pak tyto vektory nazýváme lineárně závislé, pokud rovnost $\sum_{i=1}^n \alpha_i v_i = o$ nastane pouze pro $\alpha_1, ..., \alpha_n = 0$. V opačném případě jsou vektory lineárně závislé.
+
+Buď $V$ vektorový prostor nad $\mathbb{T}$ a $M \subseteq V$ nekonečná množina vektorů. Pak je $M$ lineárně nezávislá, pokud každá konečná podmnožina $M$ je lineárně nezávislá. V opačném případě je $M$ lineárně závislá.
+
+Například sloupce, resp. i řádky regulární matice jsou lineárně nezávislé.
+
+Uvažujme vektorový prostor $V$ nad $\mathbb{T}$, pak bází rozumíme libovolný lineárně nezávislý systém generátorů $V$. Každý vektorový prostor dokážeme vyjádřit tzv. kanonickou bazí, která obsahuje vektory $e_1, ..., e_n$, kde na pozici indexu vektor obsahuje jedničku, jinde nuly.
+
+Nechť $B = \{ v_1, ..., v_n \}$ je báze prostoru $V$ a nechť $u \in V$ má nějaké vyjádření $u = \sum_{i=1}^n \alpha_i v_i$. Pak souřadnicemi vektoru $u \in V$ vzhledem k bázi $B$ rozumíme koeficienty $\alpha_1, ..., \alpha_n$, vektor souřadnic značíme $[u]_B = (\alpha_1, ..., \alpha_n)^T$.
+
+Každý vektorový prostor má bázi, všechny báze nějakého vektorového prostoru jsou stejně velké.
+
+Steinitzova věta o výměně: Buď $V$ vektorový prostor, $x_1, ..., x_m$ lineárně nezávislý systém ve $V$, nechť $y_1, ..., y_n$ je systém generátorů $V$. Platí:
+1. $m \leq n$
+2. existují navzájem různé indexy $k_1, ..., k_{n - m}$ takové, že $x_1, ..., x_m, y_{k_1}, ..., y_{k_{n-m}}$ tvoří systém generátorů $V$.
+
+Dimenze konečně generovaného vektorového prostoru je velikost nějaké jeho báze. Značíme $\dim V$. Dimenze podprostoru je menší rovna dimenzi samotného prostoru.
+
+Obecně ještě platí, že každý lineárně nezávislý systém lze rozšířit na bázi.
+
+#### Maticové podprostory (řádkový, sloupcový, jádro)
+
+Definujme podprostory:
+1. sloupcový prostor $\mathcal{S}(A) = span\{A_{*1}, ..., A_{*n}\} = \{Ax; x \in \mathbb{T}^n \}$
+2. řádkový prostor $\mathcal{R}(A) = \mathcal{S}(A^T) = \{A^Ty; y \in \mathbb{T}^m \}$
+3. jádro $Ker(A) = \{ x \in \mathbb{T}^n; Ax = o \}$
+
+Sloupcový prostor je tedy prostor generovaný sloupci matice a je to podprostor $\mathbb{T}^m$. Obdobně řádkový prostor je generovaný řádky matice a je to podprostor $\mathbb{T}^n$. Jádro je tvořeno všemi řešeními soustavy $Ax = o$, takže obsahuje nulový vektor, je uzavřené na součty a násobky.
+
+Platí $\dim Ker(A) + rank(A) = n$.
+
+### Lineární zobrazení
+
+#### Definice, maticová reprezentace lineárního zobrazení, matice složeného zobrazení
+
+Buďte $U, V$ vektorové prostory nad $\mathbb{T}$. Zobrazení $f: U \rightarrow V$ je lineární, pokud $\forall x, y \in U, \alpha \in \mathbb{T}$ platí:
+1. $f(x + y) = f(x) + f(y)$
+2. $f(\alpha x) = \alpha f(x)$
+
+Lineárnímu zobrazení také říkám homomorfismus.
+
+Lineární zobrazení reprezentujeme maticově, můžeme využít předpis $x \rightarrow Ax$.
+
+Příklad zobrazení je třeba identita, matice rotace, apod.
+
+Matice rotace = $\begin{pmatrix}
+\cos(\alpha) & -\sin(\alpha)
+\sin(\alpha) & \cos(\alpha)
+\end{pmatrix}$
+
+Buď $f: U \rightarrow V$ lineární zobrazení. Pak platí:
+1. $f(\sum_{i=1}^n \alpha_i x_i) = \sum_{i=1}^n \alpha_i f(x_i)$
+2. $f(o) = o$
+
+Dále definujeme:
+1. obraz $f(U) = \{ f(x); x \in U \}$
+2. jádro $Ker(f) = \{ x \in U; f(x) = o \}$
+3. $f(U)$ je podprostorem $V$
+4. $Ker(f)$ je podprostorem $U$
+
+Pokud je zobrazení prosté, pak jádro obshauje pouze nulový vektor a obraz libovolné lineárně nezávislé množiny je lineárně nezávislá množina.
+
+Buďte $U, V$ prostory nad $\mathbb{T}$ a $x_1, ..., x_n$ báze $U$, pro libovolné vektory $y_1, ..., y_n \in V$ existuje právě jedno lineární zobrazení takové, že $f(x_i) = y_i$.
+
+Buď $f: U \rightarrow V$ lineární zobrazení, $B_U = \{ x_1, ..., x_n \}$ báze prostoru $U$, $B_V = \{ y_1, ..., y_m \}$ báze prostoru $V$. Nechť $f(x_j) = \sum_{i=1}^m a_{ij}y_i$. Potom matice $A \in \mathbb{T}^{m \times n}$ s prvky $a_{ij} = 1, ..., m; j = 1, ..., n$ se nazývá matice lineárního zobrazení vzhledem k bázím $B_U, B_V$ a značíme ji ${}_{B_V} [f]_{B_U}$. Matice lineárního zobrazení vypadá tak, že její $j$-tý sloupce je tvořen souřadnicemi obrazu vektoru $x_j$ vzhledem k bázi $B_V$.
+
+Maticová reprezentace lineárního zobrazení: Buď $f: U \rightarrow V$ lineární zobrazení a báze jak jsme definovali nahoře. Pak $\forall x \in U: [f(x)]_{B_V} = {}_{B_V}[f]_{B_U} \cdot [x]_{B_U}$.
+
+Každé lineární zobrazení se dá definovat jako matice, nahlédneme přes kanonické báze. Takové zobrazení je jednoznačné.
+
+Matice přechodu je matice, která vyjadřuje převod vektorů z jedné báze do druhé. Pro podmínky viz nahoře platí $[x]_{B_U} = {}_{B_U}[id]_{B_V} \cdot [x]_{B_V}$.
+
+Matici přechodu můžeme spočítat tak, že dáme vektory báze $B_V$ na levou stranu matice, vektory báze $B_U$ na pravou stranu a upravíme do RREF tvaru. Nalevo dostaneme jednotkovou matici a napravo dostaneme matici přechodu ${}_{B_V}[id]_{B_U}$.
+
+Lineární zobrazení můžeme skládat. Takové zobrazení je také lineární. Matici složeného lineárního zobrazení můžeme zapsat následovně pro $f: U \rightarrow V, g: V \rightarrow W$ a jejich příslušné báze $B$ s odpovídajícím indexem: ${}_{B_W}[g \circ f]_{B_U} = {}_{B_W}[g]_{B_V} \cdot {}_{B_V}[f]_{B_U}$.
+
+#### Obraz a jádro lineárních zobrazení
+
+Viz nahoře, už jsme to potřebovali.
+
+Platí různé rovnosti o dimenzích, důležitá je například $\dim U = \dim Ker(f) + \dim f(U)$.
+
+Dále platí, že $f$ je prosté právě tehdy, když má matice lin. zobrazení lineárně nezávislé sloupce. Zobrazená je "na" právě tehdy, když má matice lin. zobrazení lineárně nezávislé řádky.
+
+#### Isomorfismus prostorů
+
+Isomorfismus mezi prostory $U, V$ nad $\mathbb{T}$ je vzájemně jednoznačné lineární zobrazení $f: U \rightarrow V$. Pokud mezi těmito dvěma prostory existuje isomorfismus, pak jsou isomorfní.
+
+Platí také následující:
+1. Inverzní isomorfismus existuje a je to také isomorfismus.
+2. Isomorfismus je tranzitivní.
+3. Lineární zobrazení $f: U \rightarrow V$ je isomorfismem právě tehdy, když libovolná báze prostoru $U$ se zobrazuje na bázi $V$. Z toho také vyplývá $dim(U) = dim(V)$.
+
+### Skalární součin
+
+#### Skalární součin, norma indukovaná skalárním součinem
+
+Standardní skalární součin vektorů $x, y \in \mathbb{R}^n$ je definován jako $x^Ty = \sum_{i=1}^n x_i y_i$. Euklidovská norma vektoru (neboli velikost) je definována jako $||x|| = \sqrt{x^Tx} = \sqrt{\sum_{i=1}^n x^2_i}$. Platí, že norma je nezáporná. Geometricky skalární součin vyjadřuje vztah $x^Ty = ||x|| \cdot ||y|| \cdot \cos(\varphi)$. Z toho vyplývá, že vektory jsou kolmé, právě když je skalární součin vektorů nulový.
+
+Skalární součin je symetrický a lineární funkcí v první i druhé složcee, ale ne v obou zároveň.
 
 ## 3. Diskrétní matematika
 
