@@ -604,7 +604,125 @@ Poslední definice, která se k tomuto tématu vztahuje, je stopa matice $trace(
 
 ### Determinanty
 
-TODO
+#### Definice a základní vlastnosti determinantu (multiplikativnost, determinant transponované matice, vztah s regularitou a vlastními čísly)
+
+Buď $A \in \mathbb{T}^{n \times n}$. Pak determinant matice je $det(A) = \sum_{p \in S_n}sgn(p)\prod_{i=1}^n a_{i, p(i)}$. Značíme buď $det(A)$ nebo $|A|$.
+
+Pro matice řádu 2 je determinant roven součinu diagonály mínus součin antidiagonály. Pro matice řádu 3 je determinant podobný, jde o součet součinů diagonál mínus součet součinů antidiagonál. Pro větší matice neexistuje nějaký jednoduchý vzorec, obecně je celkem náročné počítat determinanty, protože výpočtů je řádově $n!$.
+
+Pro horní trojúhelníkovou matici je determinant roven součinu prvků na diagonále.
+
+Platí $det(A^T) = det(A)$. Obecně neplatí třeba $det(A + B) = det(A) + det(B)$, ale platí řádková a sloupcová linearita.
+
+Jak se mění determinant s řádkovými úpravami?
+1. Při vynásobení nějakého řádku skalárem $\alpha \in \mathbb{T}$ se i determinant zvětší $\alpha$-krát.
+2. Výměna dvou řádků změní znaménko determinantu ($det(A') = -det(A)$).
+3. Přičtení násobku některého řádku k jinému determinant nemění.
+
+Pokud má matice dva stejné řádky, pak je $det(A) = 0$. Obecně platí, že matice je regulární právě tehdy, když je determinant nenulový.
+
+Multiplikativnost determinantu: Pro každé dvě matice $A, B \in \mathbb{T}^{n \times n}$ platí $det(AB) = det(A) det(B)$. Z toho vyplývá například i to, že pro $A$ regulární platí $det(A^{-1}) = det(A)^{-1}$.
+
+Inverze matice má celočíselné hodnoty právě tehdy, když $det(A) = \pm 1$.
+
+Vztah s vlastními čísly bude zmíněn v kapitole o vlastních číslech a vektorech.
+
+#### Laplaceův rozvoj determinantu
+
+Laplaceův rozvoj podle $i$-tého řádku: Buď $A \in \mathbb{T}^{n \times n}, n \geq 2$. Pak pro každé $i = 1, ..., n$ platí $det(A) = \sum_{j=1}^n (-1)^{i+j} a_{ij} det(A^{ij})$, kde matice $A^{ij}$ je matice po vyškrtnutí $i$-tého řádku a $j$-tého sloupce. Dá se rozvíjet podle libovolného řádku i sloupce.
+
+#### Geometrická interpretace determinantu
+
+Determinant má několik geometrických významů, uvažujeme-li lineární zobrazení s maticí $A \in \mathbb{R}^{n \times n}$, pak geometrická tělesa mění v tomto zobrazení svůj objem s koeficientem $|det(A)|$. Objem tady není myšlen jen jako klasický trojrozměrný, v $\mathbb{R}^2$ jde o obsah apod.
+
+Dále determinant může posloužit k výpočtu objemu rovnoběžnostěnu. Buď $A \in \mathbb{R}^{m \times n}$ a uvažujme rovnoběžnostěn s hranami danými řádky matice $A$. Pak jeho objem (opět ve smyslu objemu dané dimenze) je roven $\sqrt{det(AA^T)}$. Speciálně pro $m = n$ je objem $|det(A)|$.
+
+### Vlastní čísla a vlastní vektory
+
+#### Definice, geometrický význam a základní vlastnosti vlastních čísel, charakteristický polynom, násobnost vlastních čísel
+
+Buď $A \in \mathbb{C}^{n \times n}$. Pak $\lambda \in \mathbb{C}$ je vlastní číslo matice $A$ a $x \in \mathbb{C}^n$ je vlastní vektor, pokud platí $Ax = \lambda x, x \not = o$. Nenulovost vektoru $x$ je nezbytná podmínka, jinak by byla rovnice splněna triviálně pro každé $\lambda$.
+
+Vlastní vektor reprezentuje invariantní směr při zobrazení $x \rightarrow Ax$, tedy směr, který se zobrazí opět na ten samý směr.
+
+Buď $A \in \mathbb{C}^{n \times n}$. Pak:
+1. $\lambda \in \mathbb{C}$ je vlastním číslem právě tehdy, když $det(A - \lambda I_n) =  0$
+2. $x \in \mathbb{C}^n$ je vlastním vektorem příslušným k vlastnímu číslu $\lambda \in \mathbb{C}$ právě tehdy, když $o \not = x \in Ker(A - \lambda I_n)$.
+
+Nechť $A \in \mathbb{C}^{n \times n}$ je trojúhelníková matice. Pak její vlastní čísla jsou prvky na diagonále.
+
+Charakteristický polynom matice $A \in \mathbb{C}^{n \times n}$ vzhledem k proměnné $\lambda$ je $p_A(\lambda) = det(A - \lambda I_n) = (-1)^n \lambda^n + a_{n-1} \lambda^{n-1} + ... + a_1 \lambda + a_0$.
+
+Kořeny takového polynomu odpovídají vlastním číslům matice $A$. Takových kořenů je $n$ včetně jejich násobností. Algebraická násobnost značí násobnost $\lambda$ jako kořen char. polynomu, geometrická násobnost $\lambda$ je rovna $n - rank(A - \lambda I_n)$, tedy počtu lineárně nezávislých vlastních vektorů odpovídajících $\lambda$.
+
+Platí, že pro $A \in \mathbb{C}^{n \times n}$ s vlastními čísly $\lambda_1, ..., \lambda_n$ a vlastními vektory $x_1, x_2, ..., x_n$:
+1. $det(A) = \lambda_1 \lambda_2 ... \lambda_n$
+2. $trace(A) = \lambda_1 + \lambda_2 + ... + \lambda_n$
+3. $A$ je regulární právě tehdy, když 0 není její vlastní číslo
+4. je-li $A$ regulární, pak $A^{-1}$ má vlastní čísla $\lambda_1^{-1}, \lambda_2^{-1} ...$ a vlastní vektory stejné jako původní matice
+5. $A^2$ má vlastní čísla $\lambda_1^2, ..., \lambda_n^2$ a vlastní vektory $x_1, ..., x_n$
+6. $\alpha A$ má vlastní čísla $\alpha \lambda_1, ..., \alpha \lambda_n$ a vlastní vektory $x_1, ..., x_n$
+7. $A + \alpha I_n$ má vlastní čísla $\lambda_1 + \alpha, ... \lambda_n + \alpha$ a vlastní vektory $x_1, ..., x_n$
+8. $A^T$ má vlastní čísla $\lambda_1, ..., \lambda_n$, ale vlastní vektory obecně jiné.
+
+Je-li $\lambda$ vlastní číslo matice, pak je i komplexně sdružené $\overline{\lambda}$ číslo vlastním číslem téže matice.
+
+Spektrum matice $A$ je množina jejích vlastních čísel $\{\lambda_1, ..., \lambda_n\}$, spektrální poloměr je maximum z absolutních hodnot spektra.
+
+#### Podobnost a diagonalizovatelnost matic, spektrální rozklad
+
+Matice $A, B \in \mathbb{C}^{n \times n}$ jsou si podobné, existuje-li regulární matice $S \in \mathbb{C}^{n \times n}$ taková, že $A = S B S^{-1}$. Podobné matice mají stejná vlastní čísla. Počet lineárně nezávislých vlastních vektorů se také nezmění.
+
+Matice $A \in \mathbb{C}^{n \times n}$ je diagonalizovatelná, pokud je podobná nějaké diagonální matici. Diagonální matice obecně značíme $\Lambda$. Matice $A$ je diagonalizovatelná právě tehdy, když má $n$ lineárně nezávislých vlastních vektorů.
+
+Různá vlastní čísla mají lineárně nezávislé vlastní vektory. Pokud má matice $A \in \mathbb{C}^{n \times n}$ $n$ navzájem různých vlastních čísel, pak je diagonalizovatelná.
+
+Pokud máme 2 matice $A, B$, pak mají matice $AB$ i $BA$ stejná vlastní čísla včetně násobností.
+
+Takový rozklad se mimochodem hodí třeba pro mocnění matice.
+
+#### Symetrické matice, jejich vlastní čísla a spektrální rozklad
+
+Hermitovská transpozice matice $A \in \mathbb{C}^{n \times n}$ je matice $A^* = \overline{A}^T$. Matice je hermitovská, pokud platí $A^* = A$. Symetrická matice je to stejné, ovšem pouze pro reálná čísla.
+
+Vlastní čísla reálných symetrických i hermitovských matic jsou reálná.
+
+Pro každou symetrickou matici $A \in \mathbb{R}^{n \times n}$ existuje ortogonální $Q \in \mathbb{R}^{n \times n}$ a diagonální $\Lambda \in \mathbb{R}^{n \times n}$ takové, že $A = Q \Lambda Q^T$.
+
+### Positivně semidefinitní a positivně definitní matice
+
+#### Charakterizace a vlastnosti, vztah se skalárním součinem, vlastními čísly
+
+Buď $A \in \mathbb{R}^{n \times n}$ symetrická. Pak $A$ je positivně semidefitní, pokud $x^TAx \geq 0$ pro všechna $x \in \mathbb{R}^n$, positivně definitní, pokud $x^TAx > 0$ pro všechna $x \not = o$. Positivní definitnost je tedy slabší než semidefinitnost.
+
+Nesymetrické matice můžeme zesymetrizovat úpravou $\frac{1}{2}(A + A^T)$.
+
+Příkladem positivně semidefinitní (PSD) matice je nulová matice, příkladem positivně definitní (PD) matice je jednotková matice.
+
+PSD matice mají nezápornou diagonálu, PD mají kladnou diagonálu.
+
+Platí následující:
+1. Jsou-li dvě matice $A, B \in \mathbb{R}^{n \times n}$ PD, pak i jejich součet je PD
+2. Je-li $A \in \mathbb{R}^{n \times n}$ PD a $\alpha > 0$, pak je i $\alpha A$ PD
+3. Je-li $A \in \mathbb{R}^{n \times n}$ PD, pak je regulární a i $A^{-1}$ je PD
+
+Buď $A \in \mathbb{R}^{n \times n}$ symetrická. Pak $A$ je PSD, vlastní čísla $A$ jsou nezáporná a existuje $U \in \mathbb{R}^{n \times n}$ taková, že $A = U^T U$.
+
+Gramova matice $G \in \mathbb{R}^{m \times m}$, která je definována jako $G_{ij} = \langle w_i, w_j \rangle$, kde $w_1, ..., w_n$ jsou generátory daného podprostoru a závorky reprezentují skalární součin. Pak platí, že Gramova matice je PSD (to vyplývá z toho, že skalární součin je nezáporný). Pokud generátory tvoří bázi, pak je Gramova matice PD.
+
+Positivní (semi)definitnost se testuje rekurentně nebo přes Sylvestrovo kritérium. V požadavcích to není, pro jistotu by bylo dobré se podívat na nějaké příklady.
+
+Operace $\langle x, y \rangle$ je skalárním součinem v $\mathbb{R}^n$ právě tehdy, když má tvar $\langle x, y \rangle = x^TAy$ pro nějakou PD matici $A \in \mathbb{R}^{n \times n}$.
+
+Pro každou PSD matici $A \in \mathbb{R}^{n \times n}$ existuje PSD matice $B \in \mathbb{R}^{n \times n}, B^2 = A$. To vyplývá z toho, že existuje spektrální rozklad pro takovou matici $A$.
+
+Aplikace PD/PSD matic jsou například v optimalizačních problémech, určování struktury bílkovin apod.
+
+#### Choleského rozklad (znění věty a praktické použití)
+
+Pro každou PD matici $A \in \mathbb{R}^{n \times n}$ existuje jedna dolní trojúhelníková matice $L \in \mathbb{R}^{n \times n}$ s kladnou diagonálou taková, že $A = LL^T$.
+
+Existuje opět nějaký algoritmus pro výpočet, nemyslím, že to bude potřeba. Choleského rozklad je výhodný například proto, že dokáže ověřit PD/PSD matice v řádově nejméně krocích.
 
 ## 3. Diskrétní matematika
 
