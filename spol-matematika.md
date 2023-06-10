@@ -849,3 +849,194 @@ Hallova věta: SRR existuje $\iff \forall J \subseteq I: |\bigcup_{i \in J} M_i|
 Důkaz $\implies$: Zvolím libovolně $J \subseteq I$. Pak platí to, že $f$ je prostá, a tím pádem se splnila pravá strana.
 
 Důkaz $\impliedby$: V grafu (jednotkové ohodnocení) najdeme celočíselný maximální tok, tedy tím nalezneme minimální řez. Hrany s tokem 1 dávají SRR.
+
+## Teorie grafů
+
+### Základní pojmy teorie grafů
+
+#### Graf, vrcholy a hrany, izomorfismus grafů, podgraf, okolí vrcholu a stupeň vrcholu, doplněk grafu, bipartitní graf
+
+Graf je uspořádaná dvojice množin $(V, E)$, kde $V$ je konečná, neprázdná množina vrcholů a $E \subseteq {V \choose 2}$ je množina hran. Značíme, že $\{ u, v \} \in E$ pro hranu mezi $u, v$ a $v \in e$ pro nějakou $e \in E$, že vrchol náleží hraně.
+
+Druhy grafů:
+- úplný $K_n = ([n], {V \choose 2})$, opak je diskrétní
+- úplný bipartitiní $K_{m,n}, V(K_{m,n}) = \{ a_1, ..., a_m, b_1, ..., b_n \}, E(K_{m,n}) = \{ \{ a_i, b_j \} | i \in [m], j \in [n] \}$. Tedy je to úplný graf, kde vedou hrany pouze do vrcholů druhé komponenty.
+- cesta $P_n = ([n], \{ \{i, i+1 \} | 0 \leq i < n \})$
+- cyklus $C_n = ([n] \{ \{i, i+1 \} | 0 \leq i < n mod n\})$
+- bipartitní graf obecně - obsahuje nějaké 2 komponenty, které nemají žádné hrany uvnitř komponenty ale jen mezi sebou
+
+Izomorfismus grafů: Grafy $G, H$ jsou izomorfní, značíme $G \cong H$ právě tehdy, když $f: V(G) \rightarrow V(H)$ bijekce taková, že $\forall u, v \in V(G)$ platí: $\{ u, v \} \in E(G) \iff \{ f(u), f(v) \} \in E(H)$. Takže jde vlastně o přejmenování vrcholů.
+
+Celkový počet grafů je zjevně $2^{{n \choose 2}}$.
+
+Okolí vrcholu se dá definovat jako množina všech vrcholů, se kterými zvolený vrchol $v$ sousedí, tedy které jsou spojeny hranou. Také se tomu říká sousedství $N(v)$.
+
+Stupeň vrcholu $v$ v grafu $G$ je $deg_G(v) = |\{ \{ v, w \} \in E(g) \}|$. Tedy kolik hran vede z/do vrcholu. Dá se použít i $deg_{in}$ anebo $deg_{out}$ pro vstupní/výstupní stupeň, to poté počítá exkluzivně hrany z/do vrcholu.
+
+Skóre grafu je uspořádaná $n$-tice stupňů všech vrcholů.
+
+Triviálně platí, že součet stupňů musí být roven 2krát počtu hran, takže je určitě sudý. Z toho vyplývá, že počet lichých stupňů musí být také sudý.
+
+Graf $H$ je podgrafem grafu $G$ (značíme $H \subseteq$ G) právě tehdy, když $V(H) \subseteq V(G) \land E(H) \subseteq E(G)$. Tedy podgraf vzniká tak, že z grafu odebereme vrcholy nebo hrany.
+
+Indukovaný podgraf $H$ vznikne podobně, odebíráme však pouze vrcholy a hrany s nimi spojené. Tedy platí $V(H) \subseteq V(G) \land E(H) = E(G) \cap {V(H) \choose 2}$.
+
+Cesta v libovolném grafu je podgraf takový, že splňuje definici nahoře, případně je to na střídačku $v_0, h_0, v_1, h_1, ..., h_{n-1}, v_n$, kde se hrany/vrcholy neopakují.
+
+Sled/procházka/walk v grafu $G$ je cesta, kde se však mohou vrcholy i hrany opakovat.
+
+Tah je sled, ve kterém se neopakují hrany.
+
+Pokud v grafu existuje sled z $u$ do $v$, pak z $u$ do $v$ existuje i cesta. Dá se zkrátit odstřižením kružnice.
+
+Dále si definujme pár grafových operací.
+1. přidání hrany/vrcholu: $G + e, G + v$
+2. smazání hrany/vrcholu: $G - e = G(V, E \setminus {e})$, $G - v = G(V \setminus v, E \setminus \{ e \in E | v \in e \})$
+3. dělení hrany: $G % e = (V \cup \{z\}, E \setminus \{x, y\} \cup \{ x, z \} \cup \{ z, y \})$
+4. kontrakce hrany: 2 vrcholy nahradíme jedním
+
+### Základní příklady grafů
+
+#### Úplný graf a úplný bipartitní graf, cesty a kružnice
+
+Viz nahoře, už bylo potřeba to definovat dříve.
+
+### Souvislost grafů, komponenty souvislosti, vzdálenost v grafu
+
+Graf $G$ je souvislý právě tehdy, když $\forall u, v \in V(G) \exists$ cesta v $G$ z $u$ do $v$. Definujme si i relaci dosažitelnosti, značíme $~$ a ta říká, zda je $u$ dosažitelný z $v$ (resp. obráceně). Jde o relaci ekvivalenci.
+
+Definujme vzdálenost v grafu $G$ mezi $u, v$ jako minimum z délek cest z $u$ do $v$, značíme $d(u, v)$. Jde o metriku, protože platí:
+1. $\forall u,v \in V(G): d(u, v) \leq 0$
+2. $\forall u,v \in V(G): d(u, v) = 0 \iff u = v$
+3. $\forall u,v \in V(G): d(u, v) = d(v, u)$
+4. $\forall u,v,w \in V(G): d(u, w) \leq d(u, v) + d(v, w)$
+
+Komponenty souvislosti jsou potom podgrafy takové, že všechny vrcholy jsou v ní navzájem dosažitelné.
+
+### Stromy
+
+#### Definice a základní vlastnosti (existence listů, počet hran stromu)
+
+Strom je souvislý acyklický graf. Les je acyklický graf (soubor stromů). List je vrchol stromu se stupněm 1. Pozor na speciální případ: 1 izolovaný vrchol by neměl být stromem, ten však uvažovat BÚNO ve větách nebudeme.
+
+Strom s alespoň 2 vrcholy má alespoň 2 listy. Platí, že listy můžeme odebírat a graf s odebraným listem bude stále strom. Podobně s přidáváním listů, přidáním listu se nic nezkazí.
+
+Dále si povíme něco obecného o kostrách grafu. Kostra grafu $G$ je podgraf takový, že $H \subseteq G: V(H) = V(G) \land H$ je strom. Tedy kostra obsahuje všechy vrcholy a je stromem. Zjevně nesouvislý graf nemá kostru.
+
+Připomeňme, že tah je sled, ve kterém se neopakují hrany. Takový tah může být uzavřený (počáteční i koncový vrchol jsou stejné), nebo otevřený (zjevně opak). Může být také Eulerovský - ten obsahuje všechny vrcholy a hrany grafu.
+
+V grafu $G$ existuje uzavřený Eulerovský tah právě tehdy, když je graf souvislý a stupeň všech vrcholů je sudý.
+
+#### Ekvivalentní charakteristiky stromů
+
+Následující tvrzení jsou ekvivalentní:
+1. $G$ je souvislý a acyklický
+2. jednoznačná souvislost: mezi každými vrcholy $u, v$ vede právě 1 cesta
+3. minimální souvislost: odebrání libovolné hrany by porušilo souvislost
+4. maximální acykličnost: přidání libovolné hrany navíc by vytvořilo cyklus
+5. Eulerova formule: $|E(G)| = |V(G)| - 1$
+
+### Rovinné grafy
+
+#### Definice a základní pojmy (rovinný graf a rovinné nakreslení grafu, stěny)
+
+Pro definici rovinného grafu budeme potřebovat pár pomocných pojmů. Bod je prvek $\mathbb{R}^2$. Křivka je prostá a spojitá množina bodů. Jednoduchá křivka (oblouk) je funkce $f: [0, 1] \rightarrow \mathbb{R}^2$, která je prostá a spojitá. Kružnice $f(0) = f(1)$.
+
+Rovinné nakreslení grafu je množna kružnic či oblouků takové, že:
+1. za každou hranu existuje oblouk
+2. můžeme kreslit smyčky (pro multigrafy)
+3. průniky jsou jen vrcholy
+4. protíná-li kružnice vrchol, pak je vrchol na té hraně
+
+Graf je rovinný, pokud existuje nějaké jeho rovinné nakreslení. Zjevně je cesta rovinná, kružnice také, strom také. Topologický graf je graf nakreslený do roviny.
+
+$K_5$ není rovinný.
+
+Křížící číslo definujeme jako minimální počet křížení.
+
+Stěny nakreslení definujeme jako komponenty obloukové souvislosti. Hranice každé stěny souvislého grafu je uzavřený sled, který každou hranu obsahuje nejvýše dvakrát.
+
+Graf $G$ je rovinný právě tehdy, když ho můžeme nakreslit na sféru.
+
+Kuratowského věta: Graf $G$ není rovinný právě tehdy, když je izomorfní nějakému dělení $K_5$ nebo $K_{3, 3}$.
+
+#### Eulerova formule a maximální počet hran rovinného grafu (důkaz a použití)
+
+Eulerova formule: $v + f = e + 2$, kde $v$ je počet vrcholů, $f$ je počet stěn, $e$ je počet hran. Důkaz: fixujeme $v$, indukce podle $e$: Pro strom platí, že $e = v - 1, f = 1$. Indukční krok: Uvažujme $h$ na kružnici a podívejme se na graf bez $h$. Pak $v' = v, e' = e - 1, f' = f - 1$.
+
+Graf je maximálně rovinný právě tehdy, když by přidání libovolné hrany způsobilo, že by graf přestal být rovinný.
+
+Pro maximálně rovinný graf s $v \geq 3$ platí, že jsou všechny jeho stěny trojúhelníky a $e = \frac{3}{2}f$. Dále platí, že pro rovinný graf $e \leq 3v - 6$ a pro maximálně rovinný graf bez trojúhelníků ($C_3$ jako podgraf) platí $e \leq 2v - 4$.
+
+Jinak použití je právě třeba pro testování rovinnosti apod.
+
+### Barevnost grafů
+
+#### Definice dobrého obarvení
+
+Obarvení (dobré) grafu $k$ barvami je funkce $C: V(G) \rightarrow \{1, ..., k\}$ takové, že $\forall u, v \in V(G): \{ u, v \} \in E(G) \implies C(u) \not = C(v)$.
+
+Barevnost nebo chromatické číslo pak značíme nejmenší $k$ takové, že existuje obarvení grafu $k$ barvami.
+
+Známá chromatická čísla pro některé grafy:
+- 2 pro cestu
+- 2 pro sudou kružnici, 3 pro lichou
+- $n$ pro $K_n$
+- 1 pro graf bez hran
+- 2 pro bipartitní graf
+
+#### Vztah barevnosti a klikovosti grafu
+
+Klikovost $\omega(G)$ grafu je maximální $k$ takové, že $G$ obsahuje $K_k$ jako podgraf. Chromatické číslo je vždy vyšší než klikovost, protože na úplný graf je potřeba $k$ barev.
+
+### Hranová a vrcholová souvislost grafů
+
+Hranový řez definujme jako $F \subseteq E$ tak, že $G' = (V, E \setminus F)$ je nesouvislý.
+
+Vrcholový řez definujeme jako $A \subseteq V$ tak, že $G' = (V \setminus A, E \cap {V \setminus A \choose 2})$ je nesouvislý.
+
+Hranová souvislost $k_e(G)$ je minimální velikost hranového řezu. Vrcholová souvislost $k_v(G)$ je minimální velikost vrcholového řezu. Graf je hranově/vrcholově $k$-souvislý, pokud je $k_v(G) \geq k$ (respektive uvažujme řez hranový).
+
+Platí $k_e(G) - 1 \leq k_e(G - e) \leq k_e(G)$, stejně pro vrcholovou souvislost. Platí také $k_v(G) \leq k_e(G)$.
+
+#### Hranová a vrcholová verze Mengerovy věty
+
+Mengerova věta: $k_e(G) = t \iff$ mezi $\forall u, v \in V \exists \geq t$ hranově disjunktních cest. Vrcholová verze je stejná, uvažujeme vrcholově disjunktní cesty.
+
+### Orientované grafy, silná a slabá souvislost
+
+Orientovaný graf je $(V, E)$, kde platí $E \subseteq V^2 \setminus \Delta_V$, tedy pro každou dvojici vrcholů máme 2 možnosti (vést hranu z/do vrcholu).
+
+Podkladový graf je takový, že zapomeneme orientace hran.
+
+Můžeme pak definovat i silnou a slabou souvislost:
+1. silná souvislost: $\forall u, v \in V: \exists$ cesta z $u$ do $v$
+2. slabá souvislost: dosažitelnost v podkladovém grafu
+
+### Toky v sítích
+
+#### Definice sítě a toku v ní
+
+Síť je čtveřice $(G, z, s, c)$, kde $G$ je orientovaný graf, $z, s \in V(G)$ zdroj a stok v grafu a $c: E \rightarrow \mathbb{R}$. $c$ je funkce přiřazující jednotlivým hranám nějaké kapacity, které jsou nezáporné.
+
+Tok v síti je funkce $f: E \rightarrow \mathbb{R}$ takový, že:
+1. $\forall e \in E(G): 0 \leq f(e) \leq c(e)$ - omezení shora kapacitami
+2. $\forall v \in V(G), v \not = z \land v \not = s: \sum f(x, v) = \sum f(v, y)$ - Kirchhoffův zákon, co přiteče do vrcholu, to z něj odteče
+
+Velikost toku poté definujeme jako $w(f) = \sum f(z, x) - \sum (x, z)$, intuitivně tedy to, co odteče ze zdroje ven.
+
+#### Existence maximálního toku (bez důkazu)
+
+Vždy existuje maximální tok.
+
+Definujme si grafový řez: v síti je množina hran $R \subseteq E(G)$ taková, že v grafu $(V, E \setminus R)$ neexistuje cesta ze zdroje do stoku.
+
+Platí také věta max flow, min cut: Pro každou síť je maximální tok roven minimálnímu řezu.
+
+Cesta v síti je nasycená, pokud existuje taková hrana na trase, že vede po směru a $f(e) = c(e)$, nebo vede proti směru a $f(e) = 0$. Pokud jsou všechny neorientované cesty ze $z$ do $s$ nasycené, pak je tok maximální.
+
+#### Princip hledání maximálního toku v síti s celočíselnými kapacitami (například pomocí Ford-Fulkersonova algoritmu)
+
+Ford-Fulkerson: Začneme s nulovým tokem, dokud existuje zlepšující cesta, tak zlepši tok přes tuto zlepšující cestu. Takový algoritmus doběhne a tok bude maximální, ovšem pouze pro racionální kapacity.
+
+Více viz kapitola v ADS.
