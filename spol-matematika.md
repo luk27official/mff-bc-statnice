@@ -1040,3 +1040,199 @@ Cesta v síti je nasycená, pokud existuje taková hrana na trase, že vede po s
 Ford-Fulkerson: Začneme s nulovým tokem, dokud existuje zlepšující cesta, tak zlepši tok přes tuto zlepšující cestu. Takový algoritmus doběhne a tok bude maximální, ovšem pouze pro racionální kapacity.
 
 Více viz kapitola v ADS.
+
+## Pravděpodobnost a statistika
+
+Obecně poznámka k PaSti: Je třeba si projít nějaké příklady a najet si cheatsheet se vzorci, protože je to dost jen o vzorcích. Mimochodem některé věci úplně chybí, jako sdružená pravděpodobnost, kvantilová funkce, podmíněné hustoty apod., na druhou stranu v požadavcích to není.
+
+### Pravděpodobnostní prostor, náhodné jevy, pravděpodobnost
+
+#### Definice těchto pojmů, příklady
+
+Pro popis pomocí teorie pravdepodobnosti napřed vybereme množinu elementárních jevů (sample space), tu označujeme $\Omega$. Elementární jevy jsou například hod mincí, hod kostkou, hod šipkou na terč, ...
+
+Prostor jevů označujeme $\mathcal{F} \subseteq \mathcal{P}(\Omega)$. Často platí rovnost, to jde ve chvíli, kdy je $\Omega$ spočetná množina. Navíc platí:
+1. $\emptyset \in \mathcal{F}, \Omega \in \mathcal{F}$
+2. $A \in \mathcal{F} \implies \Omega \setminus A \in \mathcal{F}$
+3. $A_1, A_2, ... \in \mathcal{F} \implies \bigcup_{i=1}^\infty A_i \in \mathcal{F}$
+
+$P: \mathcal{F} \rightarrow [0, 1]$ se nazývá pravděpodobnost, pokud $P(\emptyset) = 0, P(\Omega) = 1$ a platí $P(\bigcup_{i=1}^\infty A_i) = \sum_{i=1}^infty P(A_i)$ pro libovolnou posloupnost dvou disjunktních jevů $A_1, A_2, ... \in \mathcal{F}$.
+
+Pravděpodobnostní prostor (probability space) je trojice $(\Omega, \mathcal{F}, P)$ je trojice taková, že množina elementárních jevů je libovolná neprázdná, $\mathcal{F}$ je prostor jevů a $P$ je pravděpodobnost.
+
+Někdy se také definuje šance jevu $A$ jako $O(A) = \frac{P(A)}{P(A^C)}$, kde $A^C$ značí opačný jev ($A^C = \Omega \setminus A$).
+
+Pravděpodobnost rovnou jedničce označujeme jako jistý jev (nastává skoro jistě). Oproti tomu nulovou pravděpodobnost označujeme jako nemožný jev.
+
+Příklady pravděpodobnostních prostorů:
+1. konečný s uniformní pravděpodobností: $\Omega$ je libovolná konečná množina, $\mathcal{F} = \mathcal{P}(\Omega), P(A) = |A|/|\Omega|$.
+2. diskrétní: $\Omega = \{ \omega_1, \omega_2, ... \}, P(A) = \sum_{i: \omega_i \in A} p_i$
+3. spojitý: $\Omega \subseteq \mathbb{R}^d$ pro vhodné $d$, pak také $f: \Omega \rightarrow [0, 1]$ taková, že $\int_{\Omega} f(x) dx = 1$. Pak $P(A) = \int_A f(x) dx$.
+
+Špatné příklady (pozor!): náhodné přirozené/reálné číslo (každé by mělo nulovou pravděpodobnost)
+
+#### Základní pravidla pro počítání s pravděpodobností
+
+V pravděpodobnostním prostoru platí:
+1. $P(A) + P(A^C) = 1$
+2. $A \subseteq B \implies P(A) \leq P(B)$
+3. $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ (princip inkluze a exkluze)
+4. $P(A_1 \cup A_2 \cup ...) \leq \sum_i P(A_i)$ (subaditivita)
+
+#### Nezávislost náhodných jevů, podmíněná pravděpodobnost
+
+Podmíněná pravděpodobnost: Pokud $A, B \in \mathcal{F}, P(B) > 0$, pak definujeme podmíněnou pravděpodobnost $P(A | B)$ jako pravděpodobnost $A$ při $B$ (probability of $A$ given $B$) jako $P(A | B) = \frac{P(A \cap B)}{P(B)}$.
+
+Z toho mimo jiné vyplývají následující poznatky:
+1. $P(A \cap B) = P(B) \cdot P(A | B)$
+2. obecněji $P(A_1 \cap A_2 \cap ...) = P(A_1)P(A_2|A_1)P(A_3|A_1 \cap A_2)...P(A_n|\cap_{i=1}^{n-1}A_i)$
+
+Spočetný systém množin $B_1, B_2, ... \in \mathcal{F}$ je rozklad $\Omega$, pokud platí:
+1. $\forall i, j$ různé: $B_i \cap B_j = \emptyset$
+2. $\bigcup_i B_i = \Omega$
+
+Ještě si uveďme větu o úplné pravděpodobnosti:  Pokud $B_1, B_2, ...$ je rozklad $\Omega$ a $A \in \mathcal{F}$, tak platí $P(A) = \sum_i P(A | B_i) P(B_i)$, kde případné sčítance s nulovou pravděpodobností považujeme za nulu.
+
+Jevy $A, B$ jsou nezávislé, pokud $P(A \cap B) = P(A)P(B)$. Pak také platí $P(A|B) = P(A)$ pro nezáporné $P(B)$.
+
+Nezávislost více jevů: Jevy $\{ A_i, i \in I \}$ jsou vzájemně nezávislé, pokud pro každou konečnou $J \subseteq I: P(\bigcap_{i \in J}A_i) = \prod_{i \in J}P(A_i)$. Pokud podmínka platí jen pro dvouprvkové množiny, pak říkáme, že jsou jevy po dvou nezávislé.
+
+#### Bayesův vzorec
+
+Pokud $B_1, B_2, ...$ je rozklad $\Omega, A \in \mathcal{F}$ a $P(A), P(B_j) > 0$, tak $P(B_j | A) = \frac{P(A|B_j)P(B_j)}{\sum_i P(A|B_i)P(B_i)}$ (sčítance s $P(B_i) = 0$ bereme jako 0).
+
+### Náhodné veličiny a jejich rozdělení
+
+#### Diskrétní i spojitý případ
+
+Mějme pravděpodobnostní prostor $(\Omega, \mathcal{F}, P)$. Funkci $X: \Omega \rightarrow \mathbb{R}$ nazveme diskrétní náhodná veličina (discrete random variable), pokud $Im(X)$ neboli obor hodnot $X$ je spočetná množina a pokud pro všechna $x \in \mathbb{R}: \{ \omega \in \Omega: X(\omega) = x \} \in \mathcal{F}$.
+
+Spojitá diskrétní veličina je na prostoru $(\Omega, \mathcal{F}, P)$ zobrazení $X: \Omega \rightarrow \mathbb{R}$ a splňuje $\forall x \in \mathbb{R}: \{ \omega \in \Omega: X(\omega): X(\omega) \leq x \} \in \mathcal{F}$.
+
+#### Popis pomocí distribuční funkce a pomocí pravděpodobnostní funkce/hustoty
+
+Pravděpodobnostní funkce (probability mass function) diskrétní náhodné veličiny je taková, že $p_X(x) = P(X = x) = P(\{ \omega \in \Omega: X(\omega) = x \})$.
+
+Distribuční funkce (cumulative distribution function) diskrétní náhodné veličiny je taková funkce, která udává pravděpodobnost, že hodnota náhodné proměnné je menší nebo rovna zadané hodnotě. Tedy $F_X(x) = P(X \leq x) = P(\{ \omega \in \Omega: X(\omega) \leq x \})$.
+
+Platí, že pro $X$ náhodnou veličinu:
+1. $F_X$ je neklesající funkce
+2. $\lim_{x \rightarrow -\infty}F_X(x) = 0$
+3. $\lim_{x \rightarrow +\infty}F_X(x) = 1$
+4. $F_X$ je zprava spojitá
+
+Náhodná veličina $X$ se nazývá spojitá, pokud existuje nezáporná reálná funkce $f_X$ tak, že $F_X(x) = P(X \leq x) = \int_{-\infty}^x f_X(t) dt$. Funkci $f_X$ nazýváme hustota náhodné veličiny.
+
+Nechť spojitá náhodná veličina má hustotu $f_X$. Pak platí:
+1. $\forall x \in \mathbb{R}: P(X = x) = 0$
+2. $\forall a < b \in \mathbb{R}: P(a \leq X \leq b) = \int_a^b f_X(t) dt$
+
+#### Střední hodnota
+
+Pokud je $X$ diskrétní náhodná veličina, tak její střední hodnota (expectation) značíme $\mathbb{E}$ a spočteme ji jako $\mathbb{E}(X) = \sum_{x \in Im(X)} x \cdot P(X = x)$, pokud má součet smysl. Například pro $1 - 1 + 1 - 1 ...$ střední hodnotu nedefinujeme. Alternativní vzorec: $\mathbb{E}(X) = \sum_{\omega \in \Omega} X(\omega) P(\{\omega\})$.
+
+Vlastnosti střední hodnoty: Nechť $X, Y$ jsou diskrétní náhodné veličiny a $a, b \in \mathbb{R}$. Pak platí:
+1. Pokud $P(X \geq 0) = 1$, pak $\mathbb{E}(X) \geq 0$. Pokud navíc platí $\mathbb{E}(X) = 0$, pak platí $P(X = 0) = 1$.
+2. $\mathbb{E}(X) \geq 0 \implies P(X \geq 0) > 0$.
+3. $\mathbb{E}(aX+b) = a\mathbb{E}(X) + b$
+4. $\mathbb{E}(X+Y) = \mathbb{E}(X) + \mathbb{E}(Y)$
+
+Podobně jako u věty o úplné pravděpodobnosti platí to stejné i pro střední hodnotu.
+
+Pro spojitou veličinu platí $\mathbb{E}(X) = \int_{-\infty}^\infty x f_X(x) dx$, pokud má integrál smysl.
+
+##### Linearita střední hodnoty
+
+To jsou vlastnosti 3 a 4 uvedené nahoře. Platí to obecně pro libovolný počet, nejen pro dvě.
+
+##### Střední hodnota součinu nezávislých veličin
+
+Pro nezávislé diskrétní náhovné veličiny $X, Y$ platí $\mathbb{E}(XY) = \mathbb{E}(X)\mathbb{E}(Y)$.
+
+##### Markovova nerovnost
+
+Nechť náhodná veličina $X$ splňuje $X \geq 0$, $a \in \mathbb{R}^+$. Pak $P(X \geq a) \leq \frac{\mathbb{E}(X)}{a}$.
+
+#### Rozptyl
+
+##### Definice
+
+Rozptyl (variance) náhodné veličiny $X$ nazveme číslo $\mathbb{E}((X-\mathbb{E}X)^2)$. Značíme jej $var(X)$. Dále definujeme směrodatnou odchylku $\sigma_X = \sqrt{var(X)}$. Někdy píšeme také $var(X) = \mathbb{E}(X^2) - \mathbb{E}(X)^2$.
+
+Pro spojité veličiny definujeme podobně, tedy $var(X) = \mathbb{E((X - \mu)^2)} = \int_{-\infty}^\infty (x-\mu)^2 f_X(x) dx$. $\mu = \mathbb{E}(X)$.
+
+##### Vzorec pro rozptyl součtu (závislých či nezávislých veličin)
+
+Pro rozptyl platí: $var(aX + b) = a^2var(X)$.
+
+Pro rozptyl součtu si potřebujeme zadefinovat kovarianci náhodných veličin $cov(X, Y) = \mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)$.
+
+Poté platí, že pro $X = \sum_{i=1}^n X_i: var(X) = \sum_{i=1}^n \sum_{j=1}^n cov(X_i, X_j) = \sum_{i = 1}^n + \sum_{i \not = j} cov(X_i, X_j)$. Pro nezávislé náhodné veličiny tam není pravý součet, protože by byl roven nule.
+
+#### Práce s konkrétními rozděleními: geometrické, binomické, Poissonovo, normální, exponenciální
+
+Protože se mi nechce přepisovat tabulku, tak viz obrázek:
+
+Diskrétní:
+
+<img src="img/stats_1.png" />
+
+Poznámky k rozdělením:
+- Bernoulliho (alternativní) - hodí se jen pro indikátorové veličiny
+- geometrické - popisuje na sobě nezávislé jevy, například kolikrát musím hodit kostkou, aby poprvé padla 1
+- binomické - popisuje jevy, které spolu nějak souvisí, tedy například počet šestek při $k$ hodech, součet na kostkách při $k$ hodech, mám $N$ míčků, z nich $k$ červených, opakuji $n$-krát, hledám počet červených míčků (vracím je) - to odpovídá $Bin(n, \frac{K}{N})$
+- hypergeometrické - stejný příklad s míčky, ale nevracím je
+- Poissonovo - přibližně stejné jako binom., ale má jen 1 parametr
+
+Spojitá:
+
+<img src="img/stats_2.png" />
+
+Poznámky k rozdělením:
+- uniformní = rovnoměrné 
+
+### Limitní věty
+
+#### Zákon velkých čísel
+
+Silný zákon velkých čísel: Nechť $X_1, X_2, ...$ jsou stejně rozdělené nezávislé náhodné veličiny se střední hodnotou $\mu$ a rozptylem $\sigma^2$. Označme $\overline{X}_n = (X_1 + ... + X_n)/n$ výběrový průměr (sample mean). Pak platí: $\lim_{n\rightarrow \infty} \overline{X}_n = \mu$ skoro jistě (s pravděpodobností 1).
+
+Slabý zákon velkých čísel: Nechť $X_1, X_2, ...$ jsou stejně rozdělené nezávislé náhodné veličiny se střední hodnotou $\mu$ a rozptylem $\sigma^2$. Označme $\overline{X}_n = (X_1 + ... + X_n)/n$ výběrový průměr (sample mean). Pak pro každé $\epsilon > 0$ platí: $\lim_{n \rightarrow \infty} P(|\overline{X}_n - \mu| > \epsilon) = 0$. Tedy říkáme, že posloupnost $S_n$ konverguje k $\mu$ v pravděpodobnosti.
+
+#### Centrální limitní věta
+
+Nechť $X_1, X_2, ...$ jsou stejně rozdělené nezávislé náhodné veličiny se střední hodnotou $\mu$ a rozptylem $\sigma^2$. Označme $Y_n = ((X_1 + ... + X_n) - n \mu) / (\sqrt{n} \cdot \sigma)$. Pak platí, že posloupnost $Y_n$ konverguje k $N(0, 1)$ v distribuci. Jinými slovy, pokud $F_n$ je distribuční funkce $Y_n$, pak platí $\forall x \in \mathbb{R}: lim_{n \rightarrow \infty} F_n(x) = \Phi(x)$.
+
+### Bodové odhady
+
+Cílem bodových odhadů je určit některý z parametrů (často to je třeba střední hodnota nějakého rozdělení).
+
+Definujme ještě pár pojmů, které budeme potřebovat pro definici odhadů. Posloupnost nezávislých náhodných veličin $X_1, ..., X_n$ ze stejného rozdělení nazveme náhodný výběr s rozsahem $n$. Pokud tyto veličiny mají distribuci $F$, pak píšeme $X_1, ..., X_n ~ F$.
+
+Parametrické modely: Můžeme zkoumat jen distribuční funkce $F$ z množiny $\{ F_\vartheta : \vartheta \in \Theta \}$, kde $\vartheta$ je neznámý parametr a $\Theta$ je množina možných hodnot tohoto parametru. Příklad:
+1. $Pois(\lambda)$ - parametr $\vartheta = \lambda, \Theta = \mathbb{R}^+$
+2. $N(\mu, \sigma^2)$ - parametr $\vartheta = (\mu, \sigma), \Theta = \mathbb{R} \times \mathbb{R}^+$
+
+Statistika je nejen název disciplíny, ale má i svůj význam. Je to totiž také libovolná funkce náhodného výběru, takže to může být maximum, minimum, aritmetický průměr, medián apod.
+
+#### Alespoň jedna metoda pro jejich tvorbu
+
+TODO: doplnit
+
+#### Vlastnosti
+
+TODO: doplnit
+
+### Intervalové odhady
+
+Cílem intervalového odhadu je určit, zda nějaký požadovaný parametr leží s pravděpodobností třeba 99 % v nějakém daném intervalu.
+
+TODO: doplnit
+
+#### Metoda založená na aproximaci normálním rozdělením
+
+TODO
+
+### Testování hypotéz
+
+TODO
