@@ -1285,3 +1285,168 @@ Při testování postupujeme takto:
 
 Dále je nutno rozlišit jedno a dvouvýběrové testy, jednovýběrový test testuje pouze jeden výběr, dvouvýběrový porovnává, zda jsou v výběry ze stejného rozdělení.
 
+## Logika
+
+### Syntax
+
+#### Znalost a práce se základními pojmy syntaxe výrokové a predikátové logiky (jazyk, otevřená a uzavřená formule, instance formule, apod.)
+
+Výroková logika pracuje s výroky a nějakými logickými spojkami. Predikátová logika 1. řádu již má proměnné pro individua, funkční a relační symboly a kvantifikátory. Predikátová logika 2. řádu má navíc proměnné pro množiny individuí, logika 3. řádu pro množiny množin individuí apod.
+
+Příklad výroku: Pokud bude pršet, vezmu si deštník. $p \rightarrow d$
+
+Příklad tvrzení 1. řádu: Existuje nejmenší prvek. $\exists x \forall y: (x \leq y)$
+
+Syntax: Symboly, pravidla vytváření termů a formulí, odvozovací pravidla, dokazovací systém, důkaz, dokazatelnost
+
+Sémantika: Přiřazení významu, struktury, modely, splnitelnost, pravdivost
+
+Korektnost dokazovacího systému: Pokud každé dokazatelné tvrzení je pravdivé
+
+Úplnost dokazovacího systému: Pokud každé pravdivé tvrzení je dokazatelné
+
+Jazyk výrokové logiky nad $\mathbb{P}$ obsahuje symboly:
+1. výrokové proměnné z $\mathbb{P}$
+2. logické spojky $\lnot, \land, \lor, \rightarrow, \leftrightarrow$
+3. závorky $(,)$
+
+Logické spojky a závorky jsou logické symboly, výrokové proměnné jsou mimologické symboly. Používáme také konstantní symboly $\top, \bot$ pro pravdu a spor.
+
+Výrokové formule jsou dány induktivním předpisem:
+1. každá výroková proměnná z $\mathbb{P}$ je výrokovou formulí
+2. jsou-li $\varphi, \psi$ výrokové formule, pak i $(\lnot \varphi), (\varphi \land \psi), (\varphi \lor \psi), (\varphi \rightarrow \psi), (\vaprhi \leftrightarrow \psi)$ jsou výrokové formule
+3. každá výroková formule vznikne konečným užitím pravidel 1 a 2
+
+Množinu všech výrokových formulí nad $\mathbb{P}$ značíme $VF_\mathbb{P}$. Množinu všech výrokových proměnných s výskytem ve $\varphi$ značíme $var(\varphi)$.
+
+I když by správně vše mělo být uzávorkováno, můžeme vynechat některé závorky podle priorit, to je celkem známá věc. Pro zachování jednoznačnosti si to však vždy musíme rozmyslet.
+
+Vytvořující strom je takový, že listy (a jen listy) jsou označeny prvovýroky, pro negaci má vrchol pouze jednoho syna, a to danou formuli, pro nějakou jinou spojku má dva potomky, a to pravého a levého.
+
+Sémanticky uvažujeme jen dvě hodnoty, 0 a 1. To reprezentujeme například pravdivostními tabulkami.
+
+Ohodnocení prvovýroků je funkce $v: \mathbb{P} \rightarrow \{ 0, 1 \}$. Hodnota výroku $\overline{v}(\varphi)$ výroku $\varphi$ je dána induktivně. Při ohodnocení záleží jen na ohodnocení prvovýroků.
+
+Výrok je splněn (platí) při ohodnocení $v: \mathbb{P} \rightarrow \{ 0, 1 \}$, pokud $\overline{v}(\varphi) = 1$. Pak $v$ je splňující ohodnocení a značíme ho $v \models \varphi$.
+
+Výrok je pravdivý, pokud platí pro každé ohodnocení. Značíme $\models \varphi$.
+
+Výrok je lživý, pokud neplatí pro žádné ohodnocení.
+
+Výrok je nezávislý, pokud není pravdivý, ani lživý (tedy pro některá ohodnocení platí).
+
+Výrok je splnitelný, pokud není lživý.
+
+Obdobně značíme modely jazyka. Model jazyka $\mathbb{P}$ je ohodnocení $v: \mathbb{P} \rightarrow \{ 0, 1 \}$. Třídu všech modelů značíme $M(\mathbb{P}) = {}^\mathbb{P}2$. Dva výroky jsou ekvivalentní, pokud mají stejné modely.
+
+Literál je prvovýrok nebo jeho negace. Opačný literál k literálu $l$ označujeme $\overline{l}$.
+
+Pro predikátovou logiku:
+
+Obecně máme proměnné, které reprezentuji individuum, dále konstantní symboly, které reprezentují konkrétní individuum, funkční symboly reprezentující funkce a relační (predikátové) symboly.
+
+Signatura je dvojice $\langle \mathcal{R}, \mathcal{F} \rangle$ disjunktních množin relačních a funkčních symbolů s danými aritami, přičemž ani jeden z nich není rovnost. Jazyk je poté dán signaturou $L = \langle \mathcal{R}, \mathcal{F} \rangle$ a uvedením, zda jde o jazyk s rovností či bez rovnosti. Každý jazyk obsahuje alespoň jeden relační symbol.
+
+Příklady jazyků s rovností:
+1. $L = \langle \rangle$ jazyk čisté rovnosti
+2. $L = \langle \leq \rangle$ jazyk uspořádání
+3. $L = \langle +, -, 0 \rangle$ jazyk teorie grup
+
+Termy jazyka $L$ jsou dány induktivně:
+1. každá proměnná nebo konstantní symbol je term
+2. je-li $f$ funkční symbol jazyka $L$ s aritou $n > 0$ a $t_1, ..., t_n$ jsou termy, pak je i výraz $f(t_1, ..., t_n)$ term
+3. každý term vznikne konečným užitím pravidel 1 a 2
+
+Konstantní term reprezentuje term bez proměnných.
+
+Atomická formule je výraz $R(t_1, ..., t_n)$, kde $R$ je $n$-ární relační symbol.
+
+Formule jazyka $L$ jsou také dány induktivně:
+1. Každá atomická formule jazyka $L$ je formule
+2. Jsou-li $\varphi, \psi$ formule, pak jsou i tyto formule spojené přes logické spojky formulemi
+3. Je-li $\varphi$ formule a $x$ proměnná, pak $((\forall x) \varphi), ((\exists x)\varphi)$ formule
+4. Každá formule vznikne konečným užitím pravidel 1, 2 a 3
+
+Výskyt proměnné: Nechť $\varphi$ je formule a $x$ je proměnná. Výskyt proměnné $x$ ve $\varphi$ je list vytvořujícího stromu $\varphi$ označený $x$. Takový výskyt je vázaný, je-li součástí nějaké podformule $\psi$ začínající kvantifikátorem $(\forall x)$ nebo $(\exists x)$. Není-li výskyt vázaný, je volný. Obdobně pro proměnné.
+
+Formule je otevřená, neobsahuje-li žádný kvantifikátor. Formule je uzavřená (neboli sentence), pokud nemá žádnou volnou proměnnou, tedy všechny výskyty proměnných jsou vázané.
+
+Pozor na to, že formule může být otevřená i uzavřená zároveň.
+
+Instance formule vznikne dosazením za volnou proměnnou $x$ nějaký term $t$. Značíme $\varphi(x/t)$. Varianta je přejmenování formule tak, aby existovala ekvivalentní formule.
+
+Struktura jazyka $L$ je trojice $\mathcal{A} = \langle A, \mathcal{R}^A, \mathcal{F}^A \rangle$, kde $A$ je neprázdná množina, zvaná doména (univerzum) struktury, $\mathcal{R}^A$ je množina relací a $\mathcal{F}^A$ je množina funkcí. Strukturu také nazýváme modelem jazyka $L$.
+
+Podobně jako ve výrokové logice se definuje ohodnocení a hodnota formule.
+
+Teorie jazyka $L$ je libovolná množina formulí jazyka $L$ (tzv. axiomů). Model teorie je taková struktura, že $\mathcal{A} \models \varphi$ pro každé $\varphi \in T$. Třída modelů teorie $T$ je označena $M(T)$.
+
+Teorie $T$ jazyka $L$ je:
+1. sporná, platí-li v ní spor, jinak je bezesporná neboli splnitelná
+2. kompletní, jestliže není sporná a každá sentence je v ní pravdivá či lživá
+3. extenze teorie $T'$ jazyka $L'$, jestliže $L' \subseteq L$ a $\Phi^{L'} (T') \subseteq \Phi^L(T)$, je jednoduchá, pokud $L = L'$ a je konzervativní, pokud jsou modely až na nové symboly stejné
+4. ekvivalentní, pokud jsou teorie vzájemně extenze
+
+#### Normální tvary výrokových formulí
+
+##### Prenexní tvary formulí predikátové logiky
+
+Problém splnitelnosti lze redukovat na otevřené teorie. Formule je v prenexním (normálním) tvaru (PNF), má-li tvar $(Q_1 x_1) ... (Q_n x_n)\varphi'$, kde $Q_i$ značí $\forall$ nebo $\exists$, proměnné $x_1, ..., x_n$ jsou navzájem různé a $\varphi'$ je otevřená formule zvaná otevřené jádro. Platí pravidla pro převod proměnných, které nejsou volné do PNF:
+1. $\models \lnot(Qx)\varphi \leftrightarrow (Qx)\lnot \varphi$
+2. $\models ((Qx)\varphi \land \psi) \leftrightarrow (Qx)(\varphi \land \psi)$
+3. $\models ((Qx)\varphi \lor \psi) \leftrightarrow (Qx)(\varphi \lor \psi)$
+4. $\models ((Qx)\varphi \rightarrow \psi) \leftrightarrow (Qx)(\varphi \rightarrow \psi)$
+5. $\models (\psi \rightarrow (Qx)\varphi) \leftrightarrow (Qx)(\psi \rightarrow \varphi)$
+
+##### Znalost základních normálních tvarů (CNF, DNF, PNF)
+
+CNF je konjuktivně normální tvar, výrok je v CNF, pokud je konjunkcí klauzulí. Klauzule je disjunkce literálů. Prázdným výrokem v CNF myslíme $\top$. Příklad CNF: $(a \lor b) \land (c \lor d)$.
+
+DNF je disjunktivně normální tvar, výrok je v DNF, pokud je disjunkcí elementárních konjunkcí. Elementární konjunkce je konjunkce literálů. Prázdným výrokem v DNF myslíme $\bot$. Příklad DNF: $(a \land b) \lor (c \land d)$.
+
+Klauzule nebo elementární konjunkce jsou zároveň CNF i DNF.
+
+CNF/DNF se dá vyčíst z tabulky. Uvedeme si to na příkladu funkce XOR.
+
+| a | b | a XOR b |
+|:-:|:-:|:-------:|
+| 0 | 0 |    0    |
+| 0 | 1 |    1    |
+| 1 | 0 |    1    |
+| 1 | 1 |    0    |
+
+Vybereme si ta ohodnocení, kde je výsledkem jednička, tedy modely. To jsou ty dvě prostřední ohodnocení. Z toho DNF vyčteme tak, že to prostě zapíšeme podle definice, tedy $(\lnot a \land b) \lor (a \land \lnot b)$.
+
+Pro CNF postupujeme tak, že vybereme ohodnocení, kde je výsledkem 0. To jsou to první a poslední ohodnocení. CNF vyčteme tak, že zapíšeme jednotlivé řádky jako klauzule a pak je dáme do konjunkce, tedy $(\lnot a \lor \lnot b) \land (a \lor b)$.
+
+PNF je prenexní tvar formule. To je nahoře popsáno.
+
+##### Převody na normální tvary
+
+Platí:
+1. $(\varphi \rightarrow \psi) ∼ (\lnot\varphi \lor \psi), (\varphi \leftrightarrow \psi) ∼ ((\lnot\varphi \lor \psi) \land (\lnot\psi \lor \varphi))$
+2. $\lnot\lnot\varphi ∼ \varphi, \lnot(\varphi \land \psi) ∼ (\lnot\varphi \lor \lnot\psi), \lnot(\varphi \lor \psi) ∼ (\lnot\varphi \land \lnot\psi)$
+3. $(\varphi \lor (\psi \land \chi)) ∼ ((\psi \land \chi) \lor \varphi) ∼ ((\varphi \lor \psi) \land (\varphi \lor \chi))$
+4. $(\varphi \land (\psi \lor \chi)) ∼ ((\psi \lor \chi) \land \varphi) ∼ ((\varphi \land \psi) \lor (\varphi \land \chi))$
+
+##### Použití pro algoritmy (SAT, rezoluce)
+
+Problém SAT: Je daná výroková formule splnitelná? Máme několik druhů SAT problémů. Výrok je v $k$-CNF, je-li v CNF a každá klauzule má nejvýše $k$ literálů. Pro 2-SAT jde o problém, který se dá vyřešit v lineárním čase, pro $k \geq 3$ jde o problém NP-úplný.
+
+Mohou se hodit i následující pojmy:
+1. Jednotková klauzule je klauzule obsahující jediný literál
+2. Hornova klauzule je klauzule obsahující nejvýše jeden pozitivní literál
+3. Hornův výrok je konjunkcí Hornových klauzulí
+4. Horn-SAT je problém splnitelnosti daného Hornova výroku
+
+Rezoluce je dokazovací systém. Vezměme výrok v CNF, utvořme množinovou reprezentaci a snažme se dostat prázdnou klauzuli, která není nikdy splněna, označujeme $\square$. Postupně rezolvujeme dvě množiny a eliminujeme $a, \lnot a$, pokud je spojíme. Pozor na to, že ve VL lze rezolvovat pouze 1 symbol, v PL více dohromady.
+
+Ukážeme si na příkladu: Formule $((p \lor r) \land (q \lor \lnot r) \land (\lnot q) \land (\lnot p \lor t) \land (\lnot s) \land (s \lor \lnot t))$ je nesplnitelná. Rezoluce vypadá:
+1. Uděláme množinový uzávěr. $S = \{ \{p,r\}, \{q, \lnot r\}, \{\lnot q\}, \{ \lnot p, t\}, \{ \lnot s\}, \{s, \lnot t\}\}$
+2. Rezolvujeme: $\{p,r\}$ a $\{q, \lnot r\}$ dají $\{ p, q\}$
+3. $\{ p, q\}$ a $\{ \lnot q \}$ dají $\{ p \}$
+4. $\{ \lnot p, t\}$ a $\{s, \lnot t\}$ dají $\{ \lnot p, s \}$
+5. $\{ \lnot p, s \}$ a $\{ \lnot s \}$ dají $\{ \lnot p \}$
+6. $\{ \lnot p \}$ a $\{ p \}$ dají $\square$
+
+Tedy formule není splnitelná. Pokud bychom si chtěli být jisti, kdyby to nešlo dokázat, pak bychom museli udělat rezoluční uzávěr, nebo třeba tablo. 
