@@ -1217,22 +1217,71 @@ Statistika je nejen název disciplíny, ale má i svůj význam. Je to totiž ta
 
 #### Alespoň jedna metoda pro jejich tvorbu
 
-TODO: doplnit
+Pro náhodný výběr $X_1, ..., X_n ~ F$ a libovolnou funkci $g$ nazveme $\hat{\Theta}_n$ bodový odhad:
+1. nevychýlený/nestranný, pokud $\mathbb{E}(\hat{\Theta}_n) = g(\vartheta)$
+2. asymptoticky nevychýlený/nestranný, pokud $\lim_{n \rightarrow \infty} \hat{\Theta}_n = g(\vartheta)$
+3. konzistentní, pokud $\hat{\Theta}_n$ konverguje v pravděpodobnosti k $g(\vartheta)$
+
+Dále definujme vychýlení $bias_\vartheta(\hat{\Theta}_n) = \mathbb{E}(\hat{\Theta}_n) - \vartheta$, střední kvadratickou chybu $MSE_\vartheta(\hat{\Theta}_n) = \mathbb{E}((\hat{\Theta}_n - \vartheta)^2)$. Platí $MSE(\hat{\Theta}_n) = bias_\vartheta (\hat{\Theta}_n)^2 + var_\vartheta(\hat{\Theta}_n)$.
+
+Pak definujme několik odhadů:
+1. $\overline{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$ výběrový průměr
+2. $\overline{S}_n^2 = \frac{1}{n}\sum_{i=1}^n (X_i - \overline{X}_n)^2$ výběrový rozptyl
+3. $\hat{S}_n^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X}_n)^2$ výběrový rozptyl$
+
+1. je konzistentní nestranný odhad $\mu$
+2. je konzistentní asymptoticky nestranný odhad $\sigma^2$
+3. je konzistentní nestranný odhad $\sigma^2$
+
+Metoda momentů: $m_r(\vartheta) = \mathbb{E}(X^r)$ pro $X ~ F_\vartheta$ ... $r$-tý moment, $\hat{m_r(\vartheta)} = \frac{1}{n}\sum_{i=1}^n X_i^r$ pro náhodný výběr z $F_\vartheta$ ... $r$-tý výběrový moment
+
+$\hat{m_r(\vartheta)}$ je nestranný konzistentní odhad pro $m_r(\vartheta)$.
+
+Metoda momentů: volíme takové $\vartheta$, které řeší soustavu rovnic $\hat{m_r(\vartheta)} = m_r(\vartheta), r = 1, ..., k$. Typicky $k$ je počet reálných čísel, která tvoří parametr $\vartheta$.
+
+Další možné metody jsou maximální věrohodnosti, nebo Studentův $t$-test.
 
 #### Vlastnosti
 
-TODO: doplnit
+Viz nahoře, další vlastnosti u toho asi nebyly.
 
 ### Intervalové odhady
 
 Cílem intervalového odhadu je určit, zda nějaký požadovaný parametr leží s pravděpodobností třeba 99 % v nějakém daném intervalu.
 
-TODO: doplnit
+Nechť $T_1 \leq T_2$ jsou dvě statistiky. Říkáme, že určují interval spolehlivosti, také konfidenční interval o spolehlivosti $1 - \alpha$ (confidence interval), pokud $P(T_1 \leq \vartheta \leq T_2) \geq 1 - \alpha$. Někdy uvažujeme jednostranné odhady s $T_1 = -\infty$ nebo $T_2 = \infty$.
+
 
 #### Metoda založená na aproximaci normálním rozdělením
 
-TODO
+Nechť $X_1, ..., X_n$ je náhodný výběr z $N(\vartheta, \sigma^2)$. $\sigma$ známe, $\vartheta$ chceme určit. Zvolíme $\alpha \in (0, 1)$. Nechť $\Phi(z_{a/2}) = 1 - \alpha/2$. Označme $S_n = (X_1 + ... + X_n)/n$ výběrový průměr a $C_n = [S_n - z_{a/2} \cdot \sigma / \sqrt{n}, S_n + z_{a/2} \cdot \sigma / \sqrt{n}]$. Pak $P(C_n \ni \vartheta) = 1 - \alpha$.
+
+Můžeme použít i centrální limitní větu, která říká, že rozdělení k tomu normálnímu konverguje. Tedy platí $\lim_{n \rightarrow \infty} P(C_n \ni \vartheta) = 1 - \alpha$.
 
 ### Testování hypotéz
 
-TODO
+#### Základní přístup
+
+$H_0$ je nulová hypotéza, značí klasický, konzervativní model (lék nefunguje, mince je spravedlivá). $H_1$ je alternativní hypotéza, značí alterntaivní model (zajímavost). Buď chceme nulovou hypotézu zamítnout (tedy přišli jsme na něco nového), nebo potvrdit, pak se nic nemění.
+
+#### Chyby 1. a 2. druhu
+
+Chyba 1. druhu: Chybné zamítnutí. Tedy zamítneme $H_0$, i když platí. To je trapné, protože říct, že jsme něco objevili zajímavého, je fajn, ale když to neplatí, tak to je k ničemu.
+
+Chyba 2. druhu: Chybné přijetí. Nezamítneme $H_0$, ale ona neplatí. To je spíše promarněná příležitost.
+
+#### Hladina významnosti
+
+Při testování postupujeme takto:
+
+1. Vybereme vhodný statistický model.
+2. Volíme hladinu významnosti $\alpha$. Test vytvoříme tak, aby pravděpodobnost chyby 1. druhu, tedy chybného zamítnutí, byla $\alpha$, typicky $\alpha = 0.05$.
+3. Určíme testovou statistiku $T = h(X_1, ..., X_n)$.
+4. Určíme kritický obor, množinu $W$.
+5. Naměříme hodnoty $x_1, ..., x_n$, to jsou realizace náhodných veličin, to musíme provést až po vybrání detailů testu, jinak bychom brali ten, který dává správné výsledky.
+6. Rozhodovací pravidlo: zamítneme $H_0$, pokud $t = h(x_1, ..., x_n) \in W$.
+7. Je tedy $\alpha = P(h(X) \in W; H_0)$.
+8. Dále označíme $\beta = P(h(X) \not \in W; H_1)$ pravděpodobnost chyby 2. druhu. Hodnota $1 - \beta$ je síla testu.
+
+Dále je nutno rozlišit jedno a dvouvýběrové testy, jednovýběrový test testuje pouze jeden výběr, dvouvýběrový porovnává, zda jsou v výběry ze stejného rozdělení.
+
