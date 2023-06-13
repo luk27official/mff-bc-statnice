@@ -1449,4 +1449,125 @@ Ukážeme si na příkladu: Formule $((p \lor r) \land (q \lor \lnot r) \land (\
 5. $\{ \lnot p, s \}$ a $\{ \lnot s \}$ dají $\{ \lnot p \}$
 6. $\{ \lnot p \}$ a $\{ p \}$ dají $\square$
 
-Tedy formule není splnitelná. Pokud bychom si chtěli být jisti, kdyby to nešlo dokázat, pak bychom museli udělat rezoluční uzávěr, nebo třeba tablo. 
+Tedy formule není splnitelná. Pokud bychom si chtěli být jisti, kdyby to nešlo dokázat, pak bychom museli udělat rezoluční uzávěr, nebo třeba tablo.
+
+### Sémantika
+
+#### Pojem modelu teorie
+
+Viz nahoře, zahrnul jsem to dohromady k intru.
+
+#### Pravdivost, lživost, nezávislost formule vzhledem k teorii
+
+Formule $\varphi$ je pravdivá v $T$, značíme $T \models \varphi$, pokud $\mathcal{A} \models \varphi$. Formule je lživá v $T$, pokud $T \models \lnot \varphi$, tedy je lživá v každém modelu $T$. Formule $\varphi$ je nezávislá v $T$, pokud není ani pravdivá, ani lživá v $T$.
+
+#### Splnitelnost, tautologie, důsledek
+
+Pro každou teorii $T$ a sentenci $\varphi$ stejného jazyka platí: $T, \lnot \varphi$ nemá model $\iff T \models \varphi$.
+
+Tautologie označujeme výroky pravdivé v každém modelu teorie.
+
+Důsledek teorie $T$ nad $\mathbb{P}$ je množina $\Phi^\mathbb{P}(T)$ všech výroků pravdivých v $T$, tedy $\Phi^\mathbb{P}(T) = \{ \varphi \in VF_\mathbb{P} | T \models \varphi \}$.
+
+#### Analýza výrokových teorií nad konečně mnoha prvovýroky
+
+Nechť $T$ je bezesporná teorie nad $\mathbb{P}$, kde $|\mathbb{P}| = n \in \mathbb{N}, m = |M^{\mathbb{P}}(T)|$. Pak:
+1. neekvivalentních výroků (popř. teorií) nad $\mathbb{P}$ je $2^{2^n}$
+2. neekvivalentních výroků nad $\mathbb{P}$ pravdivých/lživých je $2^{2^n - m}$
+3. neekvivalentních výroků nad $\mathbb{P}$ nezávislých je $2^{2^n} - 2 \cdot 2^{2^n - m}$
+4. neekvivalentních jednoduchých extenzí teorie $T$ je $2^m$, z toho sporná 1
+5. neekvivalentních kompletních jednoduchých extenzí teorie $T$ je $m$
+6. $T$-neekvivalentních výroků nad $\mathbb{P}$ je $2^m$
+7. $T$-neekvivalentních výroků nad $\mathbb{P}$ pravdivých/lživých je 1
+8. $T$-neekvivalentních výroků nad $\mathbb{P}$ nezávislých je $2^m - 2$
+
+### Extenze teorií
+
+#### Schopnost porovnat sílu teorií
+
+Extenze je popsána nahoře v sekci syntax, každopádně obecně platí, že počet modelů se zmenší nebo zůstane stejný, přidáním nových axiomů nemůžeme ovlivnit stávající.
+
+#### Konzervativnost, skolemizace
+
+Skolemova věta: Každá teorie $T$ má otevřenou konzervativní extenzi $T^*$. Stačí udělat nejprve prenexní tvar, upravit axiomy do Skolemovy varianty a dostaneme ekvisplnitelnou otevřenou teorii.
+
+Prenexní tvar se dělá vytýkáním, to jsme si už ukázali u PNF. Stačí ukázat jen Skolemovu variantu, to uděláme na příkladu:
+
+Mějme formuli $\varphi: (\exists y_1)(\forall x_1)(\forall x_2)(\exists y_2)(\forall x_3)R(y_1, x_1, x_2, y_2, x_3)$. Skolemovou variantou je poté $\varphi_S = (\forall x_1)(\forall x_2)(\forall x_3) R(f_1, x_1, x_2, f_2(x_1, x_2), x_3)$, kde $f_1$ je nový konstantní symbol a $f_2$ je nový binární funkční symbol.
+
+Kdyby to nebylo vidět, tak to funguje celkem intuitivně - vezme se každá proměnná s existenčním kvantifikátorem a nahradí se za nový funkční symbol, který bude obsahovat jako parametry všechny proměnné, které se objevily před tímhle s $(\forall)$. 
+
+### Dokazatelnost
+
+#### Pojem formálního důkazu, zamítnutí
+
+Od formálního dokazovacího systému obvykle očekáváme, že bude korektní, tj. každá formule $\varphi$ dokazatelná z teorie $T$ je v $T$ pravdivá, nejlépe i úplný, tj. každá formule $\varphi$ pravdivá v $T$ je z $T$ dokazatelná.
+
+Uvedeme si dvě metody, rezoluci a tablo důkaz. 
+
+Rezoluce je popsaná nahoře. Funguje na principu, že chceme dostat prázdnou klauzuli, tedy $\square$ postupným rezolvováním.
+
+Tablo metoda funguje pro pevný a spočetný jazyk. V tablo metodě se snažíme nalézt protipříklad. Tablo metoda je vlastně strom, kde se v jednotlivých větvích hledají všechny možnosti ohodnocení podle struktury formule. Vrcholy tabla jsou značeny polozkami, které mají příznak $T/F$, což reprezentuje platnost/neplatnost výroku. Je-li předpoklad správný, pak je správný i ve větvi pod ní. Uvedeme si dva příklady:
+
+<img src="./img/logic_tableaux.png" />
+
+Vlevo je tablo důkaz pro $((p \rightarrow q) \rightarrow p) \rightarrow p$. Všechny větve tabla "selhaly", značeno $\otimes$, neboť je na nich dvojice $T \varphi$, $F \varphi$ pro nějaké $\varphi$ (protipříklad tedy nelze nalézt). Formule má důkaz, píšeme $\vdash ((p \rightarrow q) \rightarrow p) \rightarrow p$.
+
+Vpravo je (dokončené) tablo pro $(\lnot q \lor p) \rightarrow p$. Levá větev "neselhala" a je dokončená (není třeba v ní pokračovat, ta poskytuje protipříklad
+$v(p) = v(q) = 0$).
+
+Celý takový strom lze postavit z tzv. atomických tabel:
+
+<img src="./img/logic_basic_tableaux.png" />
+
+Pro predikátovou logiku máme ještě atomická tabla následující:
+
+<img src="./img/logic_predicate_tableaux.png" />
+
+Tablo důkaz (důkaz tablem) výrokové formule $\varphi$ je sporné tablo s položkou
+$F \varphi$ v kořeni. $\varphi$ je (tablo) dokazatelná, píšeme $\vdash \varphi$, má-li tablo důkaz.
+
+Obdobně, zamítnutí formule $\varphi$ tablem je sporné tablo s položkou $T \varphi$ v kořeni. Formule $\varphi$ je (tablo) zamítnutelná, má-li zamítnutí tablem, tj. $\vdash \lnot \varphi$.
+
+#### Schopnost práce v některém z formálních dokazovacích systémů (např. tablo metoda, rezoluce, Hilbertovský kalkul)
+
+Asi bych zde doporučil si vyzkoušet udělat nějaké tablo/rezoluci, nebo se podívat na nějaké příklady. Základní příklad je uveden nahoře pro obě.
+
+### Věty o kompaktnosti a úplnosti výrokové a predikátové logiky
+
+#### Znění a porozumění významu
+
+Věta o kompaktnosti: Teorie má model právě tehdy, když každá její konečná část má model.
+
+Věta o úplnosti: TODO, nevím, co tím je myšleno. Pokud úplnost tablo metody/rezoluce, pak to je celkem jasné, ale to sem moc nesedí.
+
+#### Použití na příkladech, důsledky
+
+Aplikace věty o kompaktnosti například při $k$-obarvitelnosti grafu.
+
+### Rozhodnutelnost
+
+#### Pojem kompletnosti a její kritéria, význam pro rozhodnutelnost
+
+Teorie $T$ je rekurzivně axiomatizovaná, pokud existuje algoritmus, který
+pro každou vstupní formuli $\varphi$ skončí a oznámí, zda $\varphi \in T$.
+Teorie $T$ je rozhodnutelná, pokud existuje algoritmus, který pro každou
+vstupní formuli $\varphi$ skončí a oznámí, zda $\varphi \in Thm(T)$.
+Teorie $T$ je částečně rozhodnutelná, pokud existuje algoritmus, který pro
+každou vstupní formuli $\varphi$ skončí, právě když $\varphi \in Thm(T)$.
+
+Pro každou rekurzivně axiomatizovanou teorii $T$:
+1. $T$ je částečně rozhodnutelná
+2. je-li navíc $T$ kompletní, pak je rozhodnutelná
+
+#### Příklady rozhodnutelných a nerozhodnutelných teorií
+
+Rozhodnutelné teorie:
+1. teorie čisté rovnosti bez axiomů v jazyce $L = \langle \rangle$ s rovností
+2. teorie unárního predikátu bez axiomů v jazyce $L = \langle U \rangle$ s rovností, kde $U$ je unární relační symbol
+3. teorie hustých lineárních uspořádání $DeLO*$
+4. teorie komutativních grup
+5. teorie Booleových algeber
+
+Nerozhodnutelné teorie:
+1. existence celočíselného řešení dané Diofantické rovnice s celočiselnnými koeficienty
