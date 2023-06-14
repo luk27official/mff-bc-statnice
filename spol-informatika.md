@@ -204,7 +204,7 @@ problém.
 $L_u$ je rekurzivně spočetný, ale není rekurzivní.
 
 Instance Postova korespondenčního problému (PCP) jsou dva seznamy slov nad abecedou $\Sigma$ značené $A = w_1,w_2, ... ,w_k$ a $B = x_1, x_2, ... , x_k$ stejné délky $k$. Pro každé $i$, dvojice $(w_i, x_i)$ se nazývá odpovídající dvojice.
-Instance PCP má řešení, pokud existuje posloupnost jednoho či více přirozených čísel $i_1, i_2, ..., i_m$ tak, že $w_i_1w_i_2 ... w_i_m = x_i_1 x_i_2 ... x_i_m$ tj. dostaneme stejné slovo. V tom případě říkáme, že posloupnost $i_1, i_2, ..., i_m$ je řešení. Postův korespondenční problém je: Pro danou instanci PCP, rozhodněte, zda
+Instance PCP má řešení, pokud existuje posloupnost jednoho či více přirozených čísel $i_1, i_2, ..., i_m$ tak, že $w_{i_1}w_{i_2} ... w_{i_m} = x_{i_1} x_{i_2} ... x_{i_m}$ tj. dostaneme stejné slovo. V tom případě říkáme, že posloupnost $i_1, i_2, ..., i_m$ je řešení. Postův korespondenční problém je: Pro danou instanci PCP, rozhodněte, zda
 má řešení.
 
 Je algoritmicky nerozhodnutelné, zda je bezkontextová gramatika víceznačná.

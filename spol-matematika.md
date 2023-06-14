@@ -1314,7 +1314,7 @@ Logické spojky a závorky jsou logické symboly, výrokové proměnné jsou mim
 
 Výrokové formule jsou dány induktivním předpisem:
 1. každá výroková proměnná z $\mathbb{P}$ je výrokovou formulí
-2. jsou-li $\varphi, \psi$ výrokové formule, pak i $(\lnot \varphi), (\varphi \land \psi), (\varphi \lor \psi), (\varphi \rightarrow \psi), (\vaprhi \leftrightarrow \psi)$ jsou výrokové formule
+2. jsou-li $\varphi, \psi$ výrokové formule, pak i $(\lnot \varphi), (\varphi \land \psi), (\varphi \lor \psi), (\varphi \rightarrow \psi), (\varphi \leftrightarrow \psi)$ jsou výrokové formule
 3. každá výroková formule vznikne konečným užitím pravidel 1 a 2
 
 Množinu všech výrokových formulí nad $\mathbb{P}$ značíme $VF_\mathbb{P}$. Množinu všech výrokových proměnných s výskytem ve $\varphi$ značíme $var(\varphi)$.
