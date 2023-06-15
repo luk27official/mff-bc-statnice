@@ -226,3 +226,201 @@ Gramatikám typu 3 odpovídají regulární/pravé lineární jazyky, jsou rozpo
 #### Schopnost zařazení konkrétního jazyka do Chomského hierarchie (zpravidla sestrojení odpovídajícího automatu či gramatiky)
 
 Tohle bych řekl, že je spíš o trénování, pro regulární jazyky je celkem jednoduché vymyslet nějaký DFA/NFA, pro bezkontextové a výše je lepší vymyslet nějakou gramatiku.
+
+## Algoritmy a datové stuktury
+
+### Časová složitost algoritmů
+
+#### Časová a prostorová složitost algoritmu
+
+Časová složitost se dá počítat různými způsoby, například počet cyklů algoritmu, počet instrukcí v počítači, ... 
+
+Nechť $f, g : \mathbb{N} \rightarrow \mathbb{R}$ jsou dvě funkce. Řekneme, že funkce $f(n)$ je třídy $O(g(n))$ (poznámka: správně by se mělo značit $\mathcal{O}$, ale pro jednoduchost značíme i $O$), jestliže existuje taková kladná reálná konstanta $c$, že pro skoro všechna $n$ platí $f(n) \leq cg(n)$. Skoro všemi $n$ se myslí, že nerovnost může selhat pro konečně mnoho výjimek, tedy že existuje nějaké přirozené $n_0$ takové, že nerovnost platí pro všechna $n \geq n_0$. Funkci $g(n)$ se pak říká asymptotický horní odhad funkce $f(n)$.
+
+Zjednodušeně řečeno nezáleží na konstantách. Pozor však na to, že v realitě může být $n^3$ algoritmus lepší než třeba $5000n^2$, i když asymptoticky je horší.
+
+Mějme dvě funkce $f, g : \mathbb{N} \rightarrow \mathbb{R}$. Řekneme, že funkce $f(n)$ je třídy $\Omega(g(n))$, jestliže existuje taková kladná reálná konstanta $c$, že $f(n) \geq cg(n)$ pro skoro všechna $n$. Tomu se říká asymptotický dolní odhad.
+
+Řekneme, že funkce $f(n)$ je třídy $\Theta(g(n))$, jestliže $f(n)$ je jak třídy $O(g(n))$, tak třídy $\Omega(g(n))$.
+
+Podobně bychom definovali prostorovou složitost, která prostě počítá, kolik datových buňek náš program zabírá, tedy kolik místa v paměti algoritmus spotřebuje.
+
+#### Měření velikosti dat
+
+Záleží na tom, jak se na tohle díváme, časově se to měří podle velikosti vstupu - tedy počet dat, která musíme zpracovat, paměťově záleží na použitých typech, ... Nehledal bych v tom vědu, často se to dá prostě aproximovat přes asymptotickou složitost.
+
+#### Složitost v nejlepším, nejhorším a průměrném případě
+
+Viz definice nahoře, jinak může se stát, že nejlepší/nejhorší/průměrný případ se může asymptoticky lišit. Většinou se bere nejhorší a průměrný případ.
+
+#### Asymptotická notace
+
+Viz nahoře.
+
+### Třídy složitosti
+
+Rozhodovací problém (zkráceně problém) je funkce z množiny $\{0, 1\}^*$ všech řetězců nad binární abecedou do množiny $\{0, 1\}$.
+
+Jsou-li $A, B$ rozhodovací problémy, říkáme, že $A$ lze převést na $B$ (píšeme $A \rightarrow B$) právě tehdy, když existuje funkce $f: \{0, 1\}^* \rightarrow \{0, 1\}^*$ taková, že pro všechna $x \in \{0, 1\}^*$ platí $A(x) = B(f(x))$, a navíc lze funkci $f$ spočítat v čase polynomiálním vzhledem k $|x|$. Funkci $f$ říkáme převod nebo také redukce.
+
+#### Třídy P a NP
+
+P je třída rozhodovacích problémů, které jsou řešitelné v polynomiálním čase. Jinak řečeno, problém $L$ leží v P právě tehdy, když existuje nějaký algoritmus $A$ a polynom $f$, přičemž pro každý vstup $x$ algoritmus $A$ doběhne v čase nejvýše $f(|x|)$ a vydá výsledek $A(x) = L(x)$.
+
+NP je třída rozhodovacích problémů, v níž problém $L$ leží právě tehdy, pokud existuje nějaký problém $K \in$ P a polynom $g$, přičemž pro každý vstup $x$ je $L(x) = 1$ právě tehdy, pokud pro nějaký řetězec $y$ délky nejvýše $g(|x|)$ platí $K(x, y) = 1$. Co to znamená? Algoritmus $K$ řeší problém $L$, ale kromě vstupu $x$ má k dispozici ještě polynomiálně dlouhou nápovědu $y$. Přitom má platit, že je-li $L(x) = 1$, musí existovat alespoň jedna nápověda, kterou algoritmus $K$ schválí. Pokud ovšem $L(x) = 0$, nesmí ho přesvědčit žádná nápověda.
+
+Třída P leží uvnitř NP. Pokud totiž problém umíme řešit v polynomiálním čase bez nápovědy, tak to zvládneme v polynomiálním čase i s nápovědou. Algoritmus $K$ tedy bude ignorovat nápovědy a odpověď spočítá přímo ze vstupu.
+
+Problém $L$ nazveme NP-těžký, je-li na něj převoditelný každý problém z NP. Pokud navíc $L$ leží v NP, budeme říkat, že $L$ je NP-úplný.
+
+Nevíme, zda je pravda, že P = NP. Jde o jeden z nevyřešených a asi nejznámějších problémů informatiky.
+
+#### Převoditelnost problémů, NP-těžkost a NP-úplnost
+
+Převoditelnost je nahoře, NP-těžkost a úplnost je definovaná taktéž nahoře.
+
+Obecně se mezi sebou dají převádět problémy třídy P. Poté zvlášť problémy třídy NP.
+
+#### Příklady NP-úplných problémů a převodů mezi nimi
+
+Logické problémy:
+1. SAT: splnitelnost logických formulí v CNF
+2. 3-SAT: každá klauzule obsahuje max. 3 literály
+3. 3,3-SAT: navíc se každá proměnná vyskytuje nejvýše třikrát
+4. SAT pro obecné formule: nejen v CNF
+5. Obvodový SAT: splnitelnost booleovského obvodu
+
+Grafové problémy:
+1. Nezávislá množina: existuje množina alespoň k vrcholů, mezi nimiž nevede žádná hrana?
+2. Klika: existuje úplný podgraf na k vrcholech?
+3. Barvení grafu: lze obarvit vrcholy k barvami (přidělit každému vrcholu číslo od 1 do $k$) tak, aby vrcholy stejné barvy nebyly nikdy spojeny hranou? To je NP-úplné už pro $k = 3$.
+4. Hamiltonovská cesta: existuje cesta obsahující všechny vrcholy?
+5. Hamiltonovská kružnice: existuje kružnice obsahující všechny vrcholy?
+6. 3D-párování: máme tři množiny se zadanými trojicemi; zjistěte, zda existuje taková množina disjunktních trojic, ve které jsou všechny prvky právě jednou? (Striktně vzato, není to grafový problém, ale hypergrafový – hrany nejsou páry, ale trojice.)
+
+Číselné problémy:
+1. Součet podmnožiny: má daná množina přirozených čísel podmnožinu s daným součtem?
+2. Batoh: jsou dány předměty s váhami a cenami a kapacita batohu, chceme najít co nejdražší podmnožinu předmětů, jejíž váha nepřesáhne kapacitu batohu. Aby se jednalo o rozhodovací problém, ptáme se, zda existuje podmnožina s cenou větší nebo rovnou zadanému číslu.
+3. Dva loupežníci: lze rozdělit danou množinu čísel na dvě podmnožiny se stejným součtem?
+4. $Ax = 1$ (soustava nula-jedničkových lineárních rovnic): je dána matice $A \in \{0, 1\}^{m \times n}$. Existuje vektor $x \in \{0, 1\}^n$ takový, že $Ax$ je rovno vektoru samých jedniček?
+
+Problém SAT jsme si už představili v logice, jde o splnitelnost CNF formule. Některé převody jsou jednoduché, třeba 3-SAT je varianta SAT. SAT na 3-SAT se dá převést zavedením nové proměnné. 3-SAT se dá převést na nezávislou množinu jednoduše, tedy znázorněním proměnných jako vrcholy a hrany jsou stejné jako klauzule (s tím, že každý literál je spojený ještě s opačným). Nezávislá množina se dá převést na SAT nějakou šikovnou reprezentací hran. Klika je prakticky identická jako nezávislá množina. 3-SAT se dá převést na 3,3-SAT zavedením nových proměnných. 3,3-SAT se dá převést na 3D-párování.
+
+### Metoda rozděl a panuj
+
+Chceme problém rozdělovat na podproblémy, které budou potom tak malé, že je umíme vyřešit samostatně. To se může hodit v různých algoritmech, ale třeba i při paralelním programování.
+
+Typicky se to používá při rekurzivním programování.
+
+#### Princip rekurzivního dělení problému na podproblémy
+
+Existuje explicitní vzorec, který dokáže určit složitost rekurzivního algoritmu, říkáme mu Master theorem. Popíšeme ho později. Dá se to odhadnout také stromem rekurze, že uděláme sumu přes jednotlivé složitosti.
+
+Celkově jsou různé problémy, které se dají přes rekurzi řešit. Nějaké příklady mohou být třeba Hanojské věže, třídění sléváním (MergeSort), rychlé násobení čísel, hledání $k$-tého nejmenšího prvku (QuickSelect), rychlé třídění (QuickSort), $k$-tý nejmenší prvek v lineárním čase apod.
+
+#### Výpočet složitosti pomocí rekurentních rovnic
+
+Složitost se dá odvodit podle toho, kolik času trávíme na jednotlivých hladinách. Uvedeme si příklad - MergeSort. Jako první si tedy napíšeme čas strávený na první hladině, to je $T(1) = 1$. Obecně na $n$-té hladině trávíme $T(n) = 2 \cdot T(n/2) + cn$ času. Všimneme si, že pokud bychom dosadili za $T(n/2)$, dostaneme postupem $T(n) = 2^k \cdot T(n/2^k) + kcn$. Pak zvolíme $k$ tak, aby bylo rovno jedné. Tedy $k = \log_2 n$. Dosadíem do vzorce a dostaneme $T(n) = 2^{\log_2 n} \cdot T(1) + log_2 n \cdot cn = n + cn \log_2 n$. Časová složitost je tedy $\Theta(n \log n)$.
+
+Kromě rekurentních rovnic se to dá řešit i právě stromem rekurze.
+
+#### Master theorem (kuchařková věta) (bez důkazu)
+
+Aby se nám složitost dobře počítala, dá se použít tzv. Master theorem pro výpočet složitosti. Mějme tedy obecně zadanou rekurenci:
+
+$T(1) = 1$, $T(n) = a \cdot T(n/b) + \Theta(n^c)$. Dokazovat si to tedy nebudeme, každopádně platí, že výsledek závisí na kvocientu $q = a/b^c$. Potom platí:
+1. $q = 1 \implies T(n) = \Theta(n^c \log n)$
+2. $q < 1 \implies T(n) = \Theta(n^c)$
+3. $q > 1 \implies T(n) = \Theta(n^{\log_b a})$
+
+Samozřejmě musíme ošetřit to, aby konstanty byly rozumné, logicky $a \geq 1, b > 1, c \geq 0$.
+
+#### Aplikace
+
+Některé aplikace jsme si už zmínili nahoře.
+
+##### Mergesort
+
+Algoritmus MergeSort (rekurzivní třídění sléváním)
+Vstup: Posloupnost $a_1, ..., a_n$ k setřídění
+1. Pokud $n = 1$, vrátíme jako výsledek $b_1 = a_1$ a skončíme.
+2. $x_1,..., x_{n/2} \leftarrow MergeSort(a_1, ..., a_{n/2})$
+3. $y_1,..., y_{n/2} \leftarrow MergeSort(a_{n/2}+1, ..., a_n)$
+4. $b_1, ..., b_n \leftarrow Merge(x_1, ..., x_{n/2}; y_1, ..., y_{n/2})$
+Výstup: Setříděná posloupnost $b_1, ..., b_n$
+
+Merge je procedura slévání. To je jednoduché, začneme se dvěma setřídenými posloupnostmi, pointery jsou na začátku každé z nich. Postupně porovnáváme prvky po dvou a vždy posuneme jeden pointer podle toho, který prvek jsme zpracovali. To je lineární procedura.
+
+Buď z analýzy přes Master theorem nebo jinak nahlédneme, že celková časová složitost tohoto algoritmu je $\Theta(n \log n)$. Obecně se dělá MergeSort tak, že potřebuje nějakou lineární paměť navíc, ale dá se udělat i in-place, jen by se to nedělalo rekurzivně.
+
+##### Násobení dlouhých čísel
+
+Mějme $n$-ciferná čísla $X, Y$, která chceme vynásobit. Rozdělíme je na horních $n/2$
+a dolních $n/2$ cifer (pro jednoduchost opět předpokládejme, že $n$ je mocnina dvojky). Platí tedy:
+1. $X = A \cdot 10^{n/2} + B$
+2. $Y = C \cdot 10^{n/2} + D$
+pro nějaká $(n/2)$-ciferná čísla $A, B, C, D$. Hledaný součin $XY$ můžeme zapsat takto: $XY = AC \cdot 10^n + (AD + BC) \cdot 10^{n/2} + BD$.
+
+To by nám však nestačilo, protože by násobení bylo stále kvadratické. Proto můžeme ještě formuli upravit: $XY = AC \cdot 10^n + ((A + B)(C + D) - AC - BD) · 10^{n/2} + BD$.
+
+Tím se změní složitost na hladině na $T(n) = 3 \cdot T(n/2) + \Theta(n)$. To podle Master theoremu sníží složitost na $O(n^{\log_2(3)-1})$, což už je lepší a vyplatí se to.
+
+### Binarní vyhledávací stromy
+
+#### Definice vyhledávacího stromu
+
+Strom nazveme binární, pokud je zakořeněný a každý vrchol má nejvýše dva syny, u nichž rozlišujeme, který je levý a který pravý. Stromy si můžeme představit stejně jako v diskrétce, akorát tady máme jeden kořen a postupně hrany vedou dolů.
+
+Pro vrchol $v$ binárního stromu $T$ značíme:
+1. $T(v)$ - podstrom obsahující vrchol $v$ a všechny jeho potomky
+2. $l(v), r(v)$ - levý a pravý syn vrcholu v
+3. $L(v), R(v)$ - levý a pravý podstrom vrcholu $v$, tedy $T(l(v)) a T(r(v))$
+4. $h(v)$ - hloubka stromu $T(v)$, čili maximum z délek cest z $v$ do listů
+
+Pokud vrchol nemá levého syna, položíme $l(v) = r(v) = \emptyset$. Pak se hodí dodefinovat, že $T(\emptyset)$ je prázdný strom a $h(\emptyset) = −1$.
+
+Binární vyhledávací strom (BVS) je binární strom, jehož každému vrcholu $v$ přiřadíme unikátní klíč $k(v)$ z univerza. Přitom musí pro každý vrchol $v$ platít:
+1. Kdykoliv $a \in L(v)$, pak $k(a) < k(v)$
+2. Kdykoliv $b \in R(v)$, pak $k(b) > k(v)$
+
+Tedy vrchol $v$ odděluje klíče v levém a pravém podstromu.
+
+#### Operace s nevyvažovanými stromy
+
+Základní operací je projít strom. To uděláme rekurzivně, jde o in-order průchod. Tedy nejprve voláme rekurzivně levou stranu, pak vypíšeme sebe, pak voláme pravou stranu.
+
+Další operací je najít klíč ve stromu. Opět to jde přímočaře rekurzivně - pokud je hodnota aktuálního klíče moc velká, zavoláme proceduru na levou stranu, pokud moc malá, tak na pravou stranu. Pokud se klíč rovná hledanému, pak jsme vrchol nalezli.
+
+Minimum nalezneme jednoduše - půjdeme stále doleva. Obdobně maximum.
+
+Vkládání do stromu funguje jako vyhledávání. Pokud bychom měli prvek vyhledat, přejdeme do neexistujícího vrcholu. Místo toho, abychom oznámili neexistenci prvku, jednoduše prvek přidáme.
+
+Mazání prvku je složitější - pokud mažeme list, je to jednoduché, tím se stávající struktura neporuší. Pokud to list nebyl, tak musíme rozlišit, jestli mažeme zleva nebo zprava a dát do vrcholu nejbližší možnou hodnotu. Dá se to celkem jednoduše rozmyslet.
+
+Pozor na to, že tyto operace mají sice v průměrném případě složitost $\Theta(\log n)$, ale v nejhorším případě $\Theta(n)$ - stačí si představit příklad, že začneme s číslem 1 a vždy přidáváme prvek o 1 větší, pak budeme mít strom jako jednu dlouhou větev doprava.
+
+#### AVL stromy (definice)
+
+Definice: Binární vyhledávací strom nazveme dokonale vyvážený, pokud pro každý jeho
+vrchol $v$ platí $||L(v)| − |P(v)|| \leq 1$. Jinými slovy počet vrcholů levého a pravého podstromu se smí lišit nejvýše o 1.
+
+Dokonale vyvážený strom má tedy hloubku $\log_2 n$.
+
+Binární vyhledávací strom nazveme hloubkově vyvážený, pokud pro každý jeho
+vrchol $v$ platí $h(l(v)) − h(r(v)) \leq 1$. Jinými slovy, hloubka levého a pravého podstromu se vždy liší nejvýše o jedna.
+
+Stromy, které jsou hloubkově vyvážené, se nazývají AVL stromy.
+
+AVL stromy mají logaritmickou hloubku, tedy $\Theta(\log n)$.
+
+AVL stromy se musí vyvažovat tzv. rotacemi stromu, tedy nějaké operace s vrcholy, aby zůstal hloubkově vyvážený a zároveň stále splňoval definici BVS. Strom se musí vyvážit vždy, když přidáme nebo smažeme vrchol.
+
+Operace přidání a smazání vrcholu u AVL nejsou tak jednoduché, protože mohou nastat různé případy prohlubování, někdy se vyvažovat vůbec nemusí. Do detailu to rozepisovat nebudu.
+
+### Třídění
+
+TODO
+
+### Grafové algoritmy
+
+TODO
