@@ -419,8 +419,75 @@ Operace přidání a smazání vrcholu u AVL nejsou tak jednoduché, protože mo
 
 ### Třídění
 
-TODO
+#### Primitivní třídicí algoritmy (Bubblesort, Insertsort)
+
+Jako první si uvedeme bublinkové třídění (Bubblesort). Jeho základem je myšlenka nechat stoupat větší prvky v poli podobně, jako stoupají bublinky v limonádě. V algoritmu budeme opakovaně procházet celé pole. Jeden průchod postupně porovná všechny dvojice sousedních prvků $P[i]$ a $P[i+ 1]$. Pokud dvojice není správně uspořádaná (tedy $P[i] > P[i + 1]$), prvky prohodíme. V opačném případě necháme dvojici na pokoji. Menší prvky se nám tak posunou blíže k začátku pole, zatímco větší prvky „bublají“ na jeho konec. Pokaždé, když pole projdeme celé, začneme znovu od začátku. Tyto průchody opakujeme, dokud dochází k prohazování prvků. V okamžiku, kdy výměny ustanou, je pole setříděné. Technicky tedy jde jen o 2 for loopy. Časová složitost je tedy $O(n^2)$.
+
+Insertsort neboli třídění přímým vkládáním funguje takto: Udržujeme dvě části pole - na začátku leží setříděné prvky a v druhé části pak zbývající nesetříděné. V každém kroku vezmeme jeden prvek z nesetříděné části a vložíme jej na správné místo v části setříděné. Složitost je stejná, tedy kvadratická, protože opakovaně procházíme setříděnou posloupnost.
+
+#### Quicksort
+
+Začínáme s nesetříděným polem hodnot. Pro 1 prvek skončíme, to je zřejmé. Některý z prvků zvolíme jako pivota (je dobré to volit například náhodně). Poté rozdělíme posloupnost následovně na 3 části: prvky posloupnosti menší než pivot, prvky posloupnosti rovny pivotu, prvky posloupnosti větší než pivot. Rekurzivně setřídíme levou a pravou část stejným algoritmem a slepíme za sebe 3 části dohromady. Dostaneme setříděnou posloupnost.
+
+Při dobré volbě pivota jsme schopni třídit průměrně v čase $O(n \log n)$, v nejhorším případě v $O(n^2)$. Pokud volíme jako pivot nějaké mediány nebo skoromediány, pak se časová složitost zlepší, ovšem v kontrastu samozřejmě nějakou dobu zabere i zjistit, který prvek je meidánem apod.
+
+#### Dolní odhad složitosti porovnávacích třídicích algoritmů
+
+Nemůžeme třídit lépe než v čase $\Theta(n \log n)$, pokud tedy nepočítáme takové algoritmy jako CountingSort apod. (ty nevyužívají porovnávání). Vyhledávat lze totiž nejlépe v čase $\log n$ binárně, na každý prvek se musíme podívat alespoň jednou. 
 
 ### Grafové algoritmy
 
+#### Prohledávání do šířky a do hloubky
+
+**BFS (prohledávání do šířky)**
+
+Základním stavebním kamenem většiny grafových algoritmů je nějaký způsob prohledávání grafu. Tím myslíme postupné procházení grafu po hranách od určitého počátečního vrcholu. Možných způsobů prohledávání je víc, zatím ukážeme ten nejjednodušší: prohledávání do šířky. Často se mu říká zkratkou BFS z anglického breadth-first search.
+
+Na vstupu dostaneme konečný orientovaný graf a počáteční vrchol $v_0$. Postupně nacházíme následníky vrcholu $v_0$, pak následníky těchto následníků, a tak dále, až objevíme všechny vrcholy, do nichž se dá z $v_0$ dojít po hranách. Obrazně řečeno, do grafu nalijeme vodu a sledujeme, jak postupuje vlna.
+
+Během výpočtu rozlišujeme 3 stavy vrcholů:
+1. nenalezené - zatím jsme je nepotkali na cestě grafem
+2. otevřené - už jsme je viděli, ale ještě jsme neprozkoumali všechny hrany, které z něj vedou
+3. uzavřené - už jsme je viděli a prozkoumali jsme i hrany
+
+Předpokladem je, že všechny vrcholy až na první považujeme za uzavřené. Funguje to tak, že do fronty postupně dáváme vrcholy, jak je potkáme podle hran a vždy z fronty odebereme vrchol a zařadíme jeho sousedy, jsou-li nenalezené.
+
+BFS se vždy zastaví a korektně najde nejkratší (neohodnocenou) cestu mezi dvěma vrcholy. Časová složitost algoritmu je $O(|V| + |E|)$, prostorovou taky.
+
+Pozor na různé reprezentace sousednosti, například u matice sousednosti by to bylo až $O(n^2)$, lepší je seznam sousedů.
+
+**DFS (prohledávání do hloubky)**
+
+Dalším důležitým algoritmem k procházení grafů je prohledávání do hloubky, anglicky depth-first search čili DFS. Je založeno na podobném principu jako BFS, ale vrcholy zpracovává rekurzivně: kdykoliv narazí na dosud nenalezený vrchol, otevře ho, zavolá se rekurzivně na všechny jeho dosud nenalezené následníky, načež původní vrchol zavře a vrátí se z rekurze. Mimochodem se dá udělat i přes zásobník.
+
+DFS je vhodná ve chvíli, kdy chceme dostat třeba libovolnou cestu, případně je nám jedno, jaké bude řešení, ale chceme ho rychle. Má časovou složitost $O(|V| + |E|)$, prostorovou taky.
+
+Hrany v DFS se dají klasifikovat. Mohou nastat následující případy:
+1. stromová hrana - na DFS cestě
+2. dopředná hrana - na cestě, ovšem ne přímo (už jsme vrchol nalezli)
+3. zpětná hrana - na cestě, ovšem opačným směrem
+4. příčná hrana - už jsme tam v rekurzi byli, takže prostě napříč
+
+#### Topologické třídění orientovaných grafů
+
 TODO
+
+#### Nejkratší cesty v ohodnocených grafech (Dijkstrův a Bellmanův-Fordův algoritmus)
+
+TODO
+
+#### Minimální kostra grafu (Jarníkův a Borůvkův algoritmus)
+
+TODO
+
+#### Toky v sítích (Ford-Fulkerson algoritmus)
+
+TODO
+
+## Programovací jazyky
+
+Viz [specializace](./specializace-prog-sw.md).
+
+## Architektura počítačů a operačních systémů
+
+Viz [specializace](./specializace-prog-sw.md).
