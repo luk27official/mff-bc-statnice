@@ -470,19 +470,55 @@ Hrany v DFS se dají klasifikovat. Mohou nastat následující případy:
 
 #### Topologické třídění orientovaných grafů
 
-TODO
+Častým případem orientovaných grafů jsou acyklické orientované grafy neboli DAGy (z anglického directed acyclic graph). Pro ně umíme řadu problémů vyřešit efektivněji než pro obecné grafy. Mnohdy k tomu využíváme existenci topologického pořadí vrcholů.
+
+Jak přijdeme na to, že v grafu je cyklus? Použijeme DFS. Pokud DFS nalezne zpětnou hranu, pak graf není DAG.
+
+DAG lze uspořádat tak, aby všechny hrany vedly po směru tohoto uspořádání (to je třeba zleva doprava). Orientovaný graf má topologické uspořádání právě tehdy, když je to DAG. V grafu s cykly by nebylo možné hrany seřadit, ale v acyklickém to jde.
+
+V každém neprázdném DAGu existuje vrchol, do kterého nevede žádná hrana (zdroj).
+
+Pořadí, v němž DFS opouští vrcholy, je opačné topologické.
 
 #### Nejkratší cesty v ohodnocených grafech (Dijkstrův a Bellmanův-Fordův algoritmus)
 
-TODO
+Dijkstrův algoritmus používáme ve chvíli, kdy máme nezáporně ohodnocené hrany grafu. Mějme tedy orientovaný graf, jehož hrany jsou ohodnocené celými kladnými čísly. Každou hranu podrozdělíme na tolik jednotkových hran, jaká byla cena cesty (ohodnocení hrany). Pro každý vrchol si pořídíme budík, tedy jakmile k vrcholu zamíří vlna, nastavíme jeho budík na čas, kdy do něj má vlna dorazit, uvažujeme ten nejnižší. Dokud existují nějaké otevřené vrcholy, vybíráme vždy otevřený vrchol s nejmenší hodnotou budíku a spočítáme budíky pro všechny jeho sousedy. Dokud existuje otevřený vrchol, nezastavujeme. Inicializace trvá $O(n)$, Dijkstra funguje celkem v čase $O(n^2)$. Dá se zlepšit, pokud pracujeme s binární haldou, pak bychom měli $O((n + m) \log n)$.
+
+Dijkstrův algoritmus na grafu bez záporných hran uzavírá všechny dosažitelné vrcholy v pořadí podle rostoucí vzdálenosti od počátku (každý právě jednou). V okamžiku uzavření je ohodnocení rovno této vzdálenosti a dále se nezmění.
+
+Bellman-Fordův algoritmus používáme ve chvíli, kdy máme měřit vzdálenost v grafech se zápornými hranami. Rozdíl je v tom, že oproti Dijkstrovi budeme uzavírat nejstarší z otevřených vrcholů namísto toho s nejnižší hodnotou budíku. Pokud graf neobsahuje záporné cykly, tak zastaví. V grafu bez záporných cyklů nalezne Bellman-Ford všechny vzdálenosti z $v_0$ v čase $O(mn)$.
 
 #### Minimální kostra grafu (Jarníkův a Borůvkův algoritmus)
 
-TODO
+Potřebujeme si zadefinovat pár pojmů, které nám pomůžou pochopit, co chceme.
+
+Nechť $G = (V, E)$ je souvislý neorientovaný graf a $w: E \rightarrow \mathbb{R}$ váhová funkce, která přiřazuje hranám čísla – jejich váhy. $n, m$ nechť jako obvykle značí počet vrcholů a hran grafu $G$. Váhovou funkci můžeme přirozeně rozšířit na podgrafy: Váha $w(H)$ podgrafu $H \subseteq G$ je součet vah jeho hran. Kostra grafu $G$ je podgraf, který obsahuje všechny vrcholy a je to strom. Kostra je minimální, pokud má mezi všemi kostrami nejmenší váhu.
+
+Graf může mít více minimálních koster, pokud jsou váhy všech hran navzájem různé, pak existuje pouze jedna minimální kostra.
+
+Jarníkův algoritmus: Mějme souvislý graf s unikátními vahami. Pak začneme s libovolným vrcholem grafu a grafem $T$ obsahující pouze tento vrchol. Dokud existuje hrana taková, že jeden z vrcholů leží v $T$ a druhý tam neleží, přidáme nejlehčí z nich. Algoritmus bězí v čase $O(mn)$.
+
+Borůvkův algoritmus: Je to taková paralelní verze Jarníkova algoritmu. Začínáme s nesouvislými vrcholy. Dokud $T$ není souvislý, rozložíme ho na komponenty souvislosti. Pro každou komponentu nalezneme takového souseda s nejlehčí hranou, se kterým ještě nebyl spojený. Tímto rozšiřujeme kostru po mocninách dvojky v každé iteraci. Lze tedy nahlédnout, že takový algoritmus pracuje v čase $m \log n$.
+
 
 #### Toky v sítích (Ford-Fulkerson algoritmus)
 
-TODO
+Tok v síti jsme si už definovali u teorie grafů v matematice. Pro připomenutí máme orientovaný graf s nějakými kapacitami, zdrojem, stokem a nějakou funkcí, které říkáme tok. Pro tok platí, že je shora omezen kapacitami a platí Kirchhoffův zákon, tedy co přiteče do vrcholu, to z něj odteče pro všechny kromě zdroje a stoku.
+
+Navíc můžeme ještě definovat přítok, odtok a přebytek z vrcholu:
+1. $f^+(v) = \sum_{u: uv \in E}f(uv)$ - přítok
+2. $f^-(v) = \sum_{u: vu \in E}f(uv)$ - odtok
+3. $f^\Delta(v) = f^+(v) - f^-(v)$ - přebytek 
+
+Velikost toku se značí $|f|$ a je to vlastně přebytek stoku.
+
+Ford-Fulkerson: Nejjednodušší z algoritmů na hledání maximálního toku je založen na prosté myšlence: začneme s nulovým tokem a postupně ho vylepšujeme, až dostaneme maximální tok. Uvažujme, jak by vylepšování mohlo probíhat. Nechť existuje cesta $P$ ze $z$ do $s$ taková, že po všech jejích hranách teče méně, než dovolují kapacity. Takové cestě budeme říkat zlepšující, protože po ní můžeme tok zvětšit. Zvolíme $\epsilon = \min_{e \in P} (c(e)-f(e))$. Poté tok na každé hraně, která je ovlivněná tímto zlepšením může být zlepšena. Pozor na to, že to ještě nestačí, mohl by vzniknout tok, který není maximální.
+
+Definice: Rezerva hrany $uv$ je číslo $r(uv) = c(uv) − f(uv) + f(vu)$. Hraně s nulovou rezervou budeme říkat nasycená, hraně s kladnou rezervou nenasycená. O cestě řekneme, že je nasycená, pokud je nasycená alespoň jedna její hrana; jinak mají všechny hrany kladné rezervy a cesta je nenasycená. Roli zlepšujících cest tedy budou hrát nenasycené cesty. Budeme je opakovaně hledat a tok po nich zlepšovat.
+
+Dokud tedy existuje nenasycená cesta $P$ ze $z$ do $s$, opakujeme, že spočítáme rezervu celé cesty, vybereme minimum, pro všechny hrany spočítáme, kolik můžeme odečíst v protisměru a zbytek přičteme po směru. Dostaneme maximální tok.
+
+Side note: Velikost maximálního toku je stejná jako velikost minimálního řezu. O tom však více v té matematické části.
 
 ## Programovací jazyky
 
