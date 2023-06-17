@@ -25,7 +25,7 @@ Další operace s jazyky:
 
 ### Regulární jazyky
 
-Regulární jazyky jsou ty jazyky, které jsou generovány regulární gramatikou a jsou rozpoznatelné $DFA, NFA$ nebo $\lambda-NFA$. Ty popíšeme později.
+Regulární jazyky jsou ty jazyky, které jsou generovány regulární gramatikou a jsou rozpoznatelné DFA, NFA nebo $\lambda$-NFA. Ty popíšeme později.
 
 #### Regulární gramatiky
 
@@ -68,12 +68,12 @@ Iterační (pumping) lemma pro regulární jazyky: Mějme regulární jazyk $L$.
 
 Příklad použití pumping lemmatu: Jazyk slov se stejným počtem 0 a 1 není regulární. Předpokládejme, že regulární je. Vezměme $n$ z pumping lemmatu. Zvolme $w = 0^n 1^n \in L$. Pak $|xy| \leq n$, jenže obsahuje samé nuly. Pak by nešlo pumpovat nuly, porušila by se rovnost.
 
-Mějme konečnou abecedu $\Sigma$ a relaci ekvivalence $~$ na $\Sigma^*$. Pak:
-1. $~$ je pravá kongruence, jestliže $\forall u, v, w \in \Sigma^*: u ~ v \implies uw ~ vw$
-2. je konečného indexu, má-li rozklad $\Sigma^* / ~$ konečný počet tříd
-3. třídu kongruence $~$ obsahující slovo $u$ značíme $[u]_~$
+Mějme konečnou abecedu $\Sigma$ a relaci ekvivalence $\~$ na $\Sigma^*$. Pak:
+1. $~$ je pravá kongruence, jestliže $\forall u, v, w \in \Sigma^*: u \~ v \implies uw \~ vw$
+2. je konečného indexu, má-li rozklad $\Sigma^* / \~$ konečný počet tříd
+3. třídu kongruence $\~$ obsahující slovo $u$ značíme $[u]_\~$
 
-Myhill–Nerodova věta: $L$ je rozpoznatelný konečným automatem právě tehdy, když existuje pravá kongruence konečného indexu nad $\Sigma^*$ tak, že $L$ je sjednocením jistých tříd rozkladu $\Sigma^* / ~$.
+Myhill–Nerodova věta: $L$ je rozpoznatelný konečným automatem právě tehdy, když existuje pravá kongruence konečného indexu nad $\Sigma^*$ tak, že $L$ je sjednocením jistých tříd rozkladu $\Sigma^* / \~$.
 
 Řekněme, že v automatu je stav dosažitelný, jestliže existuje slovo takové, že po přečtení nějakého slova skončíme v daném stavu.
 

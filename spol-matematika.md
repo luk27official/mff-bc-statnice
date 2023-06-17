@@ -903,7 +903,7 @@ Viz nahoře, už bylo potřeba to definovat dříve.
 
 ### Souvislost grafů, komponenty souvislosti, vzdálenost v grafu
 
-Graf $G$ je souvislý právě tehdy, když $\forall u, v \in V(G) \exists$ cesta v $G$ z $u$ do $v$. Definujme si i relaci dosažitelnosti, značíme $~$ a ta říká, zda je $u$ dosažitelný z $v$ (resp. obráceně). Jde o relaci ekvivalenci.
+Graf $G$ je souvislý právě tehdy, když $\forall u, v \in V(G) \exists$ cesta v $G$ z $u$ do $v$. Definujme si i relaci dosažitelnosti, značíme $\~$ a ta říká, zda je $u$ dosažitelný z $v$ (resp. obráceně). Jde o relaci ekvivalenci.
 
 Definujme vzdálenost v grafu $G$ mezi $u, v$ jako minimum z délek cest z $u$ do $v$, značíme $d(u, v)$. Jde o metriku, protože platí:
 1. $\forall u,v \in V(G): d(u, v) \leq 0$
@@ -1207,7 +1207,7 @@ Nechť $X_1, X_2, ...$ jsou stejně rozdělené nezávislé náhodné veličiny 
 
 Cílem bodových odhadů je určit některý z parametrů (často to je třeba střední hodnota nějakého rozdělení).
 
-Definujme ještě pár pojmů, které budeme potřebovat pro definici odhadů. Posloupnost nezávislých náhodných veličin $X_1, ..., X_n$ ze stejného rozdělení nazveme náhodný výběr s rozsahem $n$. Pokud tyto veličiny mají distribuci $F$, pak píšeme $X_1, ..., X_n ~ F$.
+Definujme ještě pár pojmů, které budeme potřebovat pro definici odhadů. Posloupnost nezávislých náhodných veličin $X_1, ..., X_n$ ze stejného rozdělení nazveme náhodný výběr s rozsahem $n$. Pokud tyto veličiny mají distribuci $F$, pak píšeme $X_1, ..., X_n \~ F$.
 
 Parametrické modely: Můžeme zkoumat jen distribuční funkce $F$ z množiny $\{ F_\vartheta : \vartheta \in \Theta \}$, kde $\vartheta$ je neznámý parametr a $\Theta$ je množina možných hodnot tohoto parametru. Příklad:
 1. $Pois(\lambda)$ - parametr $\vartheta = \lambda, \Theta = \mathbb{R}^+$
@@ -1217,7 +1217,7 @@ Statistika je nejen název disciplíny, ale má i svůj význam. Je to totiž ta
 
 #### Alespoň jedna metoda pro jejich tvorbu
 
-Pro náhodný výběr $X_1, ..., X_n ~ F$ a libovolnou funkci $g$ nazveme $\hat{\Theta}_n$ bodový odhad:
+Pro náhodný výběr $X_1, ..., X_n \~ F$ a libovolnou funkci $g$ nazveme $\hat{\Theta}_n$ bodový odhad:
 1. nevychýlený/nestranný, pokud $\mathbb{E}(\hat{\Theta}_n) = g(\vartheta)$
 2. asymptoticky nevychýlený/nestranný, pokud $\lim_{n \rightarrow \infty} \hat{\Theta}_n = g(\vartheta)$
 3. konzistentní, pokud $\hat{\Theta}_n$ konverguje v pravděpodobnosti k $g(\vartheta)$
@@ -1233,7 +1233,7 @@ Pak definujme několik odhadů:
 2. je konzistentní asymptoticky nestranný odhad $\sigma^2$
 3. je konzistentní nestranný odhad $\sigma^2$
 
-Metoda momentů: $m_r(\vartheta) = \mathbb{E}(X^r)$ pro $X ~ F_\vartheta$ ... $r$-tý moment, $\hat{m_r(\vartheta)} = \frac{1}{n}\sum_{i=1}^n X_i^r$ pro náhodný výběr z $F_\vartheta$ ... $r$-tý výběrový moment
+Metoda momentů: $m_r(\vartheta) = \mathbb{E}(X^r)$ pro $X \~ F_\vartheta$ ... $r$-tý moment, $\hat{m_r(\vartheta)} = \frac{1}{n}\sum_{i=1}^n X_i^r$ pro náhodný výběr z $F_\vartheta$ ... $r$-tý výběrový moment
 
 $\hat{m_r(\vartheta)}$ je nestranný konzistentní odhad pro $m_r(\vartheta)$.
 
