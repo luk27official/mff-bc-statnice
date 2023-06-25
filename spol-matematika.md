@@ -69,7 +69,7 @@ Dalším příkladem jsou řady typu $\sum_{n=1}^\infty \frac{1}{n^s} = 1 + \fra
 Funkce $f: M \rightarrow \mathbb{R}, M \subseteq \mathbb{R}$ je
 
 - shora omezená pokud $\exists K \in \mathbb{R}$ takové, že $f(x) < K$ pro každé $x \in M$,
-- zdola omezená pokud $\exists K \in \mathbb{R}$ takové, že $f(x) < K$ pro každé $x \in M$,
+- zdola omezená pokud $\exists K \in \mathbb{R}$ takové, že $f(x) > K$ pro každé $x \in M$,
 - omezená pokud je shora i zdola omezená,
 - rostoucí pokud $f(x) < f(y)$ pro každé $x, y \in M, x < y$,
 - neklesající pokud $f(x) \leq f(y)$ pro každé $x, y \in M, x < y$,
@@ -109,7 +109,7 @@ Uvedené věty platí ve chvíli, kdy jsou pravé strany definované.
 Nechť $c \in \mathbb{R}^*$ a funkce $f, g, h$ jsou definované na prstencovém okolí bodu $c$. Pak:
 1. Mají-li $f, g$ v bodě $c$ limitu a $\lim_{x \rightarrow c} f(x) > \lim_{x \rightarrow c} g(x)$, pak existuje $\delta > 0$ takové, že $f(x) > g(x)$ pro každé $x \in P(c, \delta)$.
 2. Existuje-li $\delta > 0$ takové, že $f(x) \geq g(x)$ pro každé $x \in P(c, \delta)$ a mají-li funkce $f, g$ limitu v bodě $c$, potom $\lim_{x \rightarrow c} f(x) \geq \lim_{x \rightarrow c} g(x)$.
-3. Existuje-li $\delta > 0$ takové, že $f(x) \leq h(x) \leq g(x)$ pro každé $x \in P(c, \delta)$ a $\lim_{x \rightarrow c} f(x) = \lim_{x \rightarrow c} g(x) = A \in \mathbb{R}^*$, potom i $\lim{x \rightarrow c} h(x) = A$.
+3. Existuje-li $\delta > 0$ takové, že $f(x) \leq h(x) \leq g(x)$ pro každé $x \in P(c, \delta)$ a $\lim_{x \rightarrow c} f(x) = \lim_{x \rightarrow c} g(x) = A \in \mathbb{R}^*$, potom i $\lim_{x \rightarrow c} h(x) = A$.
 
 ##### Limita složené funkce
 
@@ -135,7 +135,7 @@ Nejprve si maximum funkce a další extrémy definujme.
 
 Nechť $M \subseteq \mathbb{R}, f: M \rightarrow \mathbb{R}$. Řekněme, že funkce $f$ v bodě $a \in M$ nabývá svého:
 - minima, když $\forall x \in M: f(x) \geq f(a)$
-- maxima, když $\forall x \in M: f(x) \geq f(a)$
+- maxima, když $\forall x \in M: f(x) \leq f(a)$
 - ostrého minima, když $\forall x \in M, x \not = a: f(x) > f(a)$
 - ostrého maxima, když $\forall x \in M, x \not = a: f(x) < f(a)$
 - lokálního minima, když $\exists \delta > 0 \forall x \in M \cap U(a, \delta): f(x) \geq f(a)$
@@ -197,9 +197,13 @@ Pro některé primitivní funkce neexistuje vzorec, i přestože existují.
 
 Věta o substituci: Buďte dány funkce $\varphi: (\alpha, \beta) \rightarrow (a, b), f: (a, b) \rightarrow \mathbb{R}$, přičemž první funkce má na prvním intervalu vlastní derivaci. Nechť je funkce $F: (a, b) \rightarrow \mathbb{R}$ na intervalu $(a, b)$ primitivní funkcí k $f$. Pak na $(\alpha, \beta)$ platí: $\int f(\varphi(t)) \cdot \varphi'(t) dt = F(\varphi(t)) + C$.
 
-Věta o integraci per partes: Nechť jsou funkce $f, g$ spojité na intervalu $(a, b)$ a funkce $F, G$ jsou k nim funkce na daném intervalu primitivní. Potom i $fG, Fg$ mají na daném intervalu primitivní funkci a platí identita $\int f(x)G(x) dx + \int F(x)g(x) dx = F(x)G(x) + c$.
+Věta o integraci per partes: Nechť jsou funkce $f, g$ spojité na intervalu $(a, b)$ a funkce $F, G$ jsou k nim funkce na daném intervalu primitivní. Potom i $fG, Fg$ mají na daném intervalu primitivní funkci a platí identita $\int f(x)G(x) dx + \int F(x)g(x) dx = F(x)G(x) + C$. 
 
 Tady si doporučuji projít nějaké řešené příklady.
+
+Abych trochu uvedl do problematiky:
+1. pro substituci platí, že zvolíme typicky nějaké $u$, poté ho zderivujeme a dostaneme i nějakou derivaci $dx$, upravíme původní výraz a řešíme pro typicky snazší $u$. Příklad: $\int x e^{x^2} dx$. Zvolíme $u = x^2$, $du = 2xdx, dx = \frac{du}{2x}$. Pak dosadíme do původního vzorce substituované $u$, tedy $\int x e^u \cdot \frac{du}{2x}$. Zkrátíme $x$ a vytkneme polovinu, dostaneme $\frac{1}{2} \int e^u du = \frac{1}{2} e^u = \frac{1}{2} e^{x^2} + C$.
+2. pro per partes zvolíme jednu funkci, kterou derivujeme a druhou, kterou integrujeme. Poté podle vzorce dostaneme jednodušší výraz, to funguje například ve chvíli, kdy pro jeden ze členů známe explicitní vzorec. Příklad: $\int x \cos x dx$, zvolíme si $F = x, g = \cos x$. Z toho dopočítáme jednoduše derivaci a primitivní funkci: $f = 1, G = \sin x$. Teď jen dosadíme do vzorce, tedy $\int x \cos x dx = x \sin x - \int \sin x dx = x \sin x + \cos x + C$.
 
 #### Riemannův integrál: definice, souvislost s primitivní funkcí (Newtonovým integrálem)
 
@@ -207,7 +211,7 @@ Nejprve je dobré si zadefinovat si Newtonův integrál pro funkce. Máme dáno 
 
 Je-li funkce $f$ na $[a, b] \rightarrow \mathbb{R}$ spojitá, pak existuje příslušný Newtonův integrál. Pro určité integrály platí věta o substituci a metoda per partes stejně jako pro neurčitý integrál.
 
-Teď si už můžeme zadefinovat Riemannův integrál. Nechť $-\infty < a < b < \infty$ jsou dvě reálná čísla. Konečná $(k+1)$-tice bodů $D = (a_0, a_1, ..., a_k)$ z intervalu $[a, b]$ je jeho dělením, pokud platí $a = a_0 < a_1 < ... < a_k = b$. Tyto body postupně dělí interval $[a, b]$ na intervaly $I_i = [a_i, a_{i+1}]$. Délku invertvalu označíme pomocí absolutní hodnoty. Pro nějakou funkci a její dělení (na intervalu $[a, b]$) definujeme dolní a horní Riemannovu sumu jako $s(f, D) = \sum_{i=0}^{k-1} |I_i| m_i$, respektive $S(f, D) = \sum_{i=0}^{k-1} |I_i| M_i$, kde $m_i = \inf\{f(x); x \in I_i\}, M_i = \sup\{f(x); x \in I_i\}$. Tyto součty jsou vždy definované a mohou být i $\pm \infty$.
+Teď si už můžeme zadefinovat Riemannův integrál. Nechť $-\infty < a < b < \infty$ jsou dvě reálná čísla. Konečná $(k+1)$-tice bodů $D = (a_0, a_1, ..., a_k)$ z intervalu $[a, b]$ je jeho dělením, pokud platí $a = a_0 < a_1 < ... < a_k = b$. Tyto body postupně dělí interval $[a, b]$ na intervaly $I_i = [a_i, a_{i+1}]$. Délku intervalu označíme pomocí absolutní hodnoty. Pro nějakou funkci a její dělení (na intervalu $[a, b]$) definujeme dolní a horní Riemannovu sumu jako $s(f, D) = \sum_{i=0}^{k-1} |I_i| m_i$, respektive $S(f, D) = \sum_{i=0}^{k-1} |I_i| M_i$, kde $m_i = \inf\{f(x); x \in I_i\}, M_i = \sup\{f(x); x \in I_i\}$. Tyto součty jsou vždy definované a mohou být i $\pm \infty$.
 
 Množinu všech newtonovsky integrovatelných funkcí na $[a, b]$ označujeme $\mathcal{N}[a, b]$, podobně pro riemannovsky integrovatelné funkce na $[a, b]$ to je $\mathcal{R}[a, b]$.
 
@@ -239,7 +243,7 @@ Obsah rovinného útvaru pod grafem funkce, který je situován $a \leq x \leq b
 
 ##### Objemy a povrchy rotačních útvarů v prostoru
 
-Pro objem a povrch tělesa $V = \{(x, y, z) \in \mathbb{R}^3 | a \leq x \leq b \& \sqrt{y^2 + z^2} \leq f(x) \}$ vzniklého rotací kolem osy $x$ platí následující vzorce:
+Pro objem a povrch tělesa $V = \{(x, y, z) \in \mathbb{R}^3 | a \leq x \leq b, \sqrt{y^2 + z^2} \leq f(x) \}$ vzniklého rotací kolem osy $x$ platí následující vzorce:
 $objem(V) = \pi \int_a^b f(t)^2 dt$, $povrch(V) = 2\pi \int^b_a f(t) \sqrt{1+(f'(t))^2} dt$.
 
 ##### Délka křivky
@@ -404,7 +408,9 @@ Buď $V$ vektorový prostor nad $\mathbb{T}$ a $W \subseteq V$. Pak lineární o
 
 Nechť prostor U je lineárním obalem množiny vektorů $W$, tedy $U = span(W)$, pak říkáme, že $W$ generuje prostor $U$ a prvky množiny $W$ jsou generátory $U$. Prostor $U$ je konečně generovaný, pokud je generovaný nějakou konečnou množinou vektorů.
 
-Lineární kombinace: Buď $V$ vektorový prostor nad $\mathbb{T}$ a $v_1, ..., v_n \in V$. Pak lineární kombinací vektorů $v_1, ..., v_n$ rozumíme výraz typu $\sum_{i=1}^n \alpha_i v_i = \alpha_1 v_1 + ... + \alpha_n v_n$, kde $\alpha_1, ..., \alpha_n \in \mathbb{T}$. Lineární obal pak obsahuje všechny lineární kombinace generátorll.
+Lineární kombinace: Buď $V$ vektorový prostor nad $\mathbb{T}$ a $v_1, ..., v_n \in V$. Pak lineární kombinací vektorů $v_1, ..., v_n$ rozumíme výraz typu $\sum_{i=1}^n \alpha_i v_i = \alpha_1 v_1 + ... + \alpha_n v_n$, kde $\alpha_1, ..., \alpha_n \in \mathbb{T}$. Lineární obal tedy obsahuje všechny lineární kombinace generátorů.
+
+Příklad $span \{(1, 0)^T, (0, 1)^T\} = \mathbb{R}^2$.
 
 #### Lineární závislost a nezávislost, báze a její existence, souřadnice, dimenze
 
@@ -831,7 +837,7 @@ Napravo: Předpokládejme, že se vyskytne v $j$ množinách, vyskytuje se tedy 
 
 Problém šatnářky: Pánové přijdou do divadla a odloží své klobouky do šatny. Při odchodu šatnářka vydá každému právě 1 klobouk. Jaká je pravděpodobnost, že žádný pán nedostane svůj klobouk?
 
-Řešení: Obecně se bude řešení blížit k $e^{-1}$.
+Řešení: Obecně se bude řešení blížit k $e^{-1}$. Existuje takzvané číslo šatnářky $š(n)$, které vyjadřuje počet permutací bez pevného bodu. Je rovno výrazu $n!(1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \frac{1}{4!} ...)$. Pro úplnost k původní úloze: Pravděpodobnost, že permutace nemá pevný bod = počet permutací bez pevného bodu/počet všech permutací. Tedy $\frac{š(n)}{n!}$.
 
 Eulerova funkce je počet přirozených čísel nesoudělných s $n$, která jsou menší nebo rovna $n$.
 
@@ -903,7 +909,7 @@ Viz nahoře, už bylo potřeba to definovat dříve.
 
 ### Souvislost grafů, komponenty souvislosti, vzdálenost v grafu
 
-Graf $G$ je souvislý právě tehdy, když $\forall u, v \in V(G) \exists$ cesta v $G$ z $u$ do $v$. Definujme si i relaci dosažitelnosti, značíme $\~$ a ta říká, zda je $u$ dosažitelný z $v$ (resp. obráceně). Jde o relaci ekvivalenci.
+Graf $G$ je souvislý právě tehdy, když $\forall u, v \in V(G) \exists$ cesta v $G$ z $u$ do $v$. Definujme si i relaci dosažitelnosti, značíme $\text{\textasciitilde}$ a ta říká, zda je $u$ dosažitelný z $v$ (resp. obráceně). Jde o relaci ekvivalenci.
 
 Definujme vzdálenost v grafu $G$ mezi $u, v$ jako minimum z délek cest z $u$ do $v$, značíme $d(u, v)$. Jde o metriku, protože platí:
 1. $\forall u,v \in V(G): d(u, v) \leq 0$
@@ -1056,7 +1062,7 @@ Prostor jevů označujeme $\mathcal{F} \subseteq \mathcal{P}(\Omega)$. Často pl
 2. $A \in \mathcal{F} \implies \Omega \setminus A \in \mathcal{F}$
 3. $A_1, A_2, ... \in \mathcal{F} \implies \bigcup_{i=1}^\infty A_i \in \mathcal{F}$
 
-$P: \mathcal{F} \rightarrow [0, 1]$ se nazývá pravděpodobnost, pokud $P(\emptyset) = 0, P(\Omega) = 1$ a platí $P(\bigcup_{i=1}^\infty A_i) = \sum_{i=1}^infty P(A_i)$ pro libovolnou posloupnost dvou disjunktních jevů $A_1, A_2, ... \in \mathcal{F}$.
+$P: \mathcal{F} \rightarrow [0, 1]$ se nazývá pravděpodobnost, pokud $P(\emptyset) = 0, P(\Omega) = 1$ a platí $P(\bigcup_{i=1}^\infty A_i) = \sum_{i=1}^\infty P(A_i)$ pro libovolnou posloupnost dvou disjunktních jevů $A_1, A_2, ... \in \mathcal{F}$.
 
 Pravděpodobnostní prostor (probability space) je trojice $(\Omega, \mathcal{F}, P)$ je trojice taková, že množina elementárních jevů je libovolná neprázdná, $\mathcal{F}$ je prostor jevů a $P$ je pravděpodobnost.
 
@@ -1189,7 +1195,8 @@ Spojitá:
 <img src="img/stats_2.png" />
 
 Poznámky k rozdělením:
-- uniformní = rovnoměrné 
+- uniformní = rovnoměrné
+- normální = hlavní rozdělení statistiky, konverguje k němu jakékoliv rozdělení s $\mu$ a $\sigma^2$ podle centrální limitní věty
 
 ### Limitní věty
 
@@ -1207,7 +1214,7 @@ Nechť $X_1, X_2, ...$ jsou stejně rozdělené nezávislé náhodné veličiny 
 
 Cílem bodových odhadů je určit některý z parametrů (často to je třeba střední hodnota nějakého rozdělení).
 
-Definujme ještě pár pojmů, které budeme potřebovat pro definici odhadů. Posloupnost nezávislých náhodných veličin $X_1, ..., X_n$ ze stejného rozdělení nazveme náhodný výběr s rozsahem $n$. Pokud tyto veličiny mají distribuci $F$, pak píšeme $X_1, ..., X_n \~ F$.
+Definujme ještě pár pojmů, které budeme potřebovat pro definici odhadů. Posloupnost nezávislých náhodných veličin $X_1, ..., X_n$ ze stejného rozdělení nazveme náhodný výběr s rozsahem $n$. Pokud tyto veličiny mají distribuci $F$, pak píšeme $X_1, ..., X_n \text{\textasciitilde} F$.
 
 Parametrické modely: Můžeme zkoumat jen distribuční funkce $F$ z množiny $\{ F_\vartheta : \vartheta \in \Theta \}$, kde $\vartheta$ je neznámý parametr a $\Theta$ je množina možných hodnot tohoto parametru. Příklad:
 1. $Pois(\lambda)$ - parametr $\vartheta = \lambda, \Theta = \mathbb{R}^+$
@@ -1217,7 +1224,7 @@ Statistika je nejen název disciplíny, ale má i svůj význam. Je to totiž ta
 
 #### Alespoň jedna metoda pro jejich tvorbu
 
-Pro náhodný výběr $X_1, ..., X_n \~ F$ a libovolnou funkci $g$ nazveme $\hat{\Theta}_n$ bodový odhad:
+Pro náhodný výběr $X_1, ..., X_n \text{\textasciitilde} F$ a libovolnou funkci $g$ nazveme $\hat{\Theta}_n$ bodový odhad:
 1. nevychýlený/nestranný, pokud $\mathbb{E}(\hat{\Theta}_n) = g(\vartheta)$
 2. asymptoticky nevychýlený/nestranný, pokud $\lim_{n \rightarrow \infty} \hat{\Theta}_n = g(\vartheta)$
 3. konzistentní, pokud $\hat{\Theta}_n$ konverguje v pravděpodobnosti k $g(\vartheta)$
@@ -1233,7 +1240,7 @@ Pak definujme několik odhadů:
 2. je konzistentní asymptoticky nestranný odhad $\sigma^2$
 3. je konzistentní nestranný odhad $\sigma^2$
 
-Metoda momentů: $m_r(\vartheta) = \mathbb{E}(X^r)$ pro $X \~ F_\vartheta$ ... $r$-tý moment, $\hat{m_r(\vartheta)} = \frac{1}{n}\sum_{i=1}^n X_i^r$ pro náhodný výběr z $F_\vartheta$ ... $r$-tý výběrový moment
+Metoda momentů: $m_r(\vartheta) = \mathbb{E}(X^r)$ pro $X \text{\textasciitilde} F_\vartheta$ ... $r$-tý moment, $\hat{m_r(\vartheta)} = \frac{1}{n}\sum_{i=1}^n X_i^r$ pro náhodný výběr z $F_\vartheta$ ... $r$-tý výběrový moment
 
 $\hat{m_r(\vartheta)}$ je nestranný konzistentní odhad pro $m_r(\vartheta)$.
 

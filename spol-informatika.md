@@ -68,12 +68,12 @@ Iterační (pumping) lemma pro regulární jazyky: Mějme regulární jazyk $L$.
 
 Příklad použití pumping lemmatu: Jazyk slov se stejným počtem 0 a 1 není regulární. Předpokládejme, že regulární je. Vezměme $n$ z pumping lemmatu. Zvolme $w = 0^n 1^n \in L$. Pak $|xy| \leq n$, jenže obsahuje samé nuly. Pak by nešlo pumpovat nuly, porušila by se rovnost.
 
-Mějme konečnou abecedu $\Sigma$ a relaci ekvivalence $\~$ na $\Sigma^*$. Pak:
-1. $~$ je pravá kongruence, jestliže $\forall u, v, w \in \Sigma^*: u \~ v \implies uw \~ vw$
-2. je konečného indexu, má-li rozklad $\Sigma^* / \~$ konečný počet tříd
-3. třídu kongruence $\~$ obsahující slovo $u$ značíme $[u]_\~$
+Mějme konečnou abecedu $\Sigma$ a relaci ekvivalence $\text{\textasciitilde}$ na $\Sigma^*$. Pak:
+1. $~$ je pravá kongruence, jestliže $\forall u, v, w \in \Sigma^*: u \text{\textasciitilde} v \implies uw \text{\textasciitilde} vw$
+2. je konečného indexu, má-li rozklad $\Sigma^* / \text{\textasciitilde}$ konečný počet tříd
+3. třídu kongruence $\text{\textasciitilde}$ obsahující slovo $u$ značíme $[u]_\text{\textasciitilde}$
 
-Myhill–Nerodova věta: $L$ je rozpoznatelný konečným automatem právě tehdy, když existuje pravá kongruence konečného indexu nad $\Sigma^*$ tak, že $L$ je sjednocením jistých tříd rozkladu $\Sigma^* / \~$.
+Myhill–Nerodova věta: $L$ je rozpoznatelný konečným automatem právě tehdy, když existuje pravá kongruence konečného indexu nad $\Sigma^*$ tak, že $L$ je sjednocením jistých tříd rozkladu $\Sigma^* / \text{\textasciitilde}$.
 
 Řekněme, že v automatu je stav dosažitelný, jestliže existuje slovo takové, že po přečtení nějakého slova skončíme v daném stavu.
 
@@ -218,6 +218,8 @@ Gramatikám typu 1 odpovídají kontextové gramatiky, jsou rozpoznatelné line�
 Obsahují pouze pravidla typu $\alpha A \beta \rightarrow \alpha \omega \beta, A \in V, \alpha, \beta \in (V \cup T)^*, \omega \in (V \cup T)^+$ s výjimkou pravidla $S \rightarrow \lambda$, ovšem pak se $S$ neobjevuje nikde jinde.
 
 Příklad kontextového jazyka: $L = \{ a^n b^n c^n | n \geq 1 \}$.
+
+Poznámka: Lineárně omezené automaty jsou stejné jako TM, ovšem jsou limitovány počtem políček, do kterých mohou psát.
 
 Gramatikám typu 2 odpovídají bezkontextové jazyky, jsou rozpoznávany nějakým PDA.
 
