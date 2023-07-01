@@ -5,9 +5,9 @@
 Obecně si definujme nějaké pojmy:
 - množina symbolů $\Sigma$ (abeceda)
 - slovo je konečná (i prázdná) posloupnost symbolů $s \in \Sigma$, prázdné slovo značíme $\lambda$ nebo $\epsilon$
-- množina všech slov v abecedě je $E^*$
-- množina všech neprázdných slov v abecedě je $E^+$
-- jazyk je $L \subseteq E^*$
+- množina všech slov v abecedě je $\Sigma^*$
+- množina všech neprázdných slov v abecedě je $\Sigma^+$
+- jazyk je $L \subseteq \Sigma^*$
 - operace se slovy $u, v \in L$:
   - zřetězení $u.v$ nebo $uv$
   - mocnina $u^n$, kde $n$ je počet opakování
@@ -20,7 +20,7 @@ Další operace s jazyky:
 - pozitivní iterace $L^+$
 - obecná iterace $L^*$
 - otočení jazyka $L^R$
-- levý kvocient $L$ podle $M$, $M \setminus L = \{v|uv \in L \& u \in M\}$
+- levý kvocient $L$ podle $M$, $M \setminus L = \{v|uv \in L, u \in M\}$
 - levá derivace $L$ podle $w$, $\partial_W L = \{ w \} \setminus L$
 
 ### Regulární jazyky
@@ -68,12 +68,12 @@ Iterační (pumping) lemma pro regulární jazyky: Mějme regulární jazyk $L$.
 
 Příklad použití pumping lemmatu: Jazyk slov se stejným počtem 0 a 1 není regulární. Předpokládejme, že regulární je. Vezměme $n$ z pumping lemmatu. Zvolme $w = 0^n 1^n \in L$. Pak $|xy| \leq n$, jenže obsahuje samé nuly. Pak by nešlo pumpovat nuly, porušila by se rovnost.
 
-Mějme konečnou abecedu $\Sigma$ a relaci ekvivalence $\text{\textasciitilde}$ na $\Sigma^*$. Pak:
-1. $~$ je pravá kongruence, jestliže $\forall u, v, w \in \Sigma^*: u \text{\textasciitilde} v \implies uw \text{\textasciitilde} vw$
-2. je konečného indexu, má-li rozklad $\Sigma^* / \text{\textasciitilde}$ konečný počet tříd
-3. třídu kongruence $\text{\textasciitilde}$ obsahující slovo $u$ značíme $[u]_\text{\textasciitilde}$
+Mějme konečnou abecedu $\Sigma$ a relaci ekvivalence $\sim$ na $\Sigma^*$. Pak:
+1. $~$ je pravá kongruence, jestliže $\forall u, v, w \in \Sigma^*: u \sim v \implies uw \sim vw$
+2. je konečného indexu, má-li rozklad $\Sigma^* / \sim$ konečný počet tříd
+3. třídu kongruence $\sim$ obsahující slovo $u$ značíme $[u]_\sim$
 
-Myhill–Nerodova věta: $L$ je rozpoznatelný konečným automatem právě tehdy, když existuje pravá kongruence konečného indexu nad $\Sigma^*$ tak, že $L$ je sjednocením jistých tříd rozkladu $\Sigma^* / \text{\textasciitilde}$.
+Myhill–Nerodova věta: $L$ je rozpoznatelný konečným automatem právě tehdy, když existuje pravá kongruence konečného indexu nad $\Sigma^*$ tak, že $L$ je sjednocením jistých tříd rozkladu $\Sigma^* / \sim$.
 
 Řekněme, že v automatu je stav dosažitelný, jestliže existuje slovo takové, že po přečtení nějakého slova skončíme v daném stavu.
 
@@ -261,9 +261,9 @@ Viz nahoře.
 
 ### Třídy složitosti
 
-Rozhodovací problém (zkráceně problém) je funkce z množiny $\{0, 1\}^*$ všech řetězců nad binární abecedou do množiny $\{0, 1\}$.
+Rozhodovací problém (zkráceně problém) je funkce z množiny $\{0, 1\}^{*}$ všech řetězců nad binární abecedou do množiny $\{0, 1\}$.
 
-Jsou-li $A, B$ rozhodovací problémy, říkáme, že $A$ lze převést na $B$ (píšeme $A \rightarrow B$) právě tehdy, když existuje funkce $f: \{0, 1\}^* \rightarrow \{0, 1\}^*$ taková, že pro všechna $x \in \{0, 1\}^*$ platí $A(x) = B(f(x))$, a navíc lze funkci $f$ spočítat v čase polynomiálním vzhledem k $|x|$. Funkci $f$ říkáme převod nebo také redukce.
+Jsou-li $A, B$ rozhodovací problémy, říkáme, že $A$ lze převést na $B$ (píšeme $A \rightarrow B$) právě tehdy, když existuje funkce $f: \{0, 1\}^{*} \rightarrow \{0, 1\}^{*}$ taková, že pro všechna $x \in \{0, 1\}^{*}$ platí $A(x) = B(f(x))$, a navíc lze funkci $f$ spočítat v čase polynomiálním vzhledem k $|x|$. Funkci $f$ říkáme převod nebo také redukce.
 
 #### Třídy P a NP
 

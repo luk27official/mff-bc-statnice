@@ -1,6 +1,6 @@
 # Programování a vývoj software
 
-TODO, každopádně u většiny jde o nějaké praktické použití, takže bych se zaměřil spíše na to. Zatím jsou u každého okruhu vypsány předměty, které je fajn si projít, na druhou stranu až na první okruh to je relativně straightforward.
+TODO, každopádně u většiny jde o nějaké praktické použití, takže bych se zaměřil spíše na to. Zatím jsou u každého okruhu vypsány předměty, které je fajn si projít, na druhou stranu až na první okruh to je relativně straightforward. Zejména doporučuji projít si pečlivě první část.
 
 ## 1. Architektura počítačů, operačních systémů a sítí
 
@@ -34,7 +34,7 @@ Předměty:
 
 ## 4. Databáze
 
-Kromě těch prezentací je asi ještě dobré si zkusit procvičit SQL.
+Kromě těch prezentací je asi ještě dobré si zkusit procvičit SQL. Dobré je také zkusit si UML/ER diagram a naučit se ty různé normální formy (3NF, BCNF).
 
 Předměty:
 - NDBI025 Databázové systémy - http://www.ms.mff.cuni.cz/~kopecky/vyuka/dbs/, vlastní poznámky
