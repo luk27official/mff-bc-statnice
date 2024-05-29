@@ -69,15 +69,15 @@ Iterační (pumping) lemma pro regulární jazyky: Mějme regulární jazyk $L$.
 Příklad použití pumping lemmatu: Jazyk slov se stejným počtem 0 a 1 není regulární. Předpokládejme, že regulární je. Vezměme $n$ z pumping lemmatu. Zvolme $w = 0^n 1^n \in L$. Pak $|xy| \leq n$, jenže obsahuje samé nuly. Pak by nešlo pumpovat nuly, porušila by se rovnost.
 
 Mějme konečnou abecedu $\Sigma$ a relaci ekvivalence $\sim$ na $\Sigma^*$. Pak:
-1. $~$ je pravá kongruence, jestliže $\forall u, v, w \in \Sigma^*: u \sim v \implies uw \sim vw$
+1. $\sim$ je pravá kongruence, jestliže $\forall u, v, w \in \Sigma^*: u \sim v \implies uw \sim vw$
 2. je konečného indexu, má-li rozklad $\Sigma^* / \sim$ konečný počet tříd
 3. třídu kongruence $\sim$ obsahující slovo $u$ značíme $[u]_\sim$
 
 Myhill–Nerodova věta: $L$ je rozpoznatelný konečným automatem právě tehdy, když existuje pravá kongruence konečného indexu nad $\Sigma^*$ tak, že $L$ je sjednocením jistých tříd rozkladu $\Sigma^* / \sim$.
 
-Řekněme, že v automatu je stav dosažitelný, jestliže existuje slovo takové, že po přečtení nějakého slova skončíme v daném stavu.
+Řekněme, že v automatu je stav $q$ dosažitelný, jestliže existuje slovo takové, že po přečtení nějakého slova skončíme ve stavu $q$.
 
-Dva automaty nad stejnou abecedou jsou ekvivalentní, jestliže rozpoznávají stejný jazyk. Dva stavy v automatu jsou ekvivalentní, pokud pro všechna slova z jazyku platí, že $\forall w; \delta^* (p,w) \in F \iff \delta^* (q,w) \in F$.
+Dva automaty nad stejnou abecedou jsou ekvivalentní, jestliže rozpoznávají stejný jazyk. Dva stavy $p, q$ v automatu jsou ekvivalentní, pokud pro všechna slova z jazyku platí, že $\forall w:  \delta^* (p,w) \in F \iff \delta^* (q,w) \in F$.
 
 DFA je redukovaný, pokud nemá nedosažitelné stavy a žádné dva stavy nejsou ekvivalentní. Redukce je jednoduchá, stačí nalézt ekvivalentní stavy a poté je spojit v jeden stav.
 
@@ -102,10 +102,9 @@ Indukce je poté:
 3. $L(\alpha^*) = L(\alpha)^*$
 4. $L((\alpha)) = L(\alpha)$
 
-Každý jazyk reprezentovaný konečným automatem lze zapsat jako regulární
-výraz. Každý jazyk popsaný regulárním výrazem můžeme zapsat jako $\lambda$-NFA (a tedy i DFA).
+Každý jazyk reprezentovaný konečným automatem lze zapsat jako regulární výraz. Každý jazyk popsaný regulárním výrazem můžeme zapsat jako $\lambda$-NFA (a tedy i DFA).
 
-Regulární jazyky jssou uzavřeny na všechny operace, tedy sjednocení, průnik, doplněk, homomorfismus, inverzní homomorfismus.
+Regulární jazyky jsou uzavřeny na všechny operace, tedy sjednocení, průnik, doplněk, homomorfismus, inverzní homomorfismus.
 
 Poznámka: homomorfismus je zjednodušeně řečeno přeznačení abecedy.
 
@@ -181,31 +180,26 @@ TM můžeme rozšířit tak, že přidáme více pásek, případně tak, že p�
 #### Algoritmicky nerozhodnutelné problémy
 
 Chceme dojít k důkazu nerozhodnutelnosti jazyka dvojic $(M, w)$ takových, že:
-1. $M$ je binárně kódovaný Turingův stroj s abecedou \{ 0, 1 \}
+1. $M$ je binárně kódovaný Turingův stroj s abecedou $\{ 0, 1 \}$
 2. $w \in \{ 0, 1 \}^*$
 3. $M$ nepřijímá vstup $w$
 
 Diagonální jazyk $L_d = \{ w, $ TM reprezentovaný jako $w$ takový, že nepřijímá $ w \}$
 
-Neexistuje TM přijímající jazyk L_d, protože by to vedlo k paradoxu.
+Neexistuje TM přijímající jazyk $L_d$, protože by to vedlo k paradoxu.
 
 Definujeme univerzální jazyk $L_u$ jakožto množinu binárních řetězců, které kódují pár $(M, w)$, kde $M$ je TM a $w \in L(M)$. TM rozpoznávající $L_u$ se nazývá Univerzální Turingův stroj.
 
-Problémem $P$ myslíme matematicky/informaticky definovanou množinu otázek
-kódovatelnou řetězci nad abecedou $\Sigma$ s odpověďmi $\in \{ano, ne\}$.
+Problémem $P$ myslíme matematicky/informaticky definovanou množinu otázek kódovatelnou řetězci nad abecedou $\Sigma$ s odpověďmi $\in \{ano, ne\}$.
 
-Problém je (algoritmicky) rozhodnutelný, pokud existuje Turingův stroj TM
-takový, že pro každý vstup $w \in P$ zastaví a navíc přijme právě když $P(w) = ano$
-(tj. pro $P(w) = ne$ zastaví v ne–přijímacím stavu).
+Problém je (algoritmicky) rozhodnutelný, pokud existuje Turingův stroj TM takový, že pro každý vstup $w \in P$ zastaví a navíc přijme právě když $P(w) = ano$ (tj. pro $P(w) = ne$ zastaví v ne–přijímacím stavu).
 
-Problém, který není algoritmicky rozhodnutelný nazýváme nerozhodnutelný
-problém.
+Problém, který není algoritmicky rozhodnutelný nazýváme nerozhodnutelný problém.
 
 $L_u$ je rekurzivně spočetný, ale není rekurzivní.
 
 Instance Postova korespondenčního problému (PCP) jsou dva seznamy slov nad abecedou $\Sigma$ značené $A = w_1,w_2, ... ,w_k$ a $B = x_1, x_2, ... , x_k$ stejné délky $k$. Pro každé $i$, dvojice $(w_i, x_i)$ se nazývá odpovídající dvojice.
-Instance PCP má řešení, pokud existuje posloupnost jednoho či více přirozených čísel $i_1, i_2, ..., i_m$ tak, že $w_{i_1}w_{i_2} ... w_{i_m} = x_{i_1} x_{i_2} ... x_{i_m}$ tj. dostaneme stejné slovo. V tom případě říkáme, že posloupnost $i_1, i_2, ..., i_m$ je řešení. Postův korespondenční problém je: Pro danou instanci PCP, rozhodněte, zda
-má řešení.
+Instance PCP má řešení, pokud existuje posloupnost jednoho či více přirozených čísel $i_1, i_2, ..., i_m$ tak, že $w_{i_1}w_{i_2} ... w_{i_m} = x_{i_1} x_{i_2} ... x_{i_m}$ tj. dostaneme stejné slovo. V tom případě říkáme, že posloupnost $i_1, i_2, ..., i_m$ je řešení. Postův korespondenční problém je: Pro danou instanci PCP, rozhodněte, zda má řešení.
 
 Je algoritmicky nerozhodnutelné, zda je bezkontextová gramatika víceznačná.
 
@@ -308,6 +302,8 @@ Grafové problémy:
 
 Problém SAT jsme si už představili v logice, jde o splnitelnost CNF formule. Některé převody jsou jednoduché, třeba 3-SAT je varianta SAT. SAT na 3-SAT se dá převést zavedením nové proměnné. 3-SAT se dá převést na nezávislou množinu jednoduše, tedy znázorněním proměnných jako vrcholy a hrany jsou stejné jako klauzule (s tím, že každý literál je spojený ještě s opačným). Nezávislá množina se dá převést na SAT nějakou šikovnou reprezentací hran. Klika je prakticky identická jako nezávislá množina. 3-SAT se dá převést na 3,3-SAT zavedením nových proměnných. 3,3-SAT se dá převést na 3D-párování.
 
+Další příklady jsou třeba v Průvodci labyrintem algoritmů - někdy to bývají delší příklady, takže nemá cenu je sem vypisovat.
+
 ### Metoda rozděl a panuj
 
 Chceme problém rozdělovat na podproblémy, které budou potom tak malé, že je umíme vyřešit samostatně. To se může hodit v různých algoritmech, ale třeba i při paralelním programování.
@@ -318,11 +314,11 @@ Typicky se to používá při rekurzivním programování.
 
 Existuje explicitní vzorec, který dokáže určit složitost rekurzivního algoritmu, říkáme mu Master theorem. Popíšeme ho později. Dá se to odhadnout také stromem rekurze, že uděláme sumu přes jednotlivé složitosti.
 
-Celkově jsou různé problémy, které se dají přes rekurzi řešit. Nějaké příklady mohou být třeba Hanojské věže, třídění sléváním (MergeSort), rychlé násobení čísel, hledání $k$-tého nejmenšího prvku (QuickSelect), rychlé třídění (QuickSort), $k$-tý nejmenší prvek v lineárním čase apod.
+Celkově jsou různé problémy, které se dají přes rekurzi řešit. Příkladem mohou být třeba Hanojské věže, třídění sléváním (MergeSort), rychlé násobení čísel, hledání $k$-tého nejmenšího prvku (QuickSelect), rychlé třídění (QuickSort), $k$-tý nejmenší prvek v lineárním čase apod.
 
 #### Výpočet složitosti pomocí rekurentních rovnic
 
-Složitost se dá odvodit podle toho, kolik času trávíme na jednotlivých hladinách. Uvedeme si příklad - MergeSort. Jako první si tedy napíšeme čas strávený na první hladině, to je $T(1) = 1$. Obecně na $n$-té hladině trávíme $T(n) = 2 \cdot T(n/2) + cn$ času. Všimneme si, že pokud bychom dosadili za $T(n/2)$, dostaneme postupem $T(n) = 2^k \cdot T(n/2^k) + kcn$. Pak zvolíme $k$ tak, aby bylo rovno jedné. Tedy $k = \log_2 n$. Dosadíem do vzorce a dostaneme $T(n) = 2^{\log_2 n} \cdot T(1) + log_2 n \cdot cn = n + cn \log_2 n$. Časová složitost je tedy $\Theta(n \log n)$.
+Složitost se dá odvodit podle toho, kolik času trávíme na jednotlivých hladinách. Uvedeme si příklad - MergeSort. Jako první si tedy napíšeme čas strávený na první hladině, to je $T(1) = 1$. Obecně na $n$-té hladině trávíme $T(n) = 2 \cdot T(n/2) + cn$ času. Všimneme si, že pokud bychom dosadili za $T(n/2)$, dostaneme postupem $T(n) = 2^k \cdot T(n/2^k) + kcn$. Pak zvolíme $k$ tak, aby bylo rovno jedné. Tedy $k = \log_2 n$. Dosadíme do vzorce a dostaneme $T(n) = 2^{\log_2 n} \cdot T(1) + log_2 n \cdot cn = n + cn \log_2 n$. Časová složitost je tedy $\Theta(n \log n)$.
 
 Kromě rekurentních rovnic se to dá řešit i právě stromem rekurze.
 
@@ -357,8 +353,7 @@ Buď z analýzy přes Master theorem nebo jinak nahlédneme, že celková časov
 
 ##### Násobení dlouhých čísel
 
-Mějme $n$-ciferná čísla $X, Y$, která chceme vynásobit. Rozdělíme je na horních $n/2$
-a dolních $n/2$ cifer (pro jednoduchost opět předpokládejme, že $n$ je mocnina dvojky). Platí tedy:
+Mějme $n$-ciferná čísla $X, Y$, která chceme vynásobit. Rozdělíme je na horních $n/2$ a dolních $n/2$ cifer (pro jednoduchost opět předpokládejme, že $n$ je mocnina dvojky). Platí tedy:
 1. $X = A \cdot 10^{n/2} + B$
 2. $Y = C \cdot 10^{n/2} + D$
 pro nějaká $(n/2)$-ciferná čísla $A, B, C, D$. Hledaný součin $XY$ můžeme zapsat takto: $XY = AC \cdot 10^n + (AD + BC) \cdot 10^{n/2} + BD$.
@@ -403,13 +398,11 @@ Pozor na to, že tyto operace mají sice v průměrném případě složitost $\
 
 #### AVL stromy (definice)
 
-Definice: Binární vyhledávací strom nazveme dokonale vyvážený, pokud pro každý jeho
-vrchol $v$ platí $||L(v)| − |P(v)|| \leq 1$. Jinými slovy počet vrcholů levého a pravého podstromu se smí lišit nejvýše o 1.
+Definice: Binární vyhledávací strom nazveme dokonale vyvážený, pokud pro každý jeho vrchol $v$ platí $||L(v)| − |P(v)|| \leq 1$. Jinými slovy počet vrcholů levého a pravého podstromu se smí lišit nejvýše o 1.
 
 Dokonale vyvážený strom má tedy hloubku $\log_2 n$.
 
-Binární vyhledávací strom nazveme hloubkově vyvážený, pokud pro každý jeho
-vrchol $v$ platí $h(l(v)) − h(r(v)) \leq 1$. Jinými slovy, hloubka levého a pravého podstromu se vždy liší nejvýše o jedna.
+Binární vyhledávací strom nazveme hloubkově vyvážený, pokud pro každý jeho vrchol $v$ platí $h(l(v)) − h(r(v)) \leq 1$. Jinými slovy, hloubka levého a pravého podstromu se vždy liší nejvýše o jedna.
 
 Stromy, které jsou hloubkově vyvážené, se nazývají AVL stromy.
 
@@ -417,13 +410,13 @@ AVL stromy mají logaritmickou hloubku, tedy $\Theta(\log n)$.
 
 AVL stromy se musí vyvažovat tzv. rotacemi stromu, tedy nějaké operace s vrcholy, aby zůstal hloubkově vyvážený a zároveň stále splňoval definici BVS. Strom se musí vyvážit vždy, když přidáme nebo smažeme vrchol.
 
-Operace přidání a smazání vrcholu u AVL nejsou tak jednoduché, protože mohou nastat různé případy prohlubování, někdy se vyvažovat vůbec nemusí. Do detailu to rozepisovat nebudu.
+Operace přidání a smazání vrcholu u AVL nejsou tak jednoduché, protože mohou nastat různé případy prohlubování, někdy se vyvažovat vůbec nemusí. Do detailu to rozepisovat nebudu, v případě zájmu doporučím opět Průvodce labyrintem algoritmů.
 
 ### Třídění
 
 #### Primitivní třídicí algoritmy (Bubblesort, Insertsort)
 
-Jako první si uvedeme bublinkové třídění (Bubblesort). Jeho základem je myšlenka nechat stoupat větší prvky v poli podobně, jako stoupají bublinky v limonádě. V algoritmu budeme opakovaně procházet celé pole. Jeden průchod postupně porovná všechny dvojice sousedních prvků $P[i]$ a $P[i+ 1]$. Pokud dvojice není správně uspořádaná (tedy $P[i] > P[i + 1]$), prvky prohodíme. V opačném případě necháme dvojici na pokoji. Menší prvky se nám tak posunou blíže k začátku pole, zatímco větší prvky „bublají“ na jeho konec. Pokaždé, když pole projdeme celé, začneme znovu od začátku. Tyto průchody opakujeme, dokud dochází k prohazování prvků. V okamžiku, kdy výměny ustanou, je pole setříděné. Technicky tedy jde jen o 2 for loopy. Časová složitost je tedy $O(n^2)$.
+Jako první si uvedeme bublinkové třídění (Bubblesort). Jeho základem je myšlenka nechat stoupat větší prvky v poli podobně, jako stoupají bublinky v limonádě. V algoritmu budeme opakovaně procházet celé pole. Jeden průchod postupně porovná všechny dvojice sousedních prvků $P[i]$ a $P[i + 1]$. Pokud dvojice není správně uspořádaná (tedy $P[i] > P[i + 1]$), prvky prohodíme. V opačném případě necháme dvojici na pokoji. Menší prvky se nám tak posunou blíže k začátku pole, zatímco větší prvky „bublají“ na jeho konec. Pokaždé, když pole projdeme celé, začneme znovu od začátku. Tyto průchody opakujeme, dokud dochází k prohazování prvků. V okamžiku, kdy výměny ustanou, je pole setříděné. Technicky tedy jde jen o 2 for loopy. Časová složitost je tedy $O(n^2)$.
 
 Insertsort neboli třídění přímým vkládáním funguje takto: Udržujeme dvě části pole - na začátku leží setříděné prvky a v druhé části pak zbývající nesetříděné. V každém kroku vezmeme jeden prvek z nesetříděné části a vložíme jej na správné místo v části setříděné. Složitost je stejná, tedy kvadratická, protože opakovaně procházíme setříděnou posloupnost.
 
@@ -500,7 +493,7 @@ Graf může mít více minimálních koster, pokud jsou váhy všech hran navzá
 
 Jarníkův algoritmus: Mějme souvislý graf s unikátními vahami. Pak začneme s libovolným vrcholem grafu a grafem $T$ obsahující pouze tento vrchol. Dokud existuje hrana taková, že jeden z vrcholů leží v $T$ a druhý tam neleží, přidáme nejlehčí z nich. Algoritmus bězí v čase $O(mn)$.
 
-Borůvkův algoritmus: Je to taková paralelní verze Jarníkova algoritmu. Začínáme s nesouvislými vrcholy. Dokud $T$ není souvislý, rozložíme ho na komponenty souvislosti. Pro každou komponentu nalezneme takového souseda s nejlehčí hranou, se kterým ještě nebyl spojený. Tímto rozšiřujeme kostru po mocninách dvojky v každé iteraci. Lze tedy nahlédnout, že takový algoritmus pracuje v čase $m \log n$.
+Borůvkův algoritmus: Je to taková paralelní verze Jarníkova algoritmu. Začínáme s nesouvislými vrcholy. Dokud $T$ není souvislý, rozložíme ho na komponenty souvislosti. Pro každou komponentu nalezneme takového souseda s nejlehčí hranou, se kterým ještě nebyl spojený. Tímto rozšiřujeme kostru po mocninách dvojky v každé iteraci. Lze tedy nahlédnout, že takový algoritmus pracuje v čase $O(m \log n)$.
 
 
 #### Toky v sítích (Ford-Fulkerson algoritmus)
@@ -514,7 +507,7 @@ Navíc můžeme ještě definovat přítok, odtok a přebytek z vrcholu:
 
 Velikost toku se značí $|f|$ a je to vlastně přebytek stoku.
 
-Ford-Fulkerson: Nejjednodušší z algoritmů na hledání maximálního toku je založen na prosté myšlence: začneme s nulovým tokem a postupně ho vylepšujeme, až dostaneme maximální tok. Uvažujme, jak by vylepšování mohlo probíhat. Nechť existuje cesta $P$ ze $z$ do $s$ taková, že po všech jejích hranách teče méně, než dovolují kapacity. Takové cestě budeme říkat zlepšující, protože po ní můžeme tok zvětšit. Zvolíme $\epsilon = \min_{e \in P} (c(e)-f(e))$. Poté tok na každé hraně, která je ovlivněná tímto zlepšením může být zlepšena. Pozor na to, že to ještě nestačí, mohl by vzniknout tok, který není maximální.
+Ford-Fulkerson: Nejjednodušší z algoritmů na hledání maximálního toku je založen na prosté myšlence: Začneme s nulovým tokem a postupně ho vylepšujeme, až dostaneme maximální tok. Uvažujme, jak by vylepšování mohlo probíhat. Nechť existuje cesta $P$ ze $z$ do $s$ taková, že po všech jejích hranách teče méně, než dovolují kapacity. Takové cestě budeme říkat zlepšující, protože po ní můžeme tok zvětšit. Zvolíme $\epsilon = \min_{e \in P} (c(e)-f(e))$. Poté tok na každé hraně, která je ovlivněná tímto zlepšením může být zlepšena. Pozor na to, že to ještě nestačí, mohl by vzniknout tok, který není maximální.
 
 Definice: Rezerva hrany $uv$ je číslo $r(uv) = c(uv) − f(uv) + f(vu)$. Hraně s nulovou rezervou budeme říkat nasycená, hraně s kladnou rezervou nenasycená. O cestě řekneme, že je nasycená, pokud je nasycená alespoň jedna její hrana; jinak mají všechny hrany kladné rezervy a cesta je nenasycená. Roli zlepšujících cest tedy budou hrát nenasycené cesty. Budeme je opakovaně hledat a tok po nich zlepšovat.
 
