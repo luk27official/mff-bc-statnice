@@ -11,7 +11,7 @@ Předměty:
 
 ## 2. Programovací jazyky
 
-Tady záleží na konkrétních jazycích. Výčet je relevantní pro mě, může být doplněn. Dobré je si zkusit něco v jazyku pár dní před SZZ napsat, aby se osvěžil syntax.
+Tady záleží na konkrétních jazycích. Výčet je relevantní pro mě, může být doplněn. Dobré je si zkusit něco v jazyku pár dní před SZZ napsat, aby se osvěžila syntax.
 
 Předměty:
 - NPRG035 Programování v jazyce C# - https://d3s.mff.cuni.cz/cz/teaching/nprg035/, https://slama.dev/notes/the-cs-programming-language/
@@ -30,12 +30,12 @@ Další možné pomocné předměty:
 Předměty:
 - NSWI041 Úvod do softwarového inženýrství - vlastní poznámky
 - NSWI130 Architektury softwarových systémů - vlastní poznámky
-- NSWI154 Nástroje pro vývoj software - spíš praktická zkušenost s Git, Maven, testovací frameworky, profilery, Makefiles, ...
+- NSWI154 Nástroje pro vývoj software - spíš praktická zkušenost s nástroji Git, Maven, testovacími frameworky, profilery, Makefiles, ...
 
 ## 4. Databáze
 
-Kromě těch prezentací je asi ještě dobré si zkusit procvičit SQL. Dobré je také zkusit si UML/ER diagram a naučit se ty různé normální formy (3NF, BCNF).
+Kromě těch prezentací je asi ještě dobré si zkusit procvičit SQL. Dobré je také zkusit si UML/ER diagram a naučit se ty různé normální formy (3NF, BCNF). Také si zopakovat use cases NoSQL a hlavně princip MapReduce.
 
 Předměty:
 - NDBI025 Databázové systémy - http://www.ms.mff.cuni.cz/~kopecky/vyuka/dbs/, vlastní poznámky
-- asi ještě doplnit něco ohledně moderních DB systémů - nevím, nechodil jsem
+- NDBI040 Moderní databázové systémy - https://www.ksi.mff.cuni.cz/~holubova/NDBI040/index_2023.html
