@@ -454,7 +454,7 @@ Během výpočtu rozlišujeme 3 stavy vrcholů:
 
 Na počátku výpočtu tedy chceme prohlásit $v_0$ za otevřený a ostatní vrcholy za nenalezené. Pak $v_0$ uzavřeme a otevřeme všechny jeho následníky. Poté procházíme tyto následníky, uzavíráme je a otevíráme jejich dosud nenalezené následníky. A tak dále. Otevřené vrcholy si přitom pamatujeme ve frontě, takže pokaždé zavřeme ten z nich, který je otevřený nejdéle.
 
-BFS se vždy zastaví a korektně najde nejkratší (neohodnocenou) cestu mezi dvěma vrcholy. Časová složitost algoritmu je $O(|V| + |E|)$, prostorovou taky.
+BFS se vždy zastaví a korektně najde nejkratší (neohodnocenou) cestu mezi dvěma vrcholy. Časová složitost algoritmu je $O(|V| + |E|)$, prostorová taky.
 
 Pozor na různé reprezentace sousednosti, například u matice sousednosti by to bylo až $O(n^2)$, lepší je seznam sousedů.
 
@@ -462,7 +462,7 @@ Pozor na různé reprezentace sousednosti, například u matice sousednosti by t
 
 Dalším důležitým algoritmem k procházení grafů je prohledávání do hloubky, anglicky depth-first search čili DFS. Je založeno na podobném principu jako BFS, ale vrcholy zpracovává rekurzivně: kdykoliv narazí na dosud nenalezený vrchol, otevře ho, zavolá se rekurzivně na všechny jeho dosud nenalezené následníky, načež původní vrchol zavře a vrátí se z rekurze. Mimochodem se dá udělat i přes zásobník.
 
-DFS je vhodná ve chvíli, kdy chceme dostat třeba libovolnou cestu, případně je nám jedno, jaké bude řešení, ale chceme ho rychle. Má časovou složitost $O(|V| + |E|)$, prostorovou taky.
+DFS je vhodné ve chvíli, kdy chceme dostat třeba libovolnou cestu, případně je nám jedno, jaké bude řešení, ale chceme ho rychle. Má časovou složitost $O(|V| + |E|)$, prostorovou taky.
 
 Hrany v DFS se dají klasifikovat. Mohou nastat následující případy:
 1. stromová hrana - na DFS cestě
