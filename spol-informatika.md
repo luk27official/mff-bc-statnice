@@ -452,7 +452,7 @@ Během výpočtu rozlišujeme 3 stavy vrcholů:
 2. otevřené - už jsme je viděli, ale ještě jsme neprozkoumali všechny hrany, které z něj vedou
 3. uzavřené - už jsme je viděli a prozkoumali jsme i hrany
 
-Předpokladem je, že všechny vrcholy až na první považujeme za uzavřené. Funguje to tak, že do fronty postupně dáváme vrcholy, jak je potkáme podle hran a vždy z fronty odebereme vrchol a zařadíme jeho sousedy, jsou-li nenalezené.
+Na počátku výpočtu tedy chceme prohlásit $v_0$ za otevřený a ostatní vrcholy za nenalezené. Pak $v_0$ uzavřeme a otevřeme všechny jeho následníky. Poté procházíme tyto následníky, uzavíráme je a otevíráme jejich dosud nenalezené následníky. A tak dále. Otevřené vrcholy si přitom pamatujeme ve frontě, takže pokaždé zavřeme ten z nich, který je otevřený nejdéle.
 
 BFS se vždy zastaví a korektně najde nejkratší (neohodnocenou) cestu mezi dvěma vrcholy. Časová složitost algoritmu je $O(|V| + |E|)$, prostorovou taky.
 
